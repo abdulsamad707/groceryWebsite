@@ -131,8 +131,9 @@ let obj= {};
       obj=JSON.stringify(obj);
       $.ajax({
        method:'POST',
-       url:'http://localhost/projectIAD/api/userregister.php?key=6CU1qSJfcs',
-        data:obj,
+       data:obj,
+       url:'http://localhost/grocery/api/userregister.php?key=6CU1qSJfcs',
+        
        success:function(response){
         console.log(response);
        }

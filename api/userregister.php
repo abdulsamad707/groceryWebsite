@@ -17,24 +17,16 @@ if(!isset($status)){
       $username=ucfirst($username);
        
      $userdatainsert=['email'=>$email,'username'=>$username,'password'=>$password,"mobile"=>$mobile,"status"=>1,'verified'=>0];
-     $checkData=$userdatainsert;
-     
-     unset($checkData['status']);
-     unset($checkData['verified']);
-     unset($checkData['password']);
-     $dataChecked=   $data->checkRecord($table,$checkData, 'AND' );
-   
-     extract($dataChecked);
-     if($totalRecord==0){
-      $data->insert('users',$checkData);
-     }else{
-      $insertStatus['message']='Cannot Insert Duplicate Data';
-      $insertStatus['code']=500;
-      $insertStatus['insertId']=0;
+ 
+     $table='users';
+     $rows='id';
+     $checkData=['email'=>"'$email'",'mobile'=>"'$mobile'",'username'=>"'$username'"];
+           
+           print_r($checkData);
+      $userdat=  $data->getData('users','id',null,$checkData,null,null);
+      print_r($userdat);
+         extract($userdat);
 
-     }
-     
-     print_r($insertStatus);
    
      
      

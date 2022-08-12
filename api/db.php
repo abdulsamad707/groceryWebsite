@@ -17,7 +17,7 @@ $this->pdo=$pdo;
 
 
 }
-function getData($table=null,$rows=null,$groupBy=null,$whereCondition=null,string $orderBy=null,$limit=null,$offset=0){
+function getData($table=null,$rows=null,$groupBy=null,$whereCondition=null,string $orderBy=null,$limit=null){
 $db=$this->pdo;
       
             
@@ -38,24 +38,26 @@ $db=$this->pdo;
                   $sql="SELECT $rows FROM $table"; 
                  
               if($whereCondition!=null){
-              
+      
               
                    if(gettype($whereCondition)=='array'){
+                     $whereConditions='';
+                  $whereCondition=   array_unique($whereCondition);
                        if(count($whereCondition) > 1){
                          foreach ($whereCondition  as $key => $value){
-                            $whereCondition.= "$key = $value AND";
+                            $whereConditions.= " $key = $value AND ";
                          }
-                         $whereCondition.=rtrim($whereCondition,"AND");
+                         $whereConditions=rtrim($whereConditions," AND ");
                          
                        }else{
                         foreach ($whereCondition  as $key => $value){
-                            $whereCondition.= "$key = $value ";
+                            $whereConditions.= " $key = $value ";
                          }
-                       
+                            
                        } 
                    
                    }           
-                $sql.=" WHERE $whereCondition";
+                $sql.=" WHERE $whereConditions";
              }
                 
                 
@@ -83,7 +85,7 @@ $db=$this->pdo;
      
               
         
-               echo    $sql;
+        echo $sql;
                   
                  $result=$this->sql($sql,"read"); 
                    return $result;
@@ -113,8 +115,10 @@ function updateData ($table,$params=array(),$whereCod=null){
    
    $numberOfcondit=count($whereCod);
    $newArray=array();
+ 
+     $whereConditions='';
        if($numberOfcondit >1){
-         $whereConditions='';
+   
            foreach($whereCod as $key => $value){
          $whereConditions.=" $key=$value AND";
           
@@ -139,35 +143,9 @@ function updateData ($table,$params=array(),$whereCod=null){
 
 }
 
-       function checkRecord($table,$checkArray=array(),$operator=null){
-         $whereCondition='';
-
-         if(count($checkArray) > 1){ 
-            foreach($checkArray as $key => $value){
-          
-               $whereCondition.=" $key='$value' $operator ";
-               
-               }
-
-            $whereCondition=rtrim($whereCondition,$operator);
-         }else{
-         foreach($checkArray as $key => $value){
-            $whereCondition.=" $key='$value' ";
-            
-            }
-         }
-          $whereCondition;
-        
-    
-    $dataget = $this->getData("users",'id',null,$whereCondition,null,null,null);
-
-    return $dataget;
-       
-       
-       }
+      
      function insert($table,$insertParams=array()){
-     /*   print_r($insertParams);
-     die();*/
+        print_r($insertParams);
             $table_column=implode(",",array_keys($insertParams));
                $table_value=implode("' , '",$insertParams);
          $sql="INSERT INTO $table ($table_column) VALUES ('$table_value')";

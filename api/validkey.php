@@ -7,7 +7,7 @@ $data=new CRUDOPERATION($hostname,$dbname,$username,$password);
   if(isset($_GET['key']) && !empty($_GET['key']) ){
              $apikey=$_GET['key'];
               $table=["apikey"];
-             $apicondition="apikey='$apikey'";           
+             $apicondition=['apikey'=>"'$apikey'"];           
             
             
            
