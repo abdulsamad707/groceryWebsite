@@ -26,7 +26,7 @@ if(!isset($status)){
    
      extract($dataChecked);
      if($totalRecord==0){
-      $data->insert($checkData);
+      $data->insert('users',$checkData);
      }else{
       $insertStatus['message']='Cannot Insert Duplicate Data';
       $insertStatus['code']=500;
