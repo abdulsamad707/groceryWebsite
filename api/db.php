@@ -2,13 +2,16 @@
 class CRUDOPERATION {
 
 function __construct($host_name,$dbname,$username,$password){
-
+try{
 $this->host_name=$host_name;
 try{
 $pdo=new PDO('mysql:host='.$host_name.';dbname='.$dbname.';',$username,$password);
 $this->pdo=$pdo;
 }catch(PDOException $e){
    echo 'Connection Failed';
+}
+}catch(Exception $e){
+   echo "Server Down";
 }
 
 
@@ -91,7 +94,7 @@ $db=$this->pdo;
      
               
         
-        echo $sql;
+   
                   
                  $result=$this->sql($sql,"read"); 
                    return $result;
