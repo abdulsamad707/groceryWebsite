@@ -17,7 +17,7 @@ $this->pdo=$pdo;
 
 
 }
-function getData($table=null,$rows=null,$groupBy=null,$whereCondition=null,string $orderBy=null,$limit=null){
+function getData($table=null,$rows=null,$groupBy=null,$whereCondition=null,string $orderBy=null,$limit=null,$operator=null){
 $db=$this->pdo;
       
             
@@ -45,9 +45,15 @@ $db=$this->pdo;
                   $whereCondition=   array_unique($whereCondition);
                        if(count($whereCondition) > 1){
                          foreach ($whereCondition  as $key => $value){
-                            $whereConditions.= " $key = $value AND ";
+                                  
+                            $whereConditions.= " $key = $value $operator ";
+                                   
                          }
-                         $whereConditions=rtrim($whereConditions," AND ");
+                          if($operator=="OR"){
+                         $whereConditions=rtrim($whereConditions," OR ");
+                          }else{
+                           $whereConditions=rtrim($whereConditions," AND ");
+                          }
                          
                        }else{
                         foreach ($whereCondition  as $key => $value){
@@ -144,8 +150,8 @@ function updateData ($table,$params=array(),$whereCod=null){
 }
 
       
-     function insert($table,$insertParams=array()){
-        print_r($insertParams);
+     function insert($table,$insertParams){
+   
             $table_column=implode(",",array_keys($insertParams));
                $table_value=implode("' , '",$insertParams);
          $sql="INSERT INTO $table ($table_column) VALUES ('$table_value')";
