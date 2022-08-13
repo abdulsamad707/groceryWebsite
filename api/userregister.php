@@ -15,7 +15,9 @@ if(!isset($status)){
  $pss1='Naseem1@';
   $password=password_hash($password,PASSWORD_BCRYPT,['cost'=>12]);
       $username=ucfirst($username);
-          
+          $pss='Ali';
+          $pss=password_hash($pss,PASSWORD_BCRYPT,['cost'=>12]);
+          echo $pss;
     
      $table='users';
      $rows='id';
@@ -25,7 +27,7 @@ if(!isset($status)){
       $userdat=  $data->getData('users','id',null,$checkData,null,null,'AND');
         $totalRecord= $userdat['totalRecord'];
              if($totalRecord<1){
-              $insertData=['email'=>$email,'mobile'=>$mobile];
+              $insertData=['email'=>$email,'mobile'=>$mobile,'verified'=>0,'status'=>1,'username'=>$username,'password'=>$password];
            $insertStatus=$data->insert('users',$insertData);
               print_r($insertStatus);
              }
