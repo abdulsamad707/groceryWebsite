@@ -24,27 +24,60 @@ if(!isset($status)){
       $userdat=  $data->getData('users','id',null,$checkData,null,null,'OR');
         $totalRecord= $userdat['totalRecord'];
              if($totalRecord<1){
-              $insertData=['email'=>$email,'mobile'=>$mobile,'verified'=>0,'status'=>1,'username'=>$username,'password'=>$password];
-           $insertStatus=$data->insert('users',$insertData);
-            try{
         
-           $to = $email;
-           $subject = "My subject";
-           $txt = "Hello world!";
-           $headers = "From: abdulsamadahsan@gmail.com" . "\r\n" .
-           "CC: somebodyelse@example.com";
-           
-           mail($to,$subject,$txt,$headers);
-            }catch(Exception $e){
+          include ("phpmail.php");  
+          include ("smtp.php");  
 
-            }
+
+              
+              //Load Composer's autoloader
+            
+            
+              $mail = new PHPMailer(true);
+            /*  $mail->SMTPDebug = SMTP::DEBUG_SERVER;  */                    //Enable verbose debug output
+              $mail->isSMTP();                                            //Send using SMTP
+              $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+              $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+              $mail->Username   = 'abdulsamadahsan@gmail.com';                     //SMTP username
+              $mail->Password   = 'lgbjiahmdxixbqdd';                               //SMTP password
+              $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+              $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+          
+              //Recipients
+              $mail->setFrom('abdulsamadahsan@gmail.com', 'Grocery.pk');
+                //Add a recipient
+              $mail->addAddress($email,$username);               //Name is optional
+              $mail->addReplyTo('info@example.com', 'Information');
+             
+          
+              //Attachments
+          
+              //Content
+              $mail->isHTML(true);                                  //Set email format to HTML
+              $mail->Subject = 'Verification Of OTP';
+              $mail->Body    = 'OTP Is ';
+              $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+          
+           $sendMailer=   $mail->send();
+       
+         if($sendMailer==1){
+
+            $insertData=['email'=>$email,'mobile'=>$mobile,'verified'=>0,'status'=>1,'username'=>$username,'password'=>$password];
+           $insertStatus=$data->insert('users',$insertData);
+
+         }else{
+          $insertStatus['message']=' User Not Register Due To Internet Connection';
+          $insertStatus['code']=500;
+          $insertStatus['insertId']=0;
+         }
+       
      
        
            
            
       
              }else{
-                $insertStatus['message']='Already User Exist';
+                $insertStatus['message']=' User Exist';
                 $insertStatus['code']=500;
                 $insertStatus['insertId']=$userdat['data'][0]['id'];
  

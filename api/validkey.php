@@ -54,7 +54,7 @@ $data=new CRUDOPERATION($hostname,$dbname,$username,$password);
                              }else{
                            
                              
-                               
+                               $result['code']='200';
                                 
                             
                              
@@ -74,6 +74,7 @@ $data=new CRUDOPERATION($hostname,$dbname,$username,$password);
           $result["code"]=1;
   
   }
+  echo json_encode($result);
 
 
 ?>
