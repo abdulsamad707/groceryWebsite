@@ -16,6 +16,7 @@ if(!isset($status)){
   $password=password_hash($password,PASSWORD_BCRYPT,['cost'=>12]);
       $username=ucfirst($username);
 
+
     
    
      $checkData=['email'=>"'$email'",'mobile'=>"'$mobile'",'username'=>"'$username'"];
@@ -23,12 +24,15 @@ if(!isset($status)){
                 
       $userdat=  $data->getData('users','id',null,$checkData,null,null,'OR');
         $totalRecord= $userdat['totalRecord'];
+
              if($totalRecord<1){
         
           include ("phpmail.php");  
           include ("smtp.php");  
 
-
+         $randStr= $data->generateRandomString();
+          $rdStr=  bin2hex($randStr);
+                  $otp=mt_rand(1000,9999);
               
               //Load Composer's autoloader
             
@@ -47,22 +51,24 @@ if(!isset($status)){
               $mail->setFrom('abdulsamadahsan@gmail.com', 'Grocery.pk');
                 //Add a recipient
               $mail->addAddress($email,$username);               //Name is optional
-              $mail->addReplyTo('info@example.com', 'Information');
-             
-          
+              $mail->addReplyTo('abdulsamadahsan@gmail.com', 'Grocery.pk');
+                $html="";
+                $html.="Thanks For Register With Us Please Verify Your Email At <a href='http://localhost/grocery/verify.php?token=$otp'> verify  </a> ";
+     
               //Attachments
           
               //Content
               $mail->isHTML(true);                                  //Set email format to HTML
               $mail->Subject = 'Verification Of OTP';
-              $mail->Body    = 'OTP Is ';
+              $mail->Body    = 'OTP Is '.$otp.'<br>'.$html;
               $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
           
            $sendMailer=   $mail->send();
        
          if($sendMailer==1){
-
-            $insertData=['email'=>$email,'mobile'=>$mobile,'verified'=>0,'status'=>1,'username'=>$username,'password'=>$password];
+  
+            $insertData=['email'=>$email,'mobile'=>$mobile,'verified'=>0,'status'=>1,
+            'username'=>$username,'password'=>$password,'otp'=>$otp];
            $insertStatus=$data->insert('users',$insertData);
 
          }else{

@@ -74,7 +74,9 @@ $data=new CRUDOPERATION($hostname,$dbname,$username,$password);
           $result["code"]=1;
   
   }
+    if(isset($status)){
   echo json_encode($result);
+    }
 
 
 ?>

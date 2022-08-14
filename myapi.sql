@@ -395,7 +395,7 @@ CREATE TABLE `users` (
   `verified` enum('0','1') DEFAULT NULL,
   `status` varchar(255) NOT NULL,
   `password` text NOT NULL,
-  `otp` varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `otp` varchar(255)  NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
