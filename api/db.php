@@ -125,7 +125,7 @@ function updateData ($table,$params=array(),$whereCod=null){
        if($numberOfcondit >1){
    
            foreach($whereCod as $key => $value){
-         $whereConditions.=" $key=$value AND";
+         $whereConditions.=" $key='$value' AND";
           
            
            }
@@ -164,7 +164,7 @@ function updateData ($table,$params=array(),$whereCod=null){
    $db=$this->pdo;
            
 
-       
+
           $stmt= $db->prepare($sql);                                                                                                                                                                                                                                                                                                                                         $db->prepare($sql);
           $stmt->execute();
                                    

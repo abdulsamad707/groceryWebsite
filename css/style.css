@@ -738,3 +738,6 @@ section{
     align-items:center;
     font-size: medium;
 }
+#verifyContainer{
+    margin:45%;
+}

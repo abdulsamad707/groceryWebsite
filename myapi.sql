@@ -396,6 +396,7 @@ CREATE TABLE `users` (
   `status` varchar(255) NOT NULL,
   `password` text NOT NULL,
   `str_rand` varchar(255) null,
+  `mobile_verify` varchar(255) null,
   `otp` varchar(255)  NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --

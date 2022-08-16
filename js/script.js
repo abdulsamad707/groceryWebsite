@@ -58,6 +58,9 @@ window.onscroll = () =>{
     loginForm.classList.remove('active');
     navbar.classList.remove('active');
 }
+$("#SubmitBtn").click(function(e){
+        alert("helle");
+});
 $('#register').click(function(e){
 e.preventDefault();
 
@@ -129,18 +132,28 @@ let obj= {};
   
       }
       obj=JSON.stringify(obj);
+      $(this).prop("disabled",true);
       $.ajax({
        method:'POST',
-       data:obj,
        url:'http://localhost/grocery/api/userregister.php?key=6CU1qSJfcs',
-        
+        data:obj,
        success:function(response){
         console.log(response);
+             response=JSON.parse(response);
+           var code=response.code;
+       var http_code=response.http_code;
+
+        if(http_code==200){
+          $("#register").prop("disabled",false);
+        }
+          
+
+           
        }
       });
  
       
-  console.log(dataLength);
+
 
 });
 
