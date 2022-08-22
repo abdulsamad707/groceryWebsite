@@ -231,3 +231,15 @@ var swiper = new Swiper(".review-slider", {
 
 
 
+
+
+
+const  addtocart= (id,quantity) => {
+  const productId=id;
+  const productQty=quantity;
+    cartObject={
+      productId:productId,
+      qty:productQty
+    }
+    cartObject=JSON.stringify(cartObject);
+}

@@ -2,6 +2,8 @@
 <?php
        include("db.php");
 include("credential.php");
+include('./vendor/autoload.php');
+use \Firebase\JWT\JWT;
 $data=new CRUDOPERATION($hostname,$dbname,$username,$password);
 
   if(isset($_GET['key']) && !empty($_GET['key']) ){

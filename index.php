@@ -85,7 +85,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star-half-alt"></i>
                 </div>
-                <a href="#" class="btn">add to cart</a>
+                <a href="#" class="btn" onclick="addtocart('1','2')">add to cart</a>
             </div>
 
             <div class="swiper-slide box">
@@ -135,7 +135,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star-half-alt"></i>
                 </div>
-                <a href="#" class="btn">add to cart</a>
+                <a href="#" class="btn" onclick="addtocart('2','4')">add to cart</a>
             </div>
 
             <div class="swiper-slide box">
