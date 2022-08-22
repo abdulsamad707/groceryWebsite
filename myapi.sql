@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admins`
 --
 
-CREATE TABLE `admins` (
+CREATE TABLE if not Exists `admins` (
   `id` int(11) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `admins` (
 -- Table structure for table `apikey`
 --
 
-CREATE TABLE `apikey` (
+CREATE TABLE if not Exists`apikey` (
   `id` int(11) NOT NULL,
   `apikey` varchar(255) NOT NULL,
   `hitlimit` varchar(255) DEFAULT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE `carts` (
 -- Table structure for table `deliveryboys`
 --
 
-CREATE TABLE `deliveryboys` (
+CREATE TABLE if not Exists`deliveryboys` (
   `id` int(11) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -158,7 +158,7 @@ INSERT INTO `ordercancelled` (`id`, `Riderid`, `OrderId`) VALUES
 -- Table structure for table `orderscustomers`
 --
 
-CREATE TABLE `orderscustomers` (
+CREATE TABLE if not Exists`orderscustomers` (
   `id` int(11) NOT NULL,
   `order_amount` int(255) DEFAULT NULL,
   `order_discount` int(255) DEFAULT NULL,
@@ -208,7 +208,7 @@ INSERT INTO `orderscustomers` (`id`, `order_amount`, `order_discount`, `ordergst
 -- Table structure for table `ordersdetail`
 --
 
-CREATE TABLE `ordersdetail` (
+CREATE TABLE if not Exists`ordersdetail` (
   `id` int(11) NOT NULL,
   `orderid` int(11) DEFAULT NULL,
   `customerID` int(11) DEFAULT NULL,
@@ -241,7 +241,7 @@ INSERT INTO `ordersdetail` (`id`, `orderid`, `customerID`, `productid`, `qty`, `
 -- Table structure for table `ordersstatus`
 --
 
-CREATE TABLE `ordersstatus` (
+CREATE TABLE if not Exists `ordersstatus` (
   `id` int(11) NOT NULL,
   `orderStatus` varchar(255) DEFAULT NULL,
   `orderstatuscode` varchar(255) DEFAULT NULL
@@ -269,7 +269,7 @@ INSERT INTO `ordersstatus` (`id`, `orderStatus`, `orderstatuscode`) VALUES
 -- Table structure for table `payments`
 --
 
-CREATE TABLE `payments` (
+CREATE TABLE if not Exists`payments` (
   `Id` int(11) NOT NULL,
   `FromTrans` varchar(255) NOT NULL,
   `ToTrans` varchar(255) NOT NULL,
@@ -294,7 +294,7 @@ INSERT INTO `payments` (`Id`, `FromTrans`, `ToTrans`, `Amount`, `Status`, `PayDa
 -- Table structure for table `products`
 --
 
-CREATE TABLE `products` (
+CREATE TABLE if not Exists `products` (
   `id` int(11) NOT NULL,
   `productsName` varchar(255) DEFAULT NULL,
   `productsPrice` varchar(255) DEFAULT NULL,
@@ -322,7 +322,7 @@ INSERT INTO `products` (`id`, `productsName`, `productsPrice`, `productsGst`, `p
 -- Table structure for table `riderrating`
 --
 
-CREATE TABLE `riderrating` (
+CREATE TABLE if not Exists `riderrating` (
   `id` int(11) NOT NULL,
   `RiderRating` int(255) NOT NULL,
   `RiderId` int(254) NOT NULL
@@ -346,7 +346,7 @@ INSERT INTO `riderrating` (`id`, `RiderRating`, `RiderId`) VALUES
 -- Table structure for table `riderwallet`
 --
 
-CREATE TABLE `riderwallet` (
+CREATE TABLE if not Exists`riderwallet` (
   `Id` int(11) NOT NULL,
   `TransType` varchar(244) NOT NULL,
   `Amount` int(255) NOT NULL,
@@ -372,7 +372,7 @@ INSERT INTO `riderwallet` (`Id`, `TransType`, `Amount`, `RiderId`, `TransDate`) 
 -- Table structure for table `setting`
 --
 
-CREATE TABLE `setting` (
+CREATE TABLE if not Exists `setting` (
   `id` int(11) NOT NULL,
   `perKm` varchar(255) DEFAULT NULL,
   `perMin` varchar(255) DEFAULT NULL,
@@ -386,8 +386,8 @@ CREATE TABLE `setting` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE if not Exists `users` (
+  `id` int(11) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -416,7 +416,7 @@ INSERT INTO `users` (`id`, `username`, `email`, `created_at`, `mobile`, `verifie
 -- Table structure for table `warehouses`
 --
 
-CREATE TABLE `warehouses` (
+CREATE TABLE if not Exists`warehouses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `latitude` varchar(255) DEFAULT NULL,
   `longitude` varchar(255) DEFAULT NULL,
@@ -430,7 +430,7 @@ CREATE TABLE `warehouses` (
 -- Table structure for table `workmonitor`
 --
 
-CREATE TABLE `workmonitor` (
+CREATE TABLE if not Exists `workmonitor` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `RiderId` int(255) NOT NULL,
   `Workduration` int(255) NOT NULL,

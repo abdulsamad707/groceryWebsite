@@ -12,6 +12,8 @@ $data=new CRUDOPERATION($hostname,$dbname,$username,$password);
             
            
              $apikeydata =  $data->getData('apikey',null,null,$apicondition,null,null);
+     
+               
              if($apikeydata['totalRecord']<1){
                 $result['msg']="$apikey is not valid key";
             

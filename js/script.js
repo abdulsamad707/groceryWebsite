@@ -61,6 +61,28 @@ window.onscroll = () =>{
 $("#SubmitBtn").click(function(e){
         alert("helle");
 });
+$("#loginBTN").click(function(e){
+  e.preventDefault();
+  let data=$('#LoginFORM').serializeArray();
+  const userEmail=$("#userEmail").val();
+  const userPassword=$("#userPassword").val();
+     loginObj={};
+     for (i=0; i< data.length; i++){
+      fieldName=data[i].name;
+      fieldValue=data[i].value;
+      loginObj[fieldName]=fieldValue;
+     }
+     loginObj=JSON.stringify(loginObj);
+     $.ajax({
+      method:'POST',
+      url:'http://localhost/grocery/api/login_api.php?key=6CU1qSJfcs',
+       data:loginObj,
+      success:function(response){
+       console.log(response);
+      }
+    });
+
+});
 $('#register').click(function(e){
 e.preventDefault();
 
@@ -139,11 +161,19 @@ let obj= {};
         data:obj,
        success:function(response){
         console.log(response);
-             response=JSON.parse(response);
+          
            var code=response.code;
        var http_code=response.http_code;
-
+           
         if(http_code==200){
+          var http_code=response.http_code;
+          const operation= response.operationStatus;
+          const msg= response.message;
+            if(operation==="success"){
+          swal("Good job!", msg, operation);
+            }else{
+              swal("Oops!",msg, operation);
+            }
           $("#register").prop("disabled",false);
         }
           

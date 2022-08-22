@@ -162,7 +162,7 @@ function updateData ($table,$params=array(),$whereCod=null){
      }
   function sql($sql,$type) {
    $db=$this->pdo;
-           
+       $sql;     
 
 
           $stmt= $db->prepare($sql);                                                                                                                                                                                                                                                                                                                                         $db->prepare($sql);

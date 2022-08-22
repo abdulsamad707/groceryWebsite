@@ -76,13 +76,13 @@
         <a href="#" class="btn">checkout</a>
     </div>
 
-    <form action="" class="login-form">
+    <form action="" class="login-form" id="LoginFORM">
         <h3>login now</h3>
-        <input type="email" placeholder="your email" class="box">
-        <input type="password" placeholder="your password" class="box">
+        <input type="email" name="email" id="userEmail" placeholder="your email" class="box">
+        <input type="password" id="userPassword" name="password" placeholder="your password" class="box">
         <p>forget your password <a href="#">click here</a></p>
         <p>don't have an account <a href="#" class="reg-form">create now</a></p>
-        <input type="submit" value="login now" class="btn">
+        <input type="submit" value="login now" class="btn" id="loginBTN">
     </form>
     <form action="" class="login-form regForm" id='userregis'>
         <h3> Register Now</h3>

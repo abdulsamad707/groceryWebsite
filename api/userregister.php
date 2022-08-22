@@ -3,6 +3,8 @@
 
 header('Access-Control-Allow-Origin:*');
 header('Access-Control-Allow-Methods:POST');
+header('Content-Type:appliction/json');
+header('Access-Control-Allow-Headers:Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-With');
 
 include("function.php");
 include("validkey.php");
@@ -10,7 +12,7 @@ ob_start();
 if(!isset($status)){
 
 $posttye=$_SERVER['REQUEST_METHOD'];
-   
+   if($posttye==="POST"){
   $userdata=file_get_contents("php://input");
     $userdata=json_decode($userdata,true);
     extract($userdata);
@@ -24,7 +26,7 @@ $posttye=$_SERVER['REQUEST_METHOD'];
      $checkData=['email'=>"'$email'",'mobile'=>"'$mobile'",'username'=>"'$username'"];
      
                 
-      $userdat=  $data->getData('users','id',null,$checkData,null,null,'OR');
+      $userdat=  $data->getData('users','id',null,$checkData,null,null,'AND');
         $totalRecord= $userdat['totalRecord'];
 
              if($totalRecord<1){
@@ -39,7 +41,7 @@ $posttye=$_SERVER['REQUEST_METHOD'];
               
               //Load Composer's autoloader
               $html="";
-      $html.="<br> Thanks For Register With Us Please  Verify Your Email At <a href='http://localhost/grocery/verify.php?token=$rdStr'> verify  </a> ";
+      $html.="<br> Thanks For Register With Us Please  Verify Your Email At <a href='http://localhost/grocery/verify.html?token=$rdStr&mobile=$mobile'> verify  </a> ";
          $email_message="Your Otp is $otp ".$html;
             $subject="Verification Code";
         $sendMailer=sendMail($email_message,$email,$username,$subject);
@@ -55,11 +57,13 @@ $posttye=$_SERVER['REQUEST_METHOD'];
             'username'=>$username,'password'=>$password,'otp'=>$otp,'str_rand'=>$rdStr];
            $insertStatus=$data->insert('users',$insertData);
            $insertStatus['http_code']=200;
+           $insertStatus['operationStatus']="success";
          }else{
           $insertStatus['message']=' User Not Register Due To Internet Connection';
           $insertStatus['code']=500;
           $insertStatus['insertId']=0;
           $insertStatus['http_code']=200;
+          $insertStatus['operationStatus']="error";
          }
        
      
@@ -72,14 +76,18 @@ $posttye=$_SERVER['REQUEST_METHOD'];
                 $insertStatus['code']=500;
                 $insertStatus['http_code']=200;
                 $insertStatus['insertId']=$userdat['data'][0]['id'];
- 
+                $insertStatus['operationStatus']="error";
              }
              $insertStatus=json_encode($insertStatus);
              echo $insertStatus;
           
       
   
-     
+            }else{
+               $response["message"]="Invalid Response ";
+               echo json_encode($response);
+               http_response_code(500);
+            }
  
    
       
