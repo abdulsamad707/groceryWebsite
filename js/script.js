@@ -242,4 +242,18 @@ const  addtocart= (id,quantity) => {
       qty:productQty
     }
     cartObject=JSON.stringify(cartObject);
+   apiurl="http://localhost/grocery/api/update_add_cart.php?key=6CU1qSJfcs";
+        fetch(apiurl,{
+      method:"POST",
+      body:cartObject
+        }).then(function(response){
+
+         return response.text();
+        }).then(function(text){
+
+
+          console.log(text);
+        }).catch(function(e){
+
+        });
 }

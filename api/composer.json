@@ -1,6 +1,8 @@
 {
     "require": {
         "phpmailer/phpmailer": "^6.6",
-        "firebase/php-jwt": "^6.3"
+        "firebase/php-jwt": "^6.3",
+        "mpdf/mpdf": "^6.1"
+        
     }
 }
