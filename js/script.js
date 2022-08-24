@@ -78,7 +78,7 @@ $("#loginBTN").click(function(e){
       url:'http://localhost/grocery/api/login_api.php?key=6CU1qSJfcs',
        data:loginObj,
       success:function(response){
-       console.log(response);
+       console.log(response.message);
       }
     });
 

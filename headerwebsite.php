@@ -5,26 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Responsive Grocery Website Design Tutorial</title>
-
+    <?php include "function.php";?>
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/style.css?v=9">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo rand()+time();?>">
 
 </head>
 <body>
     
 <!-- header section starts  -->
 
+
 <header class="header">                   
 
     <a href="#" class="logo"> <i class="fas fa-shopping-basket"></i> grocoery </a>
 
     <nav class="navbar">
-        <a href="#home">home</a>
+    <?php   $fullPATTH;   $WEBBASEPATH; ?>
+        <a href="index.php">home</a>
         <a href="#features">features</a>
         <a href="#products">products</a>
         <a href="#categories">categories</a>
@@ -35,8 +37,9 @@
     <div class="icons">
         <div class="fas fa-bars" id="menu-btn"></div>
         <div class="fas fa-search" id="search-btn"></div>
-
+        
         <div class="fas fa-shopping-cart" id="cart-btn"></div>
+            
         <div class="fas fa-user" id="login-btn"></div>
     </div>
 
@@ -95,5 +98,5 @@
        
         <input type="submit" value="Register now" id="register" class="btn" >
     </form>
-
+  
 </header>

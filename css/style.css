@@ -741,3 +741,27 @@ section{
 #verifyContainer{
     margin:45%;
 }
+.checkout{
+  background-color:yellow;
+  display: flex;
+  margin: 0 auto;
+  padding: 1.rem;
+
+}
+.checkFormDiv{
+  width:50%;
+   margin-left:0.9rem;
+
+}
+.checkoutForm {
+  display: block;
+}
+.checkoutForm input{
+    width:100%;
+     margin-top: 0.5rem;
+     margin-bottom: 1rem;
+   
+}
+#deliveryAdd{
+    resize: none;
+}
