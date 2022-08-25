@@ -216,7 +216,7 @@ function handleLocationError(browserHasGeolocation){
     
     
      map: map,
-       icon:image,
+      
 
      draggable: true,
    });

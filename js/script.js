@@ -257,3 +257,13 @@ const  addtocart= (id,quantity) => {
 
         });
 }
+
+function initMap() {
+  currentLongitude=67.1111;
+  currentLatitude=24.9283;
+  const map = new google.maps.Map(document.getElementById("map"), {
+ 
+    center: { lat:currentLatitude, lng:currentLongitude },
+    zoom: 15,
+  });
+}

@@ -661,6 +661,7 @@ section{
     .header .search-form{
         width:90%;
     }
+ 
 
     .header .navbar{
         position: absolute;
@@ -731,7 +732,7 @@ section{
   
 
 }
-
+#map { position: absolute; top: 0; bottom: 0; width: 100%; float: left; }
 .closeBtn{
     background-color:yellow;
     padding:7px 13px 7px 7px;
@@ -746,16 +747,36 @@ section{
   display: flex;
   margin: 0 auto;
   padding: 1.rem;
+  height: max-content;
+
+}
+.checkitemdetail{
+    width:50%;
+   text-align: center;
+   border: 1px solid black;
 
 }
 .checkFormDiv{
   width:50%;
-   margin-left:0.9rem;
+   
 
 }
 .checkoutForm {
   display: block;
 }
+ @media (max-width:768px) {
+    .checkout{
+      display: block;
+    }
+    .checkFormDiv{
+        width: 90%;
+    }
+    .checkitemdetail{
+        width: 90%;
+    }
+
+
+ }
 .checkoutForm input{
     width:100%;
      margin-top: 0.5rem;
@@ -764,4 +785,25 @@ section{
 }
 #deliveryAdd{
     resize: none;
+   width:100%;
+}
+#matter{
+    display: flex; 
+position: relative;
+    width: 100%;
+   margin-top: 70em;
+   
+    float: right;
+    height: auto;
+    padding:2rem;
+color:white;
+}
+#proceed{
+    width: 100%;
+    background-color: #ff7800;
+    padding: 10px;
+}
+#proceed a{
+    text-decoration: none;
+    color:black;
 }

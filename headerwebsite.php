@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="total"> total : $19.69/- </div>
-        <a href="#" class="btn">checkout</a>
+        <a href="http://localhost/grocery/next_step.php" class="btn">Proceed </a>
     </div>
 
     <form action="" class="login-form" id="LoginFORM">

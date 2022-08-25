@@ -2,7 +2,7 @@
 
     <?php 
     include("headerwebsite.php");
-  
+   
     ?>
     <section class="home" id="home">
 
@@ -37,10 +37,35 @@
               <label for="">Delivery Address</label><br>
              <textarea id="deliveryAdd" cols="103" rows="3"></textarea>
            </div>
-              <div id="map"></div>
-         </form>
+           <input Type="submit" value="place Order">
+           </form>
      </div>
-   
+          <div class="checkitemdetail">
+      
+    
+            <diV>
+            <h1>Patato </h1>
+            <h1> Quantity 2</h1>
+            <h1> Unit Price :80 </h1>
+            <h1> Sub Total : 160 Rs </h1>
+           </div>
+           <diV>
+            <h1>Onion  </h1>
+            <h1> Quantity 2</h1>
+           </div>
+           <diV>
+            <h1>Patato </h1>
+            <h1> Quantity 2</h1>
+           </div>    <diV>
+            <h1>Patato </h1>
+            <h1> Quantity 2</h1>
+           </div>    <diV>
+            <h1>Patato </h1>
+            <h1> Quantity 2</h1>
+           </div>
+
+          </div>
+
 </div>
 
 
