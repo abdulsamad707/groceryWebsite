@@ -56,5 +56,11 @@ function sendMail($message,$email,$username,$subject){
   $json = json_decode($response, true);
   return $json;
 }
+
+   function encode($data){
+     $data= str_split($data);
+        
+       return $str;
+   }
 ?>
       

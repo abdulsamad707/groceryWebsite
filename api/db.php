@@ -16,6 +16,11 @@ $this->pdo=$pdo;
 
 
 }
+function getConnection(){
+  $db= $this->pdo=$pdo;
+  return $db;
+}
+
 function getData($table=null,$rows=null,$groupBy=null,$whereCondition=null,string $orderBy=null,$limit=null,$operator=null){
 $db=$this->pdo;
       
