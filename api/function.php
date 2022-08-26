@@ -62,5 +62,21 @@ function sendMail($message,$email,$username,$subject){
         
        return $str;
    }
+   function cartTotal($userId,$dataBase){
+    
+         $cartTotal=0;
+        $cartDataSql="Select  price,qty FROM carts Where customerID='$userId' ";
+   $dataFromCart=$dataBase->sql($cartDataSql,'read');
+            $cartNewData= $dataFromCart['data'];
+                  foreach($cartNewData as $key => $value){
+                 $cartTotal = $cartTotal + ($value['qty'] * $value['price']);
+                  }
+           
+
+                  $cartDataSql="Select  price,qty FROM carts Where customerID='$userId' ";
+                  $dataFromCart=$dataBase->sql($cartDataSql,'read');
+
+        return $cartTotal;
+        }
 ?>
       

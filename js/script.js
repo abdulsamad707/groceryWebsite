@@ -234,12 +234,13 @@ var swiper = new Swiper(".review-slider", {
 
 
 
-const  addtocart= (id,quantity) => {
+const  addtocart= (id,quantity,action) => {
   const productId=id;
   const productQty=quantity;
     cartObject={
       productId:productId,
-      qty:productQty
+      qty:productQty,
+      action:action
     }
     cartObject=JSON.stringify(cartObject);
    apiurl="http://localhost/grocery/api/update_add_cart.php?key=6CU1qSJfcs";
