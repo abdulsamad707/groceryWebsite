@@ -62,10 +62,10 @@ function sendMail($message,$email,$username,$subject){
         
        return $str;
    }
-   function cartTotal($userId,$dataBase){
+   function cartTotal($userId,$ipadd,$dataBase){
     
          $cartTotal=0;
-        $cartDataSql="Select  price,qty FROM carts Where customerID='$userId' ";
+        $cartDataSql="Select  price,qty FROM carts Where customerID='$userId' AND  ip_add ='$ipadd'";
    $dataFromCart=$dataBase->sql($cartDataSql,'read');
             $cartNewData= $dataFromCart['data'];
                   foreach($cartNewData as $key => $value){
@@ -73,7 +73,7 @@ function sendMail($message,$email,$username,$subject){
                   }
            
 
-                  $cartDataSql2="Select carts.qty as ProductQty,carts.price as ProductPrice,products.productsName,productImage FROM carts,products Where carts.customerID='$userId' AND products.id=carts.productid ";
+                  $cartDataSql2="Select products.id as pid,carts.qty as ProductQty,carts.price as ProductPrice,products.productsName,productImage FROM carts,products Where carts.customerID='$userId' AND products.id=carts.productid ";
                      
                   $dataFromCart=$dataBase->sql($cartDataSql2,'read');
                   $cartDetailArray['data']=$dataFromCart['data'];
@@ -97,6 +97,10 @@ function sendMail($message,$email,$username,$subject){
           else
               $ipaddress = '::1';
           return $ipaddress;
+      }
+
+      function checkCustomerHasItem($customerId,$dataBase){
+          $checkSql="select ";
       }
 ?>
       

@@ -66,8 +66,8 @@ $("#SubmitBtn").click(function(e){
 $("#loginBTN").click(function(e){
   e.preventDefault();
   let data=$('#LoginFORM').serializeArray();
-  const userEmail=$("#userEmail").val();
-  const userPassword=$("#userPassword").val();
+  var userEmail=$("#userEmail").val();
+  var userPassword=$("#userPassword").val();
      loginObj={};
      for (i=0; i< data.length; i++){
       fieldName=data[i].name;
@@ -80,7 +80,8 @@ $("#loginBTN").click(function(e){
       url:'http://localhost/grocery/api/login_api.php?key=6CU1qSJfcs',
        data:loginObj,
       success:function(response){
-       console.log(response.message);
+         console.log(response);
+
       }
     });
 
@@ -169,8 +170,8 @@ let obj= {};
            
         if(http_code==200){
           var http_code=response.http_code;
-          const operation= response.operationStatus;
-          const msg= response.message;
+          var operation= response.operationStatus;
+          var msg= response.message;
             if(operation==="success"){
           swal("Good job!", msg, operation);
             }else{
@@ -231,14 +232,45 @@ var swiper = new Swiper(".review-slider", {
     },
 });
 
+WebSite=location.href;
+ WebSite=WebSite.replace('http://localhost/grocery/','');
+
+alert(WebSite);
 
 
+ function cartDetail() {
+   var urlCart ="http://localhost/grocery/api/carts.php?key=6CU1qSJfcs";
+   fetch(urlCart,{
+method:"GET"
 
+   }).then(function(res){
+     return res.json();
+   }).then(function(respponse){
+      console.log(respponse);
+      cartData=respponse.data;
+   });
+   
+ }
+ function updatecart(pid,qty,price,action){
+  cartTotal=$("#cartTotal").html();
+   cartTotal=parseInt(cartTotal);
+ console.log(action);
+     if(action=='in'){
+   quantity=parseInt(qty)+1;
 
+     }else{
 
-const  addtocart= (id,quantity,action) => {
-  const productId=id;
-  const productQty=quantity;
+     }
+     $("#cartTotal").html(cartTotal);
+     action="update";
+   console.log(quantity);
+ 
+    console.log(cartTotal);
+ }
+ cartDetail();
+  function addtocart(id,quantity,action){
+  var productId=id;
+  var productQty=quantity;
     cartObject={
       productId:productId,
       qty:productQty,
@@ -253,27 +285,37 @@ const  addtocart= (id,quantity,action) => {
 
          return response.json();
         }).then(function(text){
-          console.log(text);
+     console.log(text);
           data=text.cartData.data;
           cartTotal=text.cartData.cartTotal;
              for(i in data){
-              console.log(data[i]);
+            
               productQty=data[i].ProductQty;
               productName=data[i].productsName;
               productPrice=data[i].ProductPrice;
               productImage=data[i].productImage;
              }
-     
+             message=text.message;
+             operationStatus=text.statusOp;
+                console.log(operationStatus);
+               if(operationStatus=='success'){
+                title="congratulations";
+               }else{
+                title="Oops!";
+               }
+      swal(title,message,operationStatus);
+        
+             cartDetail();
           
-        }).catch(function(e){
-
-        });
+        })
 }
+
+
 
 function initMap() {
   currentLongitude=67.1111;
   currentLatitude=24.9283;
-  const map = new google.maps.Map(document.getElementById("map"), {
+  var map = new google.maps.Map(document.getElementById("map"), {
  
     center: { lat:currentLatitude, lng:currentLongitude },
     zoom: 15,
@@ -287,7 +329,8 @@ method:"GET"
           
    return response.json();
   }).then(function(response){
-   
+      console.log(response);
+      
       data=response.productData.data;
 
 
@@ -315,7 +358,7 @@ method:"GET"
        }
          $("#swiper").html('');
        $("#swiper").append(html);
-       console.log(html);
+ 
    
      /*  <img src='image/product-1.png' alt=''>
        <h3>fresh orange</h3>
@@ -333,8 +376,6 @@ method:"GET"
      
      
     console.log(response);
-  }).catch(function(e){
-    console.log(e.message);
   });
 }
   function showItem(item,index,arr){

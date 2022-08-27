@@ -63,7 +63,7 @@
 
 
 <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-
+<script src="js/swiper.js"></script>
 <!-- custom js file link  -->
 
 <script src="js/jquery.js"></script>
@@ -71,7 +71,8 @@
 
 </script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="js/script.js?v=<?php echo time();?>"></script>
+<script src="js/sweet.js"></script>
+<script src="js/script.js?tggx=<?php echo time();?>"></script>
 <script
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALjpQp0rbk7coMTw-X845tOxIuTMkt7wA&callback=initMap"
 defer

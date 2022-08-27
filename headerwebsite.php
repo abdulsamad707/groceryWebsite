@@ -49,7 +49,7 @@
     </form>
 
     <div class="shopping-cart">
-          <div id="Shopping-container">
+          <div id="Shopping_container">
         <div class="box">
             <i class="fas fa-trash"></i>
             <img src="image/cart-img-1.png" alt="">
@@ -59,7 +59,7 @@
                 <span class="quantity">qty : 1</span>
             </div>
         </div>
-        <div class="box">
+       <!-- <div class="box">
             <i class="fas fa-trash"></i>
             <img src="image/cart-img-2.png" alt="">
             <div class="content">
@@ -68,7 +68,7 @@
                 <span class="quantity">qty : 1</span>
             </div>
         </div>
-        <div class="box">
+       <div class="box">
             <i class="fas fa-trash"></i>
             <img src="image/cart-img-3.png" alt="">
             <div class="content">
@@ -76,11 +76,11 @@
                 <span class="price"> Rs 499/-</span>
                 <span class="quantity">qty : 1</span>
             </div>
-        </div>
+        </div>-->
 
 
      </div>
-        <div class="total"> total : $19.69/- </div>
+        <div class="total"> total : <span id="cartTotal">$19.69</span> Rs </div>
         <a href="http://localhost/grocery/next_step.php" class="btn">Proceed </a>
     </div>
 

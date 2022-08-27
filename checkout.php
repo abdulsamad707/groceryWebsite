@@ -14,8 +14,9 @@
    
 </section>
 <?php 
-
 print_r($_SESSION);
+$_SESSION['admin']=1;
+
 
 
 
