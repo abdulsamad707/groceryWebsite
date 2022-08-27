@@ -761,9 +761,7 @@ section{
    
 
 }
-.checkoutForm {
-  display: block;
-}
+
  @media (max-width:768px) {
     .checkout{
       display: block;
@@ -777,6 +775,7 @@ section{
 
 
  }
+
 .checkoutForm input{
     width:100%;
      margin-top: 0.5rem;
@@ -791,19 +790,25 @@ section{
     display: flex; 
 position: relative;
     width: 100%;
-   margin-top: 70em;
+   margin-top: 66rem;
    
     float: right;
     height: auto;
-    padding:2rem;
+
 color:white;
 }
 #proceed{
     width: 100%;
     background-color: #ff7800;
     padding: 10px;
+    color: black;
 }
 #proceed a{
     text-decoration: none;
     color:black;
+}
+@media(max-width:450px){
+     #matter{
+        margin-top:72em;
+     }
 }

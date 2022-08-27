@@ -1,5 +1,7 @@
 
-
+<?php  
+ $_SESSION['locationSelected']=1;
+?>
 
 
 
@@ -38,11 +40,8 @@
 
 </body>
 <script src="js/map.js?v=<?php echo time();?>"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALjpQp0rbk7coMTw-X845tOxIuTMkt7wA&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALjpQp0rbk7coMTw-X845tOxIuTMkt7wA&callback=init"
 defer
 ></script>
 
 
-<?php  
- $_SESSION['locationSelected']=1;
-?>

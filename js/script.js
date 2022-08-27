@@ -1,3 +1,5 @@
+
+
 let searchForm = document.querySelector('.search-form');
 let shoppingCart = document.querySelector('.shopping-cart');
 let loginForm = document.querySelector('.login-form');
@@ -268,3 +270,24 @@ function initMap() {
     zoom: 15,
   });
 }
+function displayProduct(){
+  apiurl="http://localhost/grocery/api/products.php?key=6CU1qSJfcs";
+  fetch(apiurl,{
+method:"GET"
+  }).then(function(response){
+          
+   return response.json();
+  }).then(function(response){
+   
+      data=response.productData.data;
+       data.forEacch(showItem);
+      console.log(data);
+    console.log(response);
+  }).catch(function(e){
+    console.log(e.message);
+  });
+}
+  function showItem(item,index,arr){
+
+   }
+displayProduct();
