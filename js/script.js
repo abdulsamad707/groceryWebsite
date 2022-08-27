@@ -280,7 +280,11 @@ method:"GET"
   }).then(function(response){
    
       data=response.productData.data;
-       data.forEacch(showItem);
+       for (i in data){
+   
+        console.log(data[i].id);
+       }
+      /* data.forEacch(showItem);*/
       console.log(data);
     console.log(response);
   }).catch(function(e){
