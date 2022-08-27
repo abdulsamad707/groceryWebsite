@@ -280,11 +280,30 @@ method:"GET"
   }).then(function(response){
    
       data=response.productData.data;
+         result=[];
+         html="";
        for (i in data){
-   
+         productName=data[i].productsName;
+         html+=productName;
         console.log(data[i].id);
+
        }
-      /* data.forEacch(showItem);*/
+       <div class='swiper-slide box'>
+       <img src='image/product-1.png' alt=''>
+       <h3>fresh orange</h3>
+       <div class="price"> Rs 150/- </div>
+       <div class="stars">
+           <i class="fas fa-star"></i>
+           <i class="fas fa-star"></i>
+           <i class="fas fa-star"></i>
+           <i class="fas fa-star"></i>
+           <i class="fas fa-star-half-alt"></i>
+       </div>
+       <a href="#" class="btn">add to cart</a>
+       </div>
+       console.log(html);
+       console.log(result);
+     
       console.log(data);
     console.log(response);
   }).catch(function(e){
