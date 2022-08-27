@@ -248,6 +248,7 @@ method:"GET"
    }).then(function(respponse){
       console.log(respponse);
       cartData=respponse.data;
+       
    });
    
  }
@@ -257,8 +258,9 @@ method:"GET"
  console.log(action);
      if(action=='in'){
    quantity=parseInt(qty)+1;
-
+    
      }else{
+      quantity=parseInt(qty)-1;
 
      }
      $("#cartTotal").html(cartTotal);
