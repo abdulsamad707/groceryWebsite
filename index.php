@@ -64,13 +64,13 @@
                 <img src="image/product-1.png" alt="">
                 <h3>fresh orange</h3>
                 <div class="price"> Rs 150/- </div>
-                <div class="stars">
+            <!--    <div class="stars">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star-half-alt"></i>
-                </div>
+                </div>-->
                 <a href="#" class="btn">add to cart</a>
             </div>
 

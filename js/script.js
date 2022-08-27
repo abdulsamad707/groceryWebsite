@@ -251,11 +251,20 @@ const  addtocart= (id,quantity,action) => {
       body:cartObject
         }).then(function(response){
 
-         return response.text();
+         return response.json();
         }).then(function(text){
-
-
           console.log(text);
+          data=text.cartData.data;
+          cartTotal=text.cartData.cartTotal;
+             for(i in data){
+              console.log(data[i]);
+              productQty=data[i].ProductQty;
+              productName=data[i].productsName;
+              productPrice=data[i].ProductPrice;
+              productImage=data[i].productImage;
+             }
+     
+          
         }).catch(function(e){
 
         });
@@ -280,16 +289,35 @@ method:"GET"
   }).then(function(response){
    
       data=response.productData.data;
-         result=[];
-         html="";
-       for (i in data){
-         productName=data[i].productsName;
-         html+=productName;
-        console.log(data[i].id);
 
+
+
+
+
+
+
+         result=[];
+        html="";
+       for (i in data){
+        productPrice=(parseInt(data[i].productsPrice)+parseInt(data[i].productsGst))-data[i].productsDiscount;
+        console.log(productPrice);
+       productImage= data[i].productImage;
+       html+="<div class='swiper-slide box'>";
+       html+="<img src='image/product_image/"+productImage+"' alt=''>";
+       html+="<h3>"+data[i].productsName+"</h3>";
+       html+="<div class='price'>"+productPrice+"Rs /-</div>";
+       quantity=1;
+     html+="<a href='javascript:void(0)' onclick=addtocart('"+data[i].id+"','"+quantity+"','add') class='btn'>add to cart</a>";
+     html+="</div>";
+
+         productName=data[i].productsName;
+        
        }
-       <div class='swiper-slide box'>
-       <img src='image/product-1.png' alt=''>
+         $("#swiper").html('');
+       $("#swiper").append(html);
+       console.log(html);
+   
+     /*  <img src='image/product-1.png' alt=''>
        <h3>fresh orange</h3>
        <div class="price"> Rs 150/- </div>
        <div class="stars">
@@ -300,11 +328,10 @@ method:"GET"
            <i class="fas fa-star-half-alt"></i>
        </div>
        <a href="#" class="btn">add to cart</a>
-       </div>
-       console.log(html);
-       console.log(result);
+       </div>*/
      
-      console.log(data);
+     
+     
     console.log(response);
   }).catch(function(e){
     console.log(e.message);

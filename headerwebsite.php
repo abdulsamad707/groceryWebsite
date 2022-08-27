@@ -49,6 +49,7 @@
     </form>
 
     <div class="shopping-cart">
+          <div id="Shopping-container">
         <div class="box">
             <i class="fas fa-trash"></i>
             <img src="image/cart-img-1.png" alt="">
@@ -76,6 +77,9 @@
                 <span class="quantity">qty : 1</span>
             </div>
         </div>
+
+
+     </div>
         <div class="total"> total : $19.69/- </div>
         <a href="http://localhost/grocery/next_step.php" class="btn">Proceed </a>
     </div>
