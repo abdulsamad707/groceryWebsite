@@ -234,7 +234,7 @@ var swiper = new Swiper(".review-slider", {
 
 WebSite=location.href;
  WebSite=WebSite.replace('http://localhost/grocery/','');
-
+WebSite.replace('?','');
 alert(WebSite);
 
 
@@ -248,27 +248,83 @@ method:"GET"
    }).then(function(respponse){
       console.log(respponse);
       cartData=respponse.data;
-       
+
+      $("#Shopping_container").html('');
+
+        cartHTML="";
+         for (i in cartData){
+          pid=cartData[i].pid;
+                productPath="image/product_image/"+cartData[i].productImage;
+                console.log(productPath);
+               qty= cartData[i].ProductQty;
+               price=cartData[i].ProductPrice;
+         cartHTML+="<div class='box'>";
+         if(WebSite=='index.php' || WebSite ==''){
+          cartHTML+="<i class='fas fa-trash' data-product_id='"+pid+"' onclick=deleteItem(this)></i>";
+          
+         }
+         cartHTML+="<img src='"+productPath+"' alt='' >";
+         cartHTML+="<div class='content'>";
+         cartHTML+="<h3>"+cartData[i].productsName+"</h3>";
+         cartHTML+="<span class='price'>Rs"+price+"/-</span>";
+         cartHTML+="</span>";
+
+         cartHTML+="<span class='quantity'  id='qty-"+pid+"'>qty:";
+         if(WebSite=='index.php' || WebSite ==''){
+         cartHTML+="<i class='fa fa-plus inc' onclick=increase(this)  data-qty='"+qty+"' data-price='"+price+"' data-action='in' data-product_id='"+pid+"'></i>";
+         }
+         cartHTML+=qty;
+         if(WebSite=='index.php' || WebSite ==''){
+          cartHTML+="<i class='fa fa-minus de' onclick=decrease(this)   data-qty='"+qty+"' data-price='"+price+"' data-action='de' data-product_id='"+pid+"'></i>";
+         }
+         cartHTML+="</span>";
+         cartHTML+="</div>";
+         cartHTML+="</div>";
+         /*
+      
+     
+          
+   */
+ 
+         }
+         $("#Shopping_container").html(cartHTML);
+         console.log(cartHTML);
+         $("#cartTotal").html(respponse.cartTotal);
+         $(".cartTotal").html(respponse.cartTotal);
    });
    
  }
- function updatecart(pid,qty,price,action){
-  cartTotal=$("#cartTotal").html();
-   cartTotal=parseInt(cartTotal);
- console.log(action);
-     if(action=='in'){
-   quantity=parseInt(qty)+1;
-    
-     }else{
-      quantity=parseInt(qty)-1;
-
-     }
-     $("#cartTotal").html(cartTotal);
-     action="update";
-   console.log(quantity);
- 
-    console.log(cartTotal);
+ function deleteItem(de){
+  var conf= confirm('Are U Sure To delete Item From cart');
+  console.log(conf);
+    if(conf){
+      pid=  de.getAttribute('data-product_id');
+      quantity=0;
+      action="update";
+      addtocart(pid,quantity,action);
+      cartDetail();
+    }
  }
+   function decrease(de){
+     console.log(de.getAttribute('data-product_id'));
+   pid=  de.getAttribute('data-product_id');
+   qty=  de.getAttribute('data-qty');
+   /*price=  de.getAttribute('data-price');*/
+    action="update";
+    quantity=qty-1;
+    addtocart(pid,quantity,action);
+    cartDetail();
+   }
+   function increase(de){
+    console.log(de.getAttribute('data-product_id'));
+  pid=  de.getAttribute('data-product_id');
+  qty=  de.getAttribute('data-qty');
+  /*price=  de.getAttribute('data-price');*/
+   action="update";
+   quantity=parseInt(qty)+1;
+   addtocart(pid,quantity,action);
+   cartDetail();
+  }
  cartDetail();
   function addtocart(id,quantity,action){
   var productId=id;
@@ -278,6 +334,8 @@ method:"GET"
       qty:productQty,
       action:action
     }
+    console.log(cartObject);
+   
     cartObject=JSON.stringify(cartObject);
    apiurl="http://localhost/grocery/api/update_add_cart.php?key=6CU1qSJfcs";
         fetch(apiurl,{
@@ -323,8 +381,17 @@ function initMap() {
     zoom: 15,
   });
 }
+searchItem='';
+$("#search-box").keydown(function (e) {
+   e.preventDefault();
+  searchItem= $(this).val();
+  displayProduct();
+});
+   
 function displayProduct(){
-  apiurl="http://localhost/grocery/api/products.php?key=6CU1qSJfcs";
+
+
+  apiurl="http://localhost/grocery/api/products.php?key=6CU1qSJfcs&productSearch="+searchItem;
   fetch(apiurl,{
 method:"GET"
   }).then(function(response){
@@ -332,9 +399,10 @@ method:"GET"
    return response.json();
   }).then(function(response){
       console.log(response);
-      
-      data=response.productData.data;
+    
 
+      data=response.productData.data;
+    
 
 
 
@@ -343,6 +411,7 @@ method:"GET"
 
          result=[];
         html="";
+          if(data!=''){
        for (i in data){
         productPrice=(parseInt(data[i].productsPrice)+parseInt(data[i].productsGst))-data[i].productsDiscount;
         console.log(productPrice);
@@ -358,6 +427,9 @@ method:"GET"
          productName=data[i].productsName;
         
        }
+      }else{
+        html="No product Found";
+      }
          $("#swiper").html('');
        $("#swiper").append(html);
  

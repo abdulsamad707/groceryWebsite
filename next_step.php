@@ -27,8 +27,9 @@
 </div>
 
 <div class="containermap">
-
+<input type="text" placeholder="Search Loaction" id="SearchLocation" value="">
    <div id="matter">
+
       <a href="javascript:void(0)" style="text-align:center" id="proceed">Proceed To Checkout</a>
    </div>
 </div>
@@ -42,7 +43,7 @@
 
 </body>
 <script src="js/map.js?v=<?php echo time();?>"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALjpQp0rbk7coMTw-X845tOxIuTMkt7wA&callback=init"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALjpQp0rbk7coMTw-X845tOxIuTMkt7wA&callback=init&libraries=places"
 defer
 ></script>
 

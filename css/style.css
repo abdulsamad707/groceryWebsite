@@ -661,7 +661,15 @@ section{
     .header .search-form{
         width:90%;
     }
- 
+    .checkout{
+        display: block;
+      }
+      .checkFormDiv{
+          width: 90%;
+      }
+      .checkitemdetail{
+          width: 90%;
+      }
 
     .header .navbar{
         position: absolute;
@@ -702,6 +710,13 @@ section{
 
     .footer .box-container .box .payment-img{
         margin: 2rem auto;
+    }
+    #SearchLocation{
+    margin-top: 72rem;
+    width:100%;
+    }
+    #matter{
+            margin-top:1em;
     }
 
 }
@@ -750,10 +765,19 @@ section{
   height: max-content;
 
 }
+
+.itemContainer{
+
+
+    align-items: center;
+}
+.checkitemdetail img{
+    width:50%;
+}
 .checkitemdetail{
     width:50%;
    text-align: center;
-   border: 1px solid black;
+
 
 }
 .checkFormDiv{
@@ -762,35 +786,35 @@ section{
 
 }
 
- @media (max-width:768px) {
-    .checkout{
-      display: block;
-    }
-    .checkFormDiv{
-        width: 90%;
-    }
-    .checkitemdetail{
-        width: 90%;
-    }
 
-
- }
-
-.checkoutForm input{
+.checkoutForm input[type=text]{
     width:100%;
      margin-top: 0.5rem;
      margin-bottom: 1rem;
    
 }
+#orderBtn{
+    width:100%;
+     margin-top: 0.5rem;
+     margin-bottom: 1rem;
+     border-radius: 5%;
+     padding:2rem;
+     background-color:green;
+}
 #deliveryAdd{
     resize: none;
    width:100%;
+}
+#SearchLocation
+{
+margin-top: 66rem;
+width:100%;
 }
 #matter{
     display: flex; 
 position: relative;
     width: 100%;
-   margin-top: 66rem;
+   margin-top: 1rem;
    
     float: right;
     height: auto;
@@ -807,8 +831,17 @@ color:white;
     text-decoration: none;
     color:black;
 }
-@media(max-width:450px){
-     #matter{
-        margin-top:72em;
-     }
-}
+@media (max-width:768px){
+
+    
+      .checkitemdetail{
+          width: 90%;
+      }
+
+    .checkout{
+        display: block;
+      }
+      .checkFormDiv{
+          width: 90%;
+      }
+    }

@@ -165,6 +165,11 @@ function updateData ($table,$params=array(),$whereCod=null){
         return $result;
      
      }
+     function deleteData($table,$id){
+      $sql="DELETE FROM $table WHERE id='$id'";
+      $result= $this->sql($sql,"delete");
+      return $result;
+     }
   function sql($sql,$type) {
    $db=$this->pdo;
        $sql;     
@@ -209,6 +214,10 @@ function updateData ($table,$params=array(),$whereCod=null){
               $result["code"]=200;
               $result["insertId"]=$db->lastInsertId();
 
+          }if($type=="delete"){
+            $result["code"]=200;
+            $result["message"]="Data Upated";
+           $result["totalRecord"]=$totalRecord;
           }
         
           

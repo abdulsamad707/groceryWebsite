@@ -50,15 +50,55 @@
 
     <div class="shopping-cart">
           <div id="Shopping_container">
+       <?php
+        $httpHOST= $_SERVER['HTTP_HOST'];
+        $fileName=$_SERVER["PHP_SELF"];
+        $fileName= basename($fileName);
+        $ext= pathinfo($fileName,PATHINFO_EXTENSION);
+           $ext=".".$ext;
+           $shortURL= rtrim($fileName,$ext);
+        $urI= $_SERVER["REQUEST_URI"];
+        $REQUEST_SCHEME=$_SERVER['REQUEST_SCHEME'];
+         
+            $fullPATTH=$REQUEST_SCHEME."://".$httpHOST.$urI;
+            
+           $WEBBASEPATH=rtrim($fullPATTH,$fileName);
+          $url = 'http://localhost/grocery/api/carts.php?key=6CU1qSJfcs';
+
+$curl = curl_init();
+ 
+curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_HEADER, false);
+ 
+$dataUrl = curl_exec($curl);
+ 
+curl_close($curl);
+   $dataUrl=json_decode($dataUrl,true);
+     
+   foreach($dataUrl['data'] as $keyitem  => $value){
+    $pid=$value['pid'];
+  $qty=  $value['ProductQty'];
+  $price=$value['ProductPrice'];
+    ?>
         <div class="box">
+
+            <?php  if($shortURL=="index"){?>
             <i class="fas fa-trash"></i>
-            <img src="image/cart-img-1.png" alt="">
+            <?php
+            }
+            ?>
+            <img src=" image/product_image /<?php echo $value['productImage'];?>">
             <div class="content">
-                <h3>watermelon</h3>
-                <span class="price"> Rs 180/-</span>
-                <span class="quantity">qty : 1</span>
+                <h3><?php echo $value['productsName'];?></h3>
+                <span class="price"><?php echo $value['ProductPrice'];?> Rs /-</span>
+                <span class="quantity"><?php if($shortURL=="index.php"){?><i class="fa fa-plus" onclick=" updatecart('<?Php echo $pid;?>','<?php echo $qty?>','<?php echo $price;?>','in')"></i><?php }?><?php echo $value['ProductQty'];?></span>
+           <span id="Subtotal-<?php echo $pid;  ?>"> </span>
             </div>
         </div>
+        <?php
+   } 
+   ?>
        <!-- <div class="box">
             <i class="fas fa-trash"></i>
             <img src="image/cart-img-2.png" alt="">
@@ -80,7 +120,7 @@
 
 
      </div>
-        <div class="total"> total : <span id="cartTotal">$19.69</span> Rs </div>
+        <div class="total"> total : <span id="cartTotal"><?php echo $dataUrl['cartTotal'];?></span> Rs </div>
         <a href="http://localhost/grocery/next_step.php" class="btn">Proceed </a>
     </div>
 

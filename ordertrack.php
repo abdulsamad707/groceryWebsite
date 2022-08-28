@@ -200,7 +200,7 @@ function initMap() {
 function handleLocationError(browserHasGeolocation){
 
 }
-   navigator.geolocation.getCurrentPosition(showPosition,handleLocationError(true));
+   navigator.geolocation.getCurrentPosition(showPosition,handleLocationError(true),{maximumAge:10000, timeout:5000, enableHighAccuracy: true});
    function showPosition(position){
        currentLatitude=position.coords.latitude;
        currentLongitude=position.coords.longitude;

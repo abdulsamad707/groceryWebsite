@@ -59,52 +59,34 @@
     <div class="swiper product-slider">
 
         <div class="swiper-wrapper" id="swiper">
+            <?php
+        $url = "http://localhost/grocery/api/products.php?key=6CU1qSJfcs&productSearch=''";
+ 
+$curl = curl_init();
+ 
+curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_HEADER, false);
+ 
+$dataUrl = curl_exec($curl);
+ 
+curl_close($curl);
 
-            <div class="swiper-slide box">
-                <img src="image/product-1.png" alt="">
-                <h3>fresh orange</h3>
-                <div class="price"> Rs 150/- </div>
-            <!--    <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>-->
-                <a href="#" class="btn">add to cart</a>
-            </div>
+   $dataUrl=json_decode($dataUrl,true);
+    
+    $dataUrl= $dataUrl['productData']['data'];
+   
 
-            <div class="swiper-slide box">
-                <img src="image/product-2.png" alt="">
-                <h3>fresh onion</h3>
-                <div class="price"> $4.99/- - 10.99/- </div>
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn" onclick="addtocart('1','2','add')">add to cart</a>
-            </div>
+      ?>
 
-            <div class="swiper-slide box">
-                <img src="image/product-3.png" alt="">
-                <h3>fresh meat</h3>
-                <div class="price"> $4.99/- - 10.99/- </div>
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-            </div>
+   
 
-            <div class="swiper-slide box">
-                <img src="image/product-4.png" alt="">
-                <h3>fresh cabbage</h3>
+  <?php
+       foreach($dataUrl as $value){
+  ?>
+           <div class="swiper-slide box">
+                <img src="image/product_image/<?php echo $value['productImage'];?>" alt="">
+                <h3><?php echo $value['productsName'];?></h3>
                 <div class="price"> $4.99/- - 10.99/- </div>
                 <div class="stars">
                     <i class="fas fa-star"></i>
@@ -115,6 +97,9 @@
                 </div>
                 <a href="#" class="btn">add to cart</a>
             </div>
+            <?php
+       } 
+            ?>
 
         </div>
 
