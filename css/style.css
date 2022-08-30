@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
-
+ 
 :root{
     --orange:#ff7800;
     --black:#130f40;
@@ -18,8 +18,12 @@
     text-decoration: none;
     text-transform: capitalize;
     transition: all .2s linear;
-}
+    text-decoration: none;
 
+}
+a{
+    text-decoration: none  !important;
+}
 html{
     font-size: 62.5%;
     overflow-x: hidden;
@@ -52,19 +56,19 @@ section{
 }
 
 .btn{
-    margin-top: 1rem;
-    display: inline-block;
-    padding:.8rem 3rem;
-    font-size: 1.7rem;
-    border-radius: .5rem;
-    border:.2rem solid var(--black);
-    color:var(--black);
-    cursor: pointer;
+    margin-top: 1rem !important;
+    display: inline-block !important;
+    padding:.8rem 3rem !important;
+    font-size: 1.7rem !important;
+    border-radius: .5rem !important;
+    border:.2rem solid var(--black) !important;
+    color:var(--black) !important;
+    cursor: pointer ;
     background: none;
 }
 
 .btn:hover{
-    background: var(--orange);
+    background: var(--orange) !important;
     color:#fff;
 }
 
@@ -758,14 +762,19 @@ section{
     margin:45%;
 }
 .checkout{
-  background-color:yellow;
-  display: flex;
-  margin: 0 auto;
-  padding: 1.rem;
+  
+
   height: max-content;
+   padding-bottom: 1rem;
+}
+.checkoutImg{
+width:100px;
+
+display: block;
+margin-left: auto;
+margin-right: auto;
 
 }
-
 .itemContainer{
 
 
@@ -781,7 +790,7 @@ section{
 
 }
 .checkFormDiv{
-  width:50%;
+  width:100%;
    
 
 }
@@ -807,7 +816,7 @@ section{
 }
 #SearchLocation
 {
-margin-top: 66rem;
+margin-top: 74rem;
 width:100%;
 }
 #matter{
@@ -824,7 +833,7 @@ color:white;
 #proceed{
     width: 100%;
     background-color: #ff7800;
-    padding: 10px;
+    padding: 15px;
     color: black;
 }
 #proceed a{
@@ -844,4 +853,8 @@ color:white;
       .checkFormDiv{
           width: 90%;
       }
+    }
+    .cartAmount{
+       font-size: 24px;
+       text-align: center;
     }

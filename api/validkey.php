@@ -1,5 +1,6 @@
 
 <?php
+clearstatcache();
        include("db.php");
 include("credential.php");
 include('./vendor/autoload.php');

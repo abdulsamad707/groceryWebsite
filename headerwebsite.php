@@ -13,8 +13,11 @@
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="css/style.css?v=<?php echo rand()+time();?>">
-
-</head>
+<!--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+-->
+<link rel="stylesheet" href="css/bootstrap.css?v=<?php echo rand()+time();?>">
+    </head>
 <body>
     
 <!-- header section starts  -->
@@ -69,7 +72,7 @@ $curl = curl_init();
  
 curl_setopt($curl, CURLOPT_URL, $url);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($curl, CURLOPT_HEADER, false);
+ 
  
 $dataUrl = curl_exec($curl);
  
@@ -120,8 +123,20 @@ curl_close($curl);
 
 
      </div>
-        <div class="total"> total : <span id="cartTotal"><?php echo $dataUrl['cartTotal'];?></span> Rs </div>
-        <a href="http://localhost/grocery/next_step.php" class="btn">Proceed </a>
+        <?php 
+       if($dataUrl['cartTotal'] > 0 ){
+        ?>
+        <div class="total" id="cartDisplayTotal"> 
+    
+      cart  total : <span id="cartTotal"><?php echo $dataUrl['cartTotal'];?></span> Rs 
+       deliveryCharge :<span id="deliveryCharge"><?php echo $dataUrl['deliveryCharge'];?></span> Rs<br>
+       Gst :<span id="gst"><?php echo $dataUrl['GST'];?></span> Rs <br>
+       Order Total :<span id="orderAmount"><?php echo $dataUrl['FinalOrderAmount'];?></span> Rs
+    </div>
+       <?php 
+       }
+       ?>
+        <a href="http://localhost/grocery/checkout.php" class="btn-product" id="nextStep"> Checkout </a>
     </div>
 
     <form action="" class="login-form" id="LoginFORM">
@@ -130,9 +145,9 @@ curl_close($curl);
         <input type="password" id="userPassword" name="password" placeholder="your password" class="box">
         <p>forget your password <a href="#">click here</a></p>
         <p>don't have an account <a href="#" class="reg-form">create now</a></p>
-        <input type="submit" value="login now" class="btn" id="loginBTN">
+        <input type="submit" value="login now" class="btn-product" id="loginBTN">
     </form>
-    <form action="" class="login-form regForm" id='userregis'>
+    <form action="" method="POST" class="login-form regForm" id='userregis'>
         <h3> Register Now</h3>
         <div id="Error"><span><span id="ErrorMsg"class="errorHeading">Please Enter Correct Email Address</span></span> </div>
         <input type="email" id="RegisterEmail" placeholder="your email" name="email" class="box">

@@ -76,8 +76,13 @@ function sendMail($message,$email,$username,$subject){
                   $cartDataSql2="Select products.id as pid,carts.qty as ProductQty,carts.price as ProductPrice,products.productsName, productImage FROM carts,products Where carts.customerID='$userId' AND  products.id=carts.productid  AND carts.ip_add='$ipadd' ";
                      
                   $dataFromCart=$dataBase->sql($cartDataSql2,'read');
+                  $cartDetailArray['totalItem']=$dataFromCart['totalRecord'];
                   $cartDetailArray['data']=$dataFromCart['data'];
                   $cartDetailArray['cartTotal']=$cartTotal;
+                  $cartDetailArray['deliveryCharge']=100;
+                  $cartDetailArray['GST']=floor((25/100)*$cartTotal);
+                  $cartDetailArray['FinalOrderAmount']=$cartDetailArray['cartTotal']+$cartDetailArray['deliveryCharge']+$cartDetailArray['GST'];
+
         return $cartDetailArray;
         }
         function get_client_ip() {

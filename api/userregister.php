@@ -14,7 +14,9 @@ if(!isset($status)){
 $posttye=$_SERVER['REQUEST_METHOD'];
    if($posttye==="POST"){
   $userdata=file_get_contents("php://input");
-    $userdata=json_decode($userdata,true);
+
+  $userdata=json_decode($userdata,true);
+    
     extract($userdata);
 
   $password=password_hash($password,PASSWORD_BCRYPT,['cost'=>12]);
@@ -26,7 +28,7 @@ $posttye=$_SERVER['REQUEST_METHOD'];
      $checkData=['email'=>"'$email'",'mobile'=>"'$mobile'",'username'=>"'$username'"];
      
                 
-      $userdat=  $data->getData('users','id',null,$checkData,null,null,'AND');
+      $userdat=  $data->getData('users','id',null,$checkData,null,null,'OR');
         $totalRecord= $userdat['totalRecord'];
 
              if($totalRecord<1){
@@ -90,7 +92,7 @@ $posttye=$_SERVER['REQUEST_METHOD'];
             }
  
    
-      
+         
 
     }
   

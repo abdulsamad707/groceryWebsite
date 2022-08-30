@@ -95,7 +95,8 @@ curl_close($curl);
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star-half-alt"></i>
                 </div>
-                <a href="#" class="btn">add to cart</a>
+       
+                <a href="#" class="btn btn-primary btn-block">add to cart</a>
             </div>
             <?php
        } 

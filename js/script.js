@@ -1,5 +1,7 @@
 
 
+
+
 let searchForm = document.querySelector('.search-form');
 let shoppingCart = document.querySelector('.shopping-cart');
 let loginForm = document.querySelector('.login-form');
@@ -61,31 +63,152 @@ window.onscroll = () =>{
     navbar.classList.remove('active');
 }
 $("#SubmitBtn").click(function(e){
-        alert("helle");
+        
 });
-$("#loginBTN").click(function(e){
-  e.preventDefault();
-  let data=$('#LoginFORM').serializeArray();
-  var userEmail=$("#userEmail").val();
-  var userPassword=$("#userPassword").val();
-     loginObj={};
-     for (i=0; i< data.length; i++){
-      fieldName=data[i].name;
-      fieldValue=data[i].value;
-      loginObj[fieldName]=fieldValue;
-     }
-     loginObj=JSON.stringify(loginObj);
-     $.ajax({
-      method:'POST',
-      url:'http://localhost/grocery/api/login_api.php?key=6CU1qSJfcs',
-       data:loginObj,
-      success:function(response){
-         console.log(response);
+   
+loginBTN=document.getElementById("loginBTN");
+ loginBTN.addEventListener("click",function(e){
 
-      }
-    });
 
-});
+    e.preventDefault();
+  var userEmail= document.getElementById("userEmail").value;
+  var userPassword=document.getElementById("userPassword").value;
+
+   loginObj={
+    email:userEmail,
+    password:userPassword
+   };
+
+   loginObj=JSON.stringify(loginObj);
+  
+
+    urlLogin='http://localhost/grocery/api/login_api.php?key=6CU1qSJfcs';
+
+     fetch(urlLogin,{
+      method:"POST",
+      body:loginObj
+     }).then(function(res){
+  
+     return res.json();
+     }).then(function(response){
+      
+       
+     message=response.message;
+     
+     actionStatusText=response.actionStatusText;
+
+     actionStatusTextSymbol=response.actionStatusTextSymbol;
+        console.log(actionStatusTextSymbol);
+
+        if(response.action_status==1){
+          swal("Congratulation",message,"success");
+         varco= decodeURIComponent(document.cookie);
+         console.log(varco);
+          console.log(   document.cookie);
+        }else{
+     swal("Oops",message,"error");
+        }
+        
+    
+     });
+ });
+ 
+        
+
+         registerComplete= document.getElementById("register");
+         registerComplete.addEventListener("click",function(e){
+          e.preventDefault();
+          this.setAttribute("disabled",true);
+       const  EmailAddress=document.getElementById("RegisterEmail").value;
+         const mobileNumber=document.querySelector('#MobileUser').value;
+          const UserPassword=document.querySelector('#UserPassword').value;
+         const RegisterUserName=document.querySelector('#RegisterUserName').value;
+         const MobilePattern =/[9][2][0-9]{10}/;
+          const  PassWordPattern=/[A-Za-z]{1,}[0-9]{1,}[@$^*?,'!|#^%';:/-_.]{1,}/;
+         const EmailPattern=/[A-Za-z0-9,-_.]{3,}[@]{1}[A-Za-z]{5,7}[.]{1}[A-Za-z]{3,}/;
+            ErrorMsg=document.getElementById('ErrorMsg');
+
+                if(EmailAddress==""){
+                  swal('Oops','Email Must Be Filled Out','error');
+  
+         
+                  return false;
+                }
+               if(UserPassword==""){
+                swal('Oops','Password Must Be Filled Out','error');
+  
+         
+                return false;
+               }
+               if(!EmailPattern.test(EmailAddress)){
+                swal('Oops','Wrong Email Format ','error');
+               }
+            if(!PassWordPattern.test(UserPassword)){
+        
+            swal('Oops','Wrong Password Format Must Contain Special Character And AlphaNumeric','error');
+  
+         
+                return false;
+             }
+
+                
+                var formData =new FormData();
+                                formData.append('email',EmailAddress);
+
+                                formData.append('username',RegisterUserName);
+                                formData.append('mobile',mobileNumber);
+                                formData.append('password',UserPassword);
+                                  formData={
+                                    email:EmailAddress,
+                                    password:UserPassword,
+                                    mobile:mobileNumber,
+                                    username:RegisterUserName
+                                  }
+                                
+                     formData=JSON.stringify(formData);
+                    console.log(formData);
+                    console.log(this);
+        /*
+
+                   formData.append('username',RegisterUserName);
+                   formData.append('mobile',mobileNumber);
+                   formData.append('email',EmailAddress);
+                   formData.append('password',UserPassword);
+                   *
+                  formData=JSON.stringify(formData);
+                console.log(formData);
+            */
+               
+             urlReg="http://localhost/grocery/api/userregister.php?key=6CU1qSJfcs";
+             fetch(urlReg,{
+              method:"POST",
+              body:formData
+             }).then(function(response){
+              return response.json();
+             }).then(function(json){
+              console.log(json);
+              var code=json.code;
+              var http_code=json.http_code;
+                  
+               if(http_code==200){
+                this.setAttribute("disabled",false);
+                 var http_code=json.http_code;
+                 var operation=json.operationStatus;
+                 var msg= json.message;
+                   if(operation==="success"){
+                 swal("Good job!", msg, operation);
+                   }else{
+                     swal("Oops!",msg, operation);
+                   }
+     
+                 
+               }
+             })
+
+         });
+
+/*
+
 $('#register').click(function(e){
 e.preventDefault();
 
@@ -151,11 +274,11 @@ let obj= {};
                   }
             obj[fieldName]=fieldValue;
           /*  $(this).prop('disabled',true);
-            console.log($(this));*/
+            console.log($(this));
           }
    
   
-      }
+      }/*
       obj=JSON.stringify(obj);
       $(this).prop("disabled",true);
       $.ajax({
@@ -163,7 +286,7 @@ let obj= {};
        url:'http://localhost/grocery/api/userregister.php?key=6CU1qSJfcs',
         data:obj,
        success:function(response){
-        console.log(response);
+      
           
            var code=response.code;
        var http_code=response.http_code;
@@ -182,13 +305,12 @@ let obj= {};
           
 
            
-       }
-      });
+       }*/
+    
  
       
 
 
-});
 
 var swiper = new Swiper(".product-slider", {
     loop:true,
@@ -235,7 +357,7 @@ var swiper = new Swiper(".review-slider", {
 WebSite=location.href;
  WebSite=WebSite.replace('http://localhost/grocery/','');
 WebSite.replace('?','');
-alert(WebSite);
+
 
 
  function cartDetail() {
@@ -246,7 +368,7 @@ method:"GET"
    }).then(function(res){
      return res.json();
    }).then(function(respponse){
-      console.log(respponse);
+      
       cartData=respponse.data;
 
       $("#Shopping_container").html('');
@@ -255,7 +377,7 @@ method:"GET"
          for (i in cartData){
           pid=cartData[i].pid;
                 productPath="image/product_image/"+cartData[i].productImage;
-                console.log(productPath);
+       
                qty= cartData[i].ProductQty;
                price=cartData[i].ProductPrice;
          cartHTML+="<div class='box'>";
@@ -288,7 +410,7 @@ method:"GET"
  
          }
          $("#Shopping_container").html(cartHTML);
-         console.log(cartHTML);
+        
          $("#cartTotal").html(respponse.cartTotal);
          $(".cartTotal").html(respponse.cartTotal);
    });
@@ -296,7 +418,7 @@ method:"GET"
  }
  function deleteItem(de){
   var conf= confirm('Are U Sure To delete Item From cart');
-  console.log(conf);
+
     if(conf){
       pid=  de.getAttribute('data-product_id');
       quantity=0;
@@ -306,7 +428,7 @@ method:"GET"
     }
  }
    function decrease(de){
-     console.log(de.getAttribute('data-product_id'));
+   
    pid=  de.getAttribute('data-product_id');
    qty=  de.getAttribute('data-qty');
    /*price=  de.getAttribute('data-price');*/
@@ -316,7 +438,7 @@ method:"GET"
     cartDetail();
    }
    function increase(de){
-    console.log(de.getAttribute('data-product_id'));
+   
   pid=  de.getAttribute('data-product_id');
   qty=  de.getAttribute('data-qty');
   /*price=  de.getAttribute('data-price');*/
@@ -334,7 +456,7 @@ method:"GET"
       qty:productQty,
       action:action
     }
-    console.log(cartObject);
+  
    
     cartObject=JSON.stringify(cartObject);
    apiurl="http://localhost/grocery/api/update_add_cart.php?key=6CU1qSJfcs";
@@ -345,7 +467,7 @@ method:"GET"
 
          return response.json();
         }).then(function(text){
-     console.log(text);
+  
           data=text.cartData.data;
           cartTotal=text.cartData.cartTotal;
              for(i in data){
@@ -357,7 +479,7 @@ method:"GET"
              }
              message=text.message;
              operationStatus=text.statusOp;
-                console.log(operationStatus);
+             
                if(operationStatus=='success'){
                 title="congratulations";
                }else{
@@ -395,10 +517,10 @@ function displayProduct(){
   fetch(apiurl,{
 method:"GET"
   }).then(function(response){
-          
+ 
    return response.json();
   }).then(function(response){
-      console.log(response);
+ 
     
 
       data=response.productData.data;
@@ -414,14 +536,14 @@ method:"GET"
           if(data!=''){
        for (i in data){
         productPrice=(parseInt(data[i].productsPrice)+parseInt(data[i].productsGst))-data[i].productsDiscount;
-        console.log(productPrice);
+     
        productImage= data[i].productImage;
        html+="<div class='swiper-slide box'>";
        html+="<img src='image/product_image/"+productImage+"' alt=''>";
        html+="<h3>"+data[i].productsName+"</h3>";
        html+="<div class='price'>"+productPrice+"Rs /-</div>";
        quantity=1;
-     html+="<a href='javascript:void(0)' onclick=addtocart('"+data[i].id+"','"+quantity+"','add') class='btn'>add to cart</a>";
+     html+="<a href='javascript:void(0)' onclick=addtocart('"+data[i].id+"','"+quantity+"','add') class='btn-product'>add to cart</a>";
      html+="</div>";
 
          productName=data[i].productsName;
@@ -449,7 +571,7 @@ method:"GET"
      
      
      
-    console.log(response);
+   
   });
 }
   function showItem(item,index,arr){

@@ -2,22 +2,12 @@
 
     <?php 
 
-    $url = 'http://localhost/grocery/api/carts.php?key=6CU1qSJfcs';
-
-    $curl = curl_init();
-     
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HEADER, false);
-     
-    $dataUrl = curl_exec($curl);
-     
-    curl_close($curl);
-       $dataUrl=json_decode($dataUrl,true);
 
 
       include("headerwebsite.php");
-    
+
+   
+  
     ?>
     <section class="home" id="home">
 
@@ -30,76 +20,76 @@
 </section>
 <?php 
 
-$_SESSION['admin']=1;
 
 
 
 
 
+
+   // Decode JSON data into PHP array
+   
 
 ?>
+<!---container start-->
+<div class="checkout container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <form action="/action_page.php" id="OrderFrom">
+  <div class="form-group">
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control " name="customerEmail" placeholder="Enter email" id="email">
+  </div>
 
-<div class="checkout">
-     <div class="checkFormDiv">
-         <form class="checkoutForm" id="OrderForm">
-            <div class="form-group">
-              <label for="">Email</label><br>
-              <input type="text" placeholder="Customer Email" >
-           </div>
-           <div class="form-group">
-              <label for="">Mobile</label><br>
-              <input type="text" placeholder="Customer Number" >
-           </div>
-          
-          
-           <div class="form-group" style="clear:both;">
-              <label for="">Delivery Address</label><br>
-             <textarea id="deliveryAdd" cols="103" rows="3">  </textarea>
-           </div>
-           <input type="radio">Cash
-            <input type="text" value="<?php echo @$_GET['lat']; ?>">
-           <input Type="submit" value="place Order" id="orderBtn">
-           </form>
-     </div>
-          <div class="checkitemdetail">
-      
-           <!---<diV class="itemContainer">
-            <h1>Onion  </h1>
-            <h1> Quantity 2</h1>
-           </div>
-           <diV class="itemContainer">
-            <h1>Patato </h1>
-            <h1> Quantity 2</h1>
-           </div>    <diV class="itemContainer">
-            <h1>Patato </h1>
-            <h1> Quantity 2</h1>
-           </div>    <diV class="itemContainer">
-            <h1>Patato </h1>
-            <h1> Quantity 2</h1>
-           </div>---->
-           <?php
-       
   
-       foreach($dataUrl['data'] as $keyitem  => $value){
-        ?>
-          <diV  class="itemContainer">
-          <h1><?php echo $value['productsName'];?> </h1>
-           <img src=" image/product_image /<?php echo $value['productImage'];?>">
-          <h1> Quantity <?php echo $value['ProductQty'];?> </h1>
-          <h1> Unit Price :<?php  echo $value['ProductPrice']; ?> Rs</h1>
-          <h1> Sub Total : <?php  echo $value['ProductPrice'] * $value['ProductQty']; ?> Rs </h1>
-         </div>
-         <?php
-       }
-         ?>
-             <div class="">
-                 Cart Total : <span class="cartTotal"> 1200 </span> Rs <br>
-                 Gst : 60 Rs
-             </div>
-          </div>
+    
+    
+    
+       
 
+
+
+  <div class="form-group">
+    <label>Mobile</label>
+    <input type="text" class="form-control" name="mobile" placeholder="Enter Mobile " id="pwd">
+  </div>
+  <div class="form-group">
+  <label for="comment">Address:</label>
+  <textarea class="form-control" name="deliveryAddress" rows="5" cols="10" style="resize:none;" id="comment"></textarea>
+</div>
+<div class="form-check">
+  <label class="form-check-label">
+
+    <input type="radio"  name="paymentMethod" value="cod">cash On delivery
+  </label>
 </div>
 
+  <button type="submit" class="btn btn-primary btn-block" id="PlaceOrder">Place Order</button>
+</form>
+
+
+
+
+
+
+
+
+    </div>
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1 class="text-center"> cart Details </h1>
+        <div class="cartAmount">
+      Cart Total : <span><?php echo $dataUrl['cartTotal']?></span>Rs<br>
+      Delivery Charge : <span><?php echo $dataUrl['deliveryCharge']?></span>Rs<br>
+      GST : <span><?php echo $dataUrl['GST']?></span>Rs<br>
+      Final Amount : <span><?php echo $dataUrl['FinalOrderAmount']?></span>Rs
+      </div>
+       </div>
+       
+     
+    </div>
+
+    </div>
+</div>
+<!---container end-->
 
 
 <?php include "footer.php";?>
