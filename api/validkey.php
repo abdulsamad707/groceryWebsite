@@ -4,6 +4,8 @@ clearstatcache();
        include("db.php");
 include("credential.php");
 include('./vendor/autoload.php');
+session_start();
+session_regenerate_id();
 use \Firebase\JWT\JWT;
 $data=new CRUDOPERATION($hostname,$dbname,$username,$password);
 

@@ -190,7 +190,7 @@ loginBTN=document.getElementById("loginBTN");
               var code=json.code;
               var http_code=json.http_code;
                   
-               if(http_code==200){
+               if(http_code=200){
                 this.setAttribute("disabled",false);
                  var http_code=json.http_code;
                  var operation=json.operationStatus;
@@ -399,6 +399,10 @@ method:"GET"
          if(WebSite=='index.php' || WebSite ==''){
           cartHTML+="<i class='fa fa-minus de' onclick=decrease(this)   data-qty='"+qty+"' data-price='"+price+"' data-action='de' data-product_id='"+pid+"'></i>";
          }
+
+
+
+
          cartHTML+="</span>";
          cartHTML+="</div>";
          cartHTML+="</div>";
@@ -409,12 +413,22 @@ method:"GET"
    */
  
          }
-         $("#Shopping_container").html(cartHTML);
-        
-         $("#cartTotal").html(respponse.cartTotal);
-         $(".cartTotal").html(respponse.cartTotal);
+
+      
+var checkoutBTN="<a href='http://localhost/grocery/checkout.php' class='btn-product' id='nextStep'> Checkout </a>";
+if(WebSite==='index.php' || WebSite ===''){
+document.getElementById("checkout_btn").innerHTML=checkoutBTN;
+}
+        document.getElementById("Shopping_container").innerHTML=cartHTML;
+     /*   cart  total : <span id="cartTotal"></span> 
+        deliveryCharge :<span id="deliveryCharge"></span> <br>
+        Gst :<span id="gst"></span>  <br>
+        Order Total :<span id="orderAmount"></span> */
+      cartTotalDisplay=   document.getElementById("cartDisplayTotal");
+      /*cartDisplayTotal*/
+         console.log(cartTotalDisplay);
    });
-   
+     
  }
  function deleteItem(de){
   var conf= confirm('Are U Sure To delete Item From cart');

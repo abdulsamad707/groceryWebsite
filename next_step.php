@@ -1,8 +1,6 @@
 
 <?php  
- $_SESSION['locationSelected']=1;
 
- $_SESSION['admin_id']=3;
 ?>
 
 

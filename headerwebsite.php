@@ -53,55 +53,11 @@
 
     <div class="shopping-cart">
           <div id="Shopping_container">
-       <?php
-        $httpHOST= $_SERVER['HTTP_HOST'];
-        $fileName=$_SERVER["PHP_SELF"];
-        $fileName= basename($fileName);
-        $ext= pathinfo($fileName,PATHINFO_EXTENSION);
-           $ext=".".$ext;
-           $shortURL= rtrim($fileName,$ext);
-        $urI= $_SERVER["REQUEST_URI"];
-        $REQUEST_SCHEME=$_SERVER['REQUEST_SCHEME'];
-         
-            $fullPATTH=$REQUEST_SCHEME."://".$httpHOST.$urI;
-            
-           $WEBBASEPATH=rtrim($fullPATTH,$fileName);
-          $url = 'http://localhost/grocery/api/carts.php?key=6CU1qSJfcs';
-
-$curl = curl_init();
- 
-curl_setopt($curl, CURLOPT_URL, $url);
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
- 
- 
-$dataUrl = curl_exec($curl);
- 
-curl_close($curl);
-   $dataUrl=json_decode($dataUrl,true);
-     
-   foreach($dataUrl['data'] as $keyitem  => $value){
-    $pid=$value['pid'];
-  $qty=  $value['ProductQty'];
-  $price=$value['ProductPrice'];
-    ?>
-        <div class="box">
-
-            <?php  if($shortURL=="index"){?>
-            <i class="fas fa-trash"></i>
-            <?php
-            }
-            ?>
-            <img src=" image/product_image /<?php echo $value['productImage'];?>">
-            <div class="content">
-                <h3><?php echo $value['productsName'];?></h3>
-                <span class="price"><?php echo $value['ProductPrice'];?> Rs /-</span>
-                <span class="quantity"><?php if($shortURL=="index.php"){?><i class="fa fa-plus" onclick=" updatecart('<?Php echo $pid;?>','<?php echo $qty?>','<?php echo $price;?>','in')"></i><?php }?><?php echo $value['ProductQty'];?></span>
-           <span id="Subtotal-<?php echo $pid;  ?>"> </span>
-            </div>
-        </div>
-        <?php
-   } 
-   ?>
+    
+    
+        
+    
+   
        <!-- <div class="box">
             <i class="fas fa-trash"></i>
             <img src="image/cart-img-2.png" alt="">
@@ -123,20 +79,15 @@ curl_close($curl);
 
 
      </div>
-        <?php 
-       if($dataUrl['cartTotal'] > 0 ){
-        ?>
-        <div class="total" id="cartDisplayTotal"> 
+     <div class="total" id="cartDisplayTotal"> 
     
-      cart  total : <span id="cartTotal"><?php echo $dataUrl['cartTotal'];?></span> Rs 
-       deliveryCharge :<span id="deliveryCharge"><?php echo $dataUrl['deliveryCharge'];?></span> Rs<br>
-       Gst :<span id="gst"><?php echo $dataUrl['GST'];?></span> Rs <br>
-       Order Total :<span id="orderAmount"><?php echo $dataUrl['FinalOrderAmount'];?></span> Rs
-    </div>
-       <?php 
-       }
-       ?>
-        <a href="http://localhost/grocery/checkout.php" class="btn-product" id="nextStep"> Checkout </a>
+  
+  </div>
+   
+        <div id="checkout_btn">
+        
+        </div>
+    
     </div>
 
     <form action="" class="login-form" id="LoginFORM">

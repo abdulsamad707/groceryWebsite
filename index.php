@@ -65,6 +65,7 @@
 $curl = curl_init();
  
 curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl,CURLOPT_POST,false);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_HEADER, false);
  
@@ -96,7 +97,7 @@ curl_close($curl);
                     <i class="fas fa-star-half-alt"></i>
                 </div>
        
-                <a href="#" class="btn btn-primary btn-block">add to cart</a>
+                <a href="#" class="btn-product">add to cart</a>
             </div>
             <?php
        } 
