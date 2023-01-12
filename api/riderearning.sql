@@ -1,0 +1,2 @@
+SELECT   ( SELECT sum(deliveryCharge) FROM orderscustomer Where deliveryboyid="1") as totalEarning,    DATE_FORMAT(orderDate,"%d-%M-%Y ") as dateMonth,count(deliveryboyid) as numberoforder, sum(deliveryCharge) as deliveryCharge from 
+orderscustomer WHERE deliveryboyid='1' GROUP BY DATE(orderDate)  
