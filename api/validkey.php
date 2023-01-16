@@ -3,20 +3,20 @@
 clearstatcache();
        include("db.php");
 include("credential.php");
-include('./vendor/autoload.php');
+
 session_start();
 session_regenerate_id();
-use \Firebase\JWT\JWT;
+
 $data=new CRUDOPERATION($hostname,$dbname,$username,$password);
 
   if(isset($_GET['key']) && !empty($_GET['key']) ){
              $apikey=$_GET['key'];
               $table=["apikey"];
-             $apicondition=['apikey'=>"'$apikey'"];           
+             $apicondition="apikey='$apikey'";           
             
             
            
-             $apikeydata =  $data->getData('apikey',null,null,$apicondition,null,null);
+             $apikeydata =  $data->getData('apikey',null,null,null,$apicondition,null,null);
      
                
              if($apikeydata['totalRecord']<1){

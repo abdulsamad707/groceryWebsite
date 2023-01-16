@@ -21,9 +21,9 @@ function getConnection(){
   return $db;
 }
 
-function getData($table=null,$rows=null,$groupBy=null,$whereCondition=null,string $orderBy=null,$limit=null,$operator=null){
+function getData($table=null,$rows=null,$groupBy=null,$join=null,$whereCondition=null,string $orderBy=null,$limit=null,$operator=null){
 $db=$this->pdo;
-      
+                                 
             
 
              if($rows==null){
@@ -36,46 +36,25 @@ $db=$this->pdo;
                $rows=$rows;
               }
                  
-             }     if(gettype($table)=='array'){
+             }  if(gettype($table)=='array'){                                          
                  $table=implode(" , ",$table);
                }
                   $sql="SELECT $rows FROM $table"; 
-                 
+                 if($join!=null){
+                  $sql.=" $join ";
+                 }
               if($whereCondition!=null){
-      
-              
-                   if(gettype($whereCondition)=='array'){
-                     $whereConditions='';
-                  $whereCondition=   array_unique($whereCondition);
-                       if(count($whereCondition) > 1){
-                         foreach ($whereCondition  as $key => $value){
-                                  
-                            $whereConditions.= " $key = $value $operator ";
-                                   
-                         }
-                          if($operator=="OR"){
-                         $whereConditions=rtrim($whereConditions," OR ");
-                          }else{
-                           $whereConditions=rtrim($whereConditions," AND ");
-                          }
-                         
-                       }else{
-                        foreach ($whereCondition  as $key => $value){
-                            $whereConditions.= " $key = $value ";
-                         }
-                            
-                       } 
-                   
-                   }           
-                $sql.=" WHERE $whereConditions";
+
+               
+                $sql.=" WHERE $whereCondition";
              }
-                
+              
                 
                 if($groupBy!=null){
                  
                  $sql.=" GROUP BY  $groupBy ";
                  }
-              if($orderBy!=null){
+              if($orderBy!=null){                                
                $sql.=" ORDER BY $orderBy";
               
               }
@@ -85,17 +64,13 @@ $db=$this->pdo;
               }
               
                    
-                      
-                    if($table!='apikey'){
-                   
-                      
-                    }
+              
                   
             
      
               
         
-   
+
                   
                  $result=$this->sql($sql,"read"); 
                    return $result;

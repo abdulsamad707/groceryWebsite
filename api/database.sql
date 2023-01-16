@@ -131,5 +131,11 @@ CREATE TABLE if not EXISTS `reviews`(
 `order_id` VARCHAR(255),
 `review_date` DATETIME ON update CURRENT_TIMESTAMP
 );
+CREATE TABLE if not EXISTS `StatusOrder`(
+`id` INT ,
+`status_id` INT,
+`status` VARCHAR(255)
+
+);
 ALTER TABLE orderdetail ADD FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE orderdetail ADD FOREIGN KEY (product_id) REFERENCES products(id);
