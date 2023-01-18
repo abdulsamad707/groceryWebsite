@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `ordersCustomer`(
    `couponCode` VARCHAR(255),
    `deliveryAddress` VARCHAR(255),
    `totalItem`VARCHAR(255),
-  `orderDate` DATETIME on update CURRENT_TIMESTAMP ,
+  `orderDate` DATETIME on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY(id)
 );
 -- Table Structure for delivery boy
@@ -132,10 +132,17 @@ CREATE TABLE if not EXISTS `reviews`(
 `review_date` DATETIME ON update CURRENT_TIMESTAMP
 );
 CREATE TABLE if not EXISTS `StatusOrder`(
-`id` INT ,
+`id` INT AUTO_INCREMENT ,
 `status_id` INT,
-`status` VARCHAR(255)
-
+`status` VARCHAR(255),
+PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS `setting`(
+  `id` INT AUTO_INCREMENT,
+  `deliveryCharge` VARCHAR(255),
+  `gst` VARCHAR(255),
+  `webSiteStatus` ENUM('1','0','2'),
+PRIMARY KEY (id)
 );
 ALTER TABLE orderdetail ADD FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE orderdetail ADD FOREIGN KEY (product_id) REFERENCES products(id);

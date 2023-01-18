@@ -1,4 +1,6 @@
-
+<?php
+include("apiCredential.php");
+?>
 <!-- header section ends -->
 
 <!-- home section starts  -->
@@ -60,7 +62,9 @@
 
         <div class="swiper-wrapper" id="swiper">
             <?php
-        $url = "http://localhost/grocery/api/products.php?key=6CU1qSJfcs&productSearch=''";
+            $keyApi=API_KEY;
+        $url = "http://localhost/groceryWebsite/api/products.php?key=$keyApi&productSearch=''";
+       
  
 $curl = curl_init();
  
@@ -74,8 +78,9 @@ $dataUrl = curl_exec($curl);
 curl_close($curl);
 
    $dataUrl=json_decode($dataUrl,true);
-    
-    $dataUrl= $dataUrl['productData']['data'];
+
+
+
    
 
       ?>
@@ -83,24 +88,21 @@ curl_close($curl);
    
 
   <?php
-       foreach($dataUrl as $value){
+      foreach ($dataUrl["data"] as $key => $value){
   ?>
            <div class="swiper-slide box">
-                <img src="image/product_image/<?php echo $value['productImage'];?>" alt="">
-                <h3><?php echo $value['productsName'];?></h3>
-                <div class="price"> $4.99/- - 10.99/- </div>
+                <img src="image/product_image/" alt="">
+                <h3><?php  echo $value["productName"] ; ?></h3>
+                <div class="price"> <?php echo $value["price"] ;?> Rs </div>
                 <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
+                  <?php echo $value["avg_rate"];?>  <i class="fas fa-star"></i>
+               
                 </div>
        
                 <a href="#" class="btn-product">add to cart</a>
             </div>
             <?php
-       } 
+      }
             ?>
 
         </div>

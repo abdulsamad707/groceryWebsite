@@ -31,13 +31,7 @@
             <a href="#" class="links"> <i class="fas fa-arrow-right"></i> blogs </a>
         </div>
 
-        <div class="box">
-            <h3>newsletter</h3>
-            <p>subscribe for latest updates</p>
-            <input type="email" placeholder="your email" class="email">
-            <input type="submit" value="subscribe" class="btn">
-            <img src="image/payment.png" class="payment-img" alt="">
-        </div>
+  
 
     </div>
     
@@ -62,7 +56,7 @@
 
 
 
-<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
 <script src="js/swiper.js"></script>
 <!-- custom js file link  -->
 

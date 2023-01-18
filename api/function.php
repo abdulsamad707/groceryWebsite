@@ -62,28 +62,32 @@ function sendMail($message,$email,$username,$subject){
         
        return $str;
    }
-   function cartTotal($userId,$ipadd,$dataBase){
+   function cartTotal($cartData,$database,$discount,$code){
+ 
+ 
+$adminData=$database->getData("setting",null,null,null,null,null,null,null);
+
+
+$deliveryCharge=$adminData["data"][0]["deliveryCharge"];
+$gst=$adminData["data"][0]["gst"];
+        $totalprice=0;
+       $totalRecord= $cartData["totalRecord"];
+        foreach($cartData["data"] as $key => $value){
+            $totalprice=$totalprice+($value["qty"]*$value["price"]);
+        }
+     $totalprice;    
+  
+      $totalPrice=$totalprice-$discount;
+   $governmentTax=floor(($gst/100)*$totalPrice);
     
-         $cartTotal=0;
-        $cartDataSql="Select  price,qty FROM carts Where customerID='$userId' AND ip_add ='$ipadd'";
-   $dataFromCart=$dataBase->sql($cartDataSql,'read');
-            $cartNewData= $dataFromCart['data'];
-                  foreach($cartNewData as $key => $value){
-                 $cartTotal = $cartTotal + ($value['qty'] * $value['price']);
-                  }
-           
-
-                  $cartDataSql2="Select products.id as pid,carts.qty as ProductQty,carts.price as ProductPrice,products.productsName, productImage FROM carts,products Where carts.customerID='$userId' AND  products.id=carts.productid  AND carts.ip_add='$ipadd' ";
-                     
-                  $dataFromCart=$dataBase->sql($cartDataSql2,'read');
-                  $cartDetailArray['totalItem']=$dataFromCart['totalRecord'];
-                  $cartDetailArray['data']=$dataFromCart['data'];
-                  $cartDetailArray['cartTotal']=$cartTotal;
-                  $cartDetailArray['deliveryCharge']=100;
-                  $cartDetailArray['GST']=floor((25/100)*$cartTotal);
-                  $cartDetailArray['FinalOrderAmount']=$cartDetailArray['cartTotal']+$cartDetailArray['deliveryCharge']+$cartDetailArray['GST'];
-
-        return $cartDetailArray;
+              $finalAmount=$totalprice+$governmentTax+$deliveryCharge;
+              echo $finalAmount;
+              $cartTotal["discount"]=$discount;
+              $cartTotal["deliveryCharge"]=$deliveryCharge;
+              $cartTotal["cartTotal"]=$totalprice;
+              $cartTotal["gst"]=$governmentTax;
+              $cartTotal["totalItem"]=$totalRecord;
+              return $cartTotal;
         }
         function get_client_ip() {
           $ipaddress = '';

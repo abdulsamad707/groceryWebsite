@@ -1,6 +1,6 @@
 
 
-
+const APIKEY="avdfheuw23";
 
 let searchForm = document.querySelector('.search-form');
 let shoppingCart = document.querySelector('.shopping-cart');
@@ -358,7 +358,7 @@ WebSite=location.href;
  WebSite=WebSite.replace('http://localhost/grocery/','');
 WebSite.replace('?','');
 
-
+/*
 
  function cartDetail() {
    var urlCart ="http://localhost/grocery/api/carts.php?key=6CU1qSJfcs";
@@ -410,7 +410,7 @@ method:"GET"
       
      
           
-   */
+   
  
          }
 
@@ -420,16 +420,16 @@ if(WebSite==='index.php' || WebSite ===''){
 document.getElementById("checkout_btn").innerHTML=checkoutBTN;
 }
         document.getElementById("Shopping_container").innerHTML=cartHTML;
-     /*   cart  total : <span id="cartTotal"></span> 
+       cart  total : <span id="cartTotal"></span> 
         deliveryCharge :<span id="deliveryCharge"></span> <br>
         Gst :<span id="gst"></span>  <br>
-        Order Total :<span id="orderAmount"></span> */
+        Order Total :<span id="orderAmount"></span>
       cartTotalDisplay=   document.getElementById("cartDisplayTotal");
-      /*cartDisplayTotal*/
+    cartDisplayTotal
          console.log(cartTotalDisplay);
    });
      
- }
+ }*/
  function deleteItem(de){
   var conf= confirm('Are U Sure To delete Item From cart');
 
@@ -526,18 +526,18 @@ $("#search-box").keydown(function (e) {
    
 function displayProduct(){
 
-
-  apiurl="http://localhost/grocery/api/products.php?key=6CU1qSJfcs&productSearch="+searchItem;
+searchItem="";
+  apiurl="http://localhost/groceryWebsite/api/products.php?key="+APIKEY+"&productSearch="+searchItem;
   fetch(apiurl,{
 method:"GET"
   }).then(function(response){
  
    return response.json();
   }).then(function(response){
- 
-    
+ console.log(response.data);
+ const data=response.data;
 
-      data=response.productData.data;
+      
     
 
 
@@ -546,27 +546,27 @@ method:"GET"
 
 
          result=[];
-        html="";
+html="";
           if(data!=''){
        for (i in data){
-        productPrice=(parseInt(data[i].productsPrice)+parseInt(data[i].productsGst))-data[i].productsDiscount;
+ 
      
-       productImage= data[i].productImage;
+
        html+="<div class='swiper-slide box'>";
-       html+="<img src='image/product_image/"+productImage+"' alt=''>";
-       html+="<h3>"+data[i].productsName+"</h3>";
-       html+="<div class='price'>"+productPrice+"Rs /-</div>";
-       quantity=1;
-     html+="<a href='javascript:void(0)' onclick=addtocart('"+data[i].id+"','"+quantity+"','add') class='btn-product'>add to cart</a>";
+       html+="<img src='image/product_image/' alt=''>";
+       html+="<h3>"+data[i].productName+"</h3>";
+       html+="<div class='price'>"+data[i].price+"Rs /-</div>";
+
+     html+="<a href='javascript:void(0)' onclick=addtocart('1','1','add') class='btn-product'>add to cart</a>";
      html+="</div>";
 
-         productName=data[i].productsName;
+       
         
        }
       }else{
         html="No product Found";
       }
-         $("#swiper").html('');
+
        $("#swiper").append(html);
  
    
@@ -591,4 +591,4 @@ method:"GET"
   function showItem(item,index,arr){
 
    }
-displayProduct();
+
