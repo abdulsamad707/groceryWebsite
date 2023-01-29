@@ -461,7 +461,7 @@ document.getElementById("checkout_btn").innerHTML=checkoutBTN;
    addtocart(pid,quantity,action);
    cartDetail();
   }
- cartDetail();
+ /*cartDetail();*/
   function addtocart(id,quantity,action){
   var productId=id;
   var productQty=quantity;
@@ -508,33 +508,19 @@ document.getElementById("checkout_btn").innerHTML=checkoutBTN;
 
 
 
-function initMap() {
-  currentLongitude=67.1111;
-  currentLatitude=24.9283;
-  var map = new google.maps.Map(document.getElementById("map"), {
- 
-    center: { lat:currentLatitude, lng:currentLongitude },
-    zoom: 15,
-  });
-}
-searchItem='';
-$("#search-box").keydown(function (e) {
-   e.preventDefault();
-  searchItem= $(this).val();
-  displayProduct();
-});
+
    
 function displayProduct(){
 
 searchItem="";
-  apiurl="http://localhost/groceryWebsite/api/products.php?key="+APIKEY+"&productSearch="+searchItem;
+  apiurl="http://localhost/groceryWebsite/api/products.php?key="+APIKEY;
   fetch(apiurl,{
 method:"GET"
   }).then(function(response){
  
-   return response.json();
+   return response.text();
   }).then(function(response){
- console.log(response.data);
+ console.log(response);
  const data=response.data;
 
       
@@ -588,6 +574,7 @@ html="";
    
   });
 }
+displayProduct();
   function showItem(item,index,arr){
 
    }

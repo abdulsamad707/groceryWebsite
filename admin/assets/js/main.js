@@ -318,3 +318,14 @@
   }
 
 })();
+
+ var LsId=localStorage.getItem("id");
+ if(LsId!=null){
+
+
+ }else{
+  window.location="login.php";
+ }
+ function logout(){
+  window.location="login.php";
+ }

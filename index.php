@@ -55,15 +55,9 @@ include("apiCredential.php");
 <!-- products section starts  -->
 
 <section class="products" id="products">
-
-    <h1 class="heading"> our <span>products</span> </h1>
-
-    <div class="swiper product-slider">
-
-        <div class="swiper-wrapper" id="swiper">
-            <?php
+<?php
             $keyApi=API_KEY;
-        $url = "http://localhost/groceryWebsite/api/products.php?key=$keyApi&productSearch=''";
+        $url = "http://localhost/grocerywebsite/api/products.php?key=$keyApi&productSearch=''";
        
  
 $curl = curl_init();
@@ -79,30 +73,39 @@ curl_close($curl);
 
    $dataUrl=json_decode($dataUrl,true);
 
+echo"<pre>";
+print_r($dataUrl);
 
 
-   
+      ?>
+    <h1 class="heading"> our <span>products</span> </h1>
+
+    <div class="swiper product-slider">
+
+        <div class="swiper-wrapper" id="swiper">
+            <?php
+      
 
       ?>
 
    
 
   <?php
-      foreach ($dataUrl["data"] as $key => $value){
+   
   ?>
            <div class="swiper-slide box">
                 <img src="image/product_image/" alt="">
-                <h3><?php  echo $value["productName"] ; ?></h3>
-                <div class="price"> <?php echo $value["price"] ;?> Rs </div>
+                <h3> echo $value["productName"]</h3>
+                <div class="price">  Rs </div>
                 <div class="stars">
-                  <?php echo $value["avg_rate"];?>  <i class="fas fa-star"></i>
+                  <?php ?>  <i class="fas fa-star"></i>
                
                 </div>
        
                 <a href="#" class="btn-product">add to cart</a>
             </div>
             <?php
-      }
+ 
             ?>
 
         </div>

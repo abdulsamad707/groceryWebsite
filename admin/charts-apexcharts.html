@@ -532,11 +532,12 @@
               <div id="lineChart"></div>
 
               <script>
+                 function showChart(){
                 document.addEventListener("DOMContentLoaded", () => {
                   new ApexCharts(document.querySelector("#lineChart"), {
                     series: [{
-                      name: "Desktops",
-                      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                      name: "sales",
+                      data: [100, 241, 235, 151, 149, 262, 269, 391, 148,900]
                     }],
                     chart: {
                       height: 350,
@@ -558,10 +559,12 @@
                       },
                     },
                     xaxis: {
-                      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct'],
                     }
                   }).render();
                 });
+              }
+              showChart();
               </script>
               <!-- End Line Chart -->
 

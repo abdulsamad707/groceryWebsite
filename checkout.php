@@ -152,6 +152,7 @@
 
     <input type="radio"  name="paymentMethod" value="cod">cash On delivery
   </label>
+  <button type="submit" class="btn btn-primary btn-block" id="PlaceOrder">Place Order</button>
 </div>
 
 
@@ -165,7 +166,7 @@
 
 ,     
     </div>
-    <div class=" col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    <div class=" col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
 
         
         <h1 class="text-center"> cart Details </h1>
@@ -179,7 +180,7 @@
       Final Amount : <span></span>
 
 
-      <button type="submit" class="btn btn-primary btn-block" id="PlaceOrder">Place Order</button>
+      
       </div>
        </div>
        

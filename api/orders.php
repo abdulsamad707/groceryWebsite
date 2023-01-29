@@ -26,19 +26,7 @@ $orderdata = $data->getData($table,$rows,null,$join,$whereCondition,null,null,nu
   
 
   
-  /*  echo "Where condition";
-    echo "<pre>";
-    print_r($whereArray);
-          echo "</pre>";
-        echo "Tables";
-    echo "<pre>";
-    print_r($tables);
-          echo "</pre>";
-                echo "Table Rows";
-    echo "<pre>";
-    print_r($tableRows);
-          echo "</pre>";
-          */
+
           
     
            

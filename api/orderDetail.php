@@ -4,7 +4,7 @@ header('Content-Type:appliction/json');
 header('Access-Control-Allow-Methods:GET');
 header('Access-Control-Allow-Headers:Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-With');
 include("validkey.php");
-$_REQUEST["order_id"];
+$orderId=$_REQUEST["order_id"];
 
 
 
