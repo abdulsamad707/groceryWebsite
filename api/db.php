@@ -69,7 +69,6 @@ $db=$this->pdo;
             
      
               
-        
 
                   
                  $result=$this->sql($sql,"read"); 
@@ -147,7 +146,7 @@ function updateData ($table,$params=array(),$whereCod=null){
      }
   function sql($sql,$type) {
    $db=$this->pdo;
-       $sql;     
+     $sql;     
 
 
           $stmt= $db->prepare($sql);                                                                                                                                                                                                                                                                                                                                         $db->prepare($sql);

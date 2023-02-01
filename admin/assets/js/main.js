@@ -318,7 +318,7 @@
   }
 
 })();
-
+function CheckLogin(){
  var LsId=localStorage.getItem("id");
  if(LsId!=null){
 
@@ -326,6 +326,9 @@
  }else{
   window.location="login.php";
  }
+}
+CheckLogin();
  function logout(){
+  localStorage.removeItem("id");
   window.location="login.php";
  }

@@ -125,7 +125,22 @@
 
 
 <script>
+function CheckLogin(){
+ var LsId=localStorage.getItem("id");
+ if(LsId!=null){
+  if(window.location=="http://localhost/grocerywebsite/admin/login.php"){
+       window.location="index.php";
+  }
 
+ }else{
+  if(window.location!="http://localhost/grocerywebsite/admin/login.php"){
+  window.location="http://localhost/grocerywebsite/admin/login.php";
+  }else{
+
+  }
+ }
+}
+CheckLogin();
 
 function adminLogin(e){
   const APIKEY="avdfheuw23";

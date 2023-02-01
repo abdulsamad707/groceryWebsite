@@ -1,0 +1,1 @@
+SELECT sum(orderdetail.qty) from  orderdetail ;
