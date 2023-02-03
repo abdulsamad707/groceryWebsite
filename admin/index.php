@@ -720,7 +720,7 @@ inventoryEarningDaily.push(value.Earning);
                 document.addEventListener("DOMContentLoaded", () => {
                   new ApexCharts(document.querySelector("#lineChart"), {
                     series: [{
-                      name: "sales",
+                      name: "Earning",
                       data: inventoryEarningDaily
                     }],
                     chart: {
@@ -795,7 +795,11 @@ inventoryEarningDaily.push(value.Earning);
              
              
                 <table class="table table-borderless ">
-                    <thead>
+
+                <button type="button"  onclick="downloadReport('daily','excel')" class="btn btn-primary" fdprocessedid="cxczp">Download Csv</button>
+                <button type="button"  onclick="downloadReport('daily','pdf')" class="btn btn-primary" fdprocessedid="cxczp">Download PDF</button>
+                
+                <thead>
                       <tr>
                         <th>S.No</th>
                         <th scope="col">Order Date </th>
@@ -847,6 +851,8 @@ inventoryEarningDaily.push(value.Earning);
 
 
 
+
+
       ?>
              
                
@@ -855,11 +861,16 @@ inventoryEarningDaily.push(value.Earning);
                
                
                 <table class="table table-borderless ">
+                <button type="button"  onclick="downloadReport('monthly','pdf')" class="btn btn-primary" fdprocessedid="cxczp">Download PDF</button>
+                <button type="button"  onclick="downloadReport('monthly','excel')" class="btn btn-primary" fdprocessedid="cxczp">Download Csv</button>
                     <thead>
                       <tr>
                       <th scope="col">S.No </th>
                         <th scope="col">Month Year </th>
                         <th scope="col">Earning</th>
+                        <th scope="col">Tax Expense</th>
+                        <th scope="col">Discount  Expense</th>
+                        <th scope="col">Delivery Expense</th>
                     </thead>
                     <tbody>
                   
@@ -874,6 +885,12 @@ inventoryEarningDaily.push(value.Earning);
                           <td><?=$key+1 ?></td>
                         <td><?= $value["monthyear"]; ?></td>
                         <td><?= $value["Earning"] ?> Rs</td>
+                        <td><?= $value["tax_expense"];?>Rs</td>
+                       <td><?= $value["discount_expense"] ?> Rs </td>
+                      <td> <?= $value["deliveryExpense"]; ?> Rs <td>
+
+
+
                       </tr>
                       <?php
                        }
@@ -898,8 +915,6 @@ inventoryEarningDaily.push(value.Earning);
 
 $urlinventorycurrentapi="product_inventory.php";
  $dataUrlinventorycurrent=  getDataFromApi($urlinventorycurrentapi,1);
-
-
 
  ?>
 
@@ -928,7 +943,7 @@ $urlinventorycurrentapi="product_inventory.php";
 
 
                          <?php
-                  
+        
                        foreach($dataUrlinventorycurrent["data"] as $key => $value){
                          ?>
                                 <tr>
@@ -989,7 +1004,100 @@ $urlinventorycurrentapi="product_inventory.php";
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.core.min.js"></script>
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.13/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+
+
+<script>
+
+// data to be exported
+async   function downloadReport(urlData,type){
+
+  const inventory=await fetch("http://localhost/groceryWebsite/api/inventory.php?key=avdfheuw23&invtype="+urlData);
+const jsonInventory=await inventory.json();
+console.log(inventory);
+console.log(jsonInventory);
+
+
+
+
+// save the PDF document
+
+data=jsonInventory.data;
+// create the PDF document
+if(type==="pdf"){
+if(urlData=="monthly"){
+ var headerPdf= [{ text: 'Month Year', style: 'tableHeader' }, { text: 'Earning', style: 'tableHeader' }];
+}else{
+  var headerPdf=  [{ text: 'Order Date', style: 'tableHeader' }, { text: 'Earning', style: 'tableHeader' }]
+}
+var docDefinition = {
+  content: [
+    {
+      table: {
+        headerRows: 1,
+        widths: ['*', '*'],
+        body: [
+
+
+       headerPdf
+        
+             
+        ,
+          ...data.map(function (item) {
+
+            
+          if(urlData=="monthly"){
+            return [item.monthyear, item.Earning];
+          }else{
+            return [item.OrderDate, item.Earning];
+          }
+
+
+          })
+        ]
+      }
+    }
+  ]
+};
+
+// download the PDF document
+pdfMake.createPdf(docDefinition).download(urlData+"inventory_report"+".pdf");
+
+}else{
+
+data=jsonInventory.data;
+
+
+console.log(data);
+// create a new workbook object
+var wb = XLSX.utils.book_new();
+
+// add the data to a worksheet in the workbook
+var ws = XLSX.utils.json_to_sheet(data);
+XLSX.utils.book_append_sheet(wb, ws, 'people');
+
+// write the workbook to a binary string
+var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+// create a download link and trigger a download
+var link = document.createElement('a');
+link.download = urlData+'.xlsx';
+link.href = URL.createObjectURL(new Blob([wbout], { type: 'application/octet-stream' }));
+link.click();
+
+}
+
+}
+</script>
   <!-- Template Main JS File -->
  
   <script src="assets/js/main.js"></script>

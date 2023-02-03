@@ -4,14 +4,6 @@ header('Access-Control-Allow-Methods:GET');
 header('Access-Control-Allow-Headers:Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-With');
 include("validkey.php");
 /*
-SELECT products.productName,products.image,products.productName,orderdetail.qty,orderdetail.price
-,orderdetail.price*orderdetail.qty as revenue
-
-orderdetail left join products on orderdetail.product_id=products.id
-left join orderscustomer on 
-orderdetail.order_id=orderscustomer.id
-WHERE orderscustomer.orderStatus="5"
-group by product_id
 
 1-table
 2-rows
@@ -26,8 +18,7 @@ $join="left join products on orderdetail.product_id=products.id left join orders
 $groupby="product_id";
 $limit=2;
 $orderBy="sum(qty)";
-$productInventory=$data->getData("orderdetail",$select_row,$groupby,$join,null,'sum(orderdetail.qty)',$limit,null);
-
+$productInventory=$data->getData("orderdetail",$select_row,$groupby,$join,null,"revenue DESC",$limit,null);
 echo json_encode($productInventory);
 
 

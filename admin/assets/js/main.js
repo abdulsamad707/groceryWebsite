@@ -328,7 +328,3 @@ function CheckLogin(){
  }
 }
 CheckLogin();
- function logout(){
-  localStorage.removeItem("id");
-  window.location="login.php";
- }

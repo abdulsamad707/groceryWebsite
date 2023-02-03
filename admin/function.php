@@ -18,6 +18,7 @@ function getDataFromApi($api_remaining_path,$number_of_paramater){
  curl_close($curl);
  $apiData=json_decode($apiData,true);
 
+
 return $apiData;
 
 }
@@ -103,6 +104,16 @@ function NumberOfActiveUser($userType){
  $link="users.php?user_type=active_user_".$userType;
  return getDataFromApi($link,2);
 
+}
+
+
+
+
+
+
+function orderTotal($order_id){
+
+   
 }
 
           ?>

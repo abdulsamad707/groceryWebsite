@@ -145,4 +145,6 @@ CREATE TABLE IF NOT EXISTS `setting`(
 PRIMARY KEY (id)
 );
 ALTER TABLE orderdetail ADD FOREIGN KEY (user_id) REFERENCES users(id);
-ALTER TABLE orderdetail ADD FOREIGN KEY (product_id) REFERENCES products(id);
+ALTER TABLE orderdetail ADD FOREIGN KEY (order_id) REFERENCES orderscustomer(id);
+SELECT count(*),orderdetail.price,product_id,SUM(orderdetail.qty)as qty_sold,sum(orderdetail.qty)*orderdetail.price as revenue,products.productName,products.image
+FROM `orderdetail` LEFT JOIN products ON orderdetail.product_id=products.id GROUP by product_id order by qty_sold DESC limit 3;

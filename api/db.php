@@ -59,7 +59,7 @@ $db=$this->pdo;
               
               }
               if($limit!=null){
-                $sql.="LiMIT $limit";
+                $sql.=" LiMIT $limit";
               
               }
               
