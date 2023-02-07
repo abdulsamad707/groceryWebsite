@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include"function.php";?>
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -39,7 +39,7 @@
 
 <body>
 
-  <!-- ======= Header ======= -->
+  <!-- ======= Header 
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -48,14 +48,14 @@
         <span class="d-none d-lg-block">NiceAdmin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+    </div>
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
+    </div>
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -64,14 +64,14 @@
           <a class="nav-link nav-icon search-bar-toggle " href="#">
             <i class="bi bi-search"></i>
           </a>
-        </li><!-- End Search Icon-->
+        </li>
 
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">4</span>
-          </a><!-- End Notification Icon -->
+          </a>
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
@@ -137,16 +137,16 @@
               <a href="#">Show all notifications</a>
             </li>
 
-          </ul><!-- End Notification Dropdown Items -->
+          </ul>
 
-        </li><!-- End Notification Nav -->
+        </li>
 
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
             <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
+          </a>
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
@@ -203,17 +203,16 @@
               <a href="#">Show all messages</a>
             </li>
 
-          </ul><!-- End Messages Dropdown Items -->
+          </ul>
 
-        </li><!-- End Messages Nav -->
+        </li>
 
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
-          </a><!-- End Profile Iamge Icon -->
-
+          </a>
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>Kevin Anderson</h6>
@@ -260,15 +259,15 @@
               </a>
             </li>
 
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
+          </ul>
+        </li>
 
       </ul>
-    </nav><!-- End Icons Navigation -->
+    </nav>
 
-  </header><!-- End Header -->
+  </header>
 
-  <!-- ======= Sidebar ======= -->
+
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -278,7 +277,7 @@
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -356,7 +355,7 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Components Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -384,7 +383,7 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Forms Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -402,7 +401,7 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Tables Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
@@ -425,7 +424,7 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Charts Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
@@ -448,8 +447,7 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Icons Nav -->
-
+      </li>
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
@@ -457,54 +455,59 @@
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
           <i class="bi bi-question-circle"></i>
           <span>F.A.Q</span>
         </a>
-      </li><!-- End F.A.Q Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-contact.html">
           <i class="bi bi-envelope"></i>
           <span>Contact</span>
         </a>
-      </li><!-- End Contact Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.html">
           <i class="bi bi-card-list"></i>
           <span>Register</span>
         </a>
-      </li><!-- End Register Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-login.html">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>
-      </li><!-- End Login Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-error-404.html">
           <i class="bi bi-dash-circle"></i>
           <span>Error 404</span>
         </a>
-      </li><!-- End Error 404 Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-blank.html">
           <i class="bi bi-file-earmark"></i>
           <span>Blank</span>
         </a>
-      </li><!-- End Blank Page Nav -->
-
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Product</span>
+        </a>
+      </li>
     </ul>
 
-  </aside><!-- End Sidebar-->
-
+  </aside>--><!-- End Sidebar-->
+<?php include "header.php";?>
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -602,7 +605,7 @@
             </div><!-- End Revenue Card -->
 
             <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
+            <div class="col-xxl-4 col-xl-6">
 
               <div class="card info-card customers-card">
 
@@ -624,7 +627,28 @@
               </div>
 
             </div><!-- End Customers Card -->
+            <div class="col-xxl-4 col-xl-6">
+  
+<div class="card info-card customers-card">
 
+  <div class="card-body">
+    <h5 class="card-title">Active Riders <span>| This Month</span></h5>
+
+    <div class="d-flex align-items-center">
+      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+        <i class="bi bi-people"></i>
+      </div>
+      <div class="ps-3">
+        <h6><?=  NumberOfActiveRider("active_riders")["data"][0]["numberofriders"];?></h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- End Customers Card -->
             <!-- Reports -->
             <div class="col-12">
               <div class="card">
@@ -797,7 +821,7 @@ inventoryEarningDaily.push(value.Earning);
                 <table class="table table-borderless ">
 
                 <button type="button"  onclick="downloadReport('daily','excel')" class="btn btn-primary" fdprocessedid="cxczp">Download Csv</button>
-                <button type="button"  onclick="downloadReport('daily','pdf')" class="btn btn-primary" fdprocessedid="cxczp">Download PDF</button>
+                <button type="button"  onclick="downloadReport('daily','pdf')" class="btn btn-primary" fdprocessedid="cxczp">Download Daily Earning Report PDF</button>
                 
                 <thead>
                       <tr>
@@ -847,7 +871,6 @@ inventoryEarningDaily.push(value.Earning);
  
 
    $dataUrlinventorymontly=inveentoryDetail("monthly");
-
 
 
 
@@ -964,6 +987,67 @@ $urlinventorycurrentapi="product_inventory.php";
 
               </div>
             </div><!-- End Top Selling -->
+ 
+            <div class="col-12">
+              <div class="card top-selling overflow-auto">
+<?php
+              $totalEarningapi="orders.php?orderType=topfive";
+ $totalEarningapi=getDataFromApi($totalEarningapi,2);
+
+
+
+?>
+                <div class="card-body pb-0">
+                  <h5 class="card-title">Top 5 Completed  Order  </h5>
+
+                  <table class="table table-borderless">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th scope="col">Customer Nmae</th>
+                        <th scope="col">  Rider Name</th>
+                        <th scope="col">Order Amount</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Total Item</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+               
+
+
+                         <?php
+        
+                       foreach($totalEarningapi["data"] as $key => $value){
+                         ?>
+                                <tr>
+
+                                <td><?= $key+1 ?></td>
+                        <td scope="row"><?= $value["customer_name"] ;?></td>
+                        <td><?=$value['rider_name'];?></td>
+                        <td><?=$value['totalAmount'];?></td>
+                        <td class="fw-bold"><?=$value["orderDate"]?></td>
+                        <td><?=$value["totalItem"]?></td>
+                      </tr>
+                         <?php
+                       }
+                         ?>
+                 
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Top Selling -->
+
+
+
+
+
+
+
+
+
 
           </div>
         </div><!-- End Left side columns -->
@@ -1017,7 +1101,16 @@ $urlinventorycurrentapi="product_inventory.php";
 
 
 <script>
+function TotalIncome(EarningArray){
+     console.log(EarningArray);
+TotalEarningInv=0;
+EarningArray.forEach((item)=>{
+     console.log(item);
+     TotalEarningInv=TotalEarningInv+item
+});
+return TotalEarningInv;
 
+}
 // data to be exported
 async   function downloadReport(urlData,type){
 
@@ -1027,24 +1120,31 @@ console.log(inventory);
 console.log(jsonInventory);
 
 
-
-
+today=new Date();
+console.log(today);
+console.log(today.getTime()+1000*60*3);
+console.log(new Date(today.getTime()+1000*60*3));
 // save the PDF document
-
+const name=today.getMonth()+today.getDate();
 data=jsonInventory.data;
 // create the PDF document
+
+
 if(type==="pdf"){
 if(urlData=="monthly"){
- var headerPdf= [{ text: 'Month Year', style: 'tableHeader' }, { text: 'Earning', style: 'tableHeader' }];
+ var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Month Year', style: 'tableHeader' }, { text: 'Earning', style: 'tableHeader' }];
 }else{
-  var headerPdf=  [{ text: 'Order Date', style: 'tableHeader' }, { text: 'Earning', style: 'tableHeader' }]
+  var headerPdf=  [{ text: 'S.No', style: 'tableHeader' },{ text: 'Order Date', style: 'tableHeader' }, { text: 'Earning', style: 'tableHeader' }]
 }
+TotalEarning=[];
 var docDefinition = {
+
   content: [
+    { text: 'Earning Report', style: 'header' ,align:"center"},
     {
       table: {
         headerRows: 1,
-        widths: ['*', '*'],
+        widths: ['*', '*','*'],
         body: [
 
 
@@ -1052,25 +1152,42 @@ var docDefinition = {
         
              
         ,
-          ...data.map(function (item) {
+  
+          ...data.map(function (item,index) {
+console.log(index+1);
 
-            
+
+TotalEarning.push(item.Earning);
+
+
+            IndexPdf=index+1;
           if(urlData=="monthly"){
-            return [item.monthyear, item.Earning];
+            return [IndexPdf,item.monthyear,item.Earning];
           }else{
-            return [item.OrderDate, item.Earning];
+            return [IndexPdf,item.OrderDate,item.Earning];
           }
 
 
           })
         ]
+  
       }
+    },
+    { text: 'Total Earning:'+TotalIncome(TotalEarning)+' Rs', style: 'thanks' }
+  
+  ],
+  styles: {
+      header: {
+         fontSize: 22,
+         bold: true,
+         alignment: 'center',
+         margin: [0, 0, 0, 20]
+      },
     }
-  ]
 };
 
 // download the PDF document
-pdfMake.createPdf(docDefinition).download(urlData+"inventory_report"+".pdf");
+pdfMake.createPdf(docDefinition).download(urlData+name+"inventory_report"+".pdf");
 
 }else{
 

@@ -149,6 +149,7 @@ function updateData ($table,$params=array(),$whereCod=null){
      $sql;     
 
 
+     
           $stmt= $db->prepare($sql);                                                                                                                                                                                                                                                                                                                                         $db->prepare($sql);
           $stmt->execute();
                                    

@@ -107,7 +107,19 @@ function NumberOfActiveUser($userType){
 }
 
 
-
+function NumberOfActiveRider($userType){
+   /* getDataFromApi;*/
+   /*?user_type=active_user_current_month
+   
+   ?user_type=active_user_previous_month
+   
+   
+   */;
+ 
+  $link="riders.php?rider_type=".$userType;
+  return getDataFromApi($link,2);
+ 
+ }
 
 
 

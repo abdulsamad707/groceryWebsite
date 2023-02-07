@@ -41,7 +41,7 @@ if(isset($_POST['submit'])){
 	$password='';
 	$host_name="localhost";
 	$pdo=new PDO('mysql:host='.$host_name.';dbname='.$dbname.';',$username,$password);
-	$sql="SELECT seatno,student_name FROM `students` order by seatno";
+	$sql="SELECT seatno,student_name,status FROM `students` order by seatno";
 	$db=$pdo;
 	$stmt= $pdo->prepare($sql);                                                                                                                                                                                                                                                                                                                                         $db->prepare($sql);
 	$stmt->execute();
@@ -49,15 +49,19 @@ if(isset($_POST['submit'])){
 	while($data=$stmt->fetch(PDO::FETCH_ASSOC)){
 		$result_array[]=$data;
 	}
+
 	$html="<table>";
 	$html.="<tr>";
 	$html.="<td> Seat No </td>";
 	$html.="<td> Student Name </td>";
+	$html.="<td> Repeator/Improver </td>";
 	$html.="</tr>";
 	foreach($result_array as $key => $value){
+		
 	$html.="<tr>";
 	$html.="<td>".$value['seatno']."</td>";
 	$html.="<td>".ucwords($value['student_name'])."</td>";
+	$html.="<td>".$value['status']."</td>";
 	$html.="<tr>";
 	}
 	echo $html;
