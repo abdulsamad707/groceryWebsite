@@ -22,29 +22,29 @@ if(isset($inventoryType)){
     }elseif($inventoryType==="monthly"){
         $orderdateFormat="DATE_FORMAT(orderDate,'%M-%Y')as monthyear";
         $groupBy=" month(orderDate), year(orderDate)";
-        $orderBy="year(orderDate), month(orderDate),s_no";
+        $orderBy="year(orderDate), month(orderDate)";
         $where="orderStatus='5'";
     }else if($inventoryType==="daily"){
         $orderdateFormat="DATE_FORMAT(orderDate,'%d-%b-%Y') as OrderDate";
         $groupBy=" day(orderDate), month(orderDate),year(orderDate)";
-        $orderBy=" date(orderDate),s_no";
+        $orderBy=" date(orderDate)";
         $where="orderStatus='5'";
     }elseif($inventoryType==="current"){
         $where ="orderStatus='5' AND  DATE_format(orderDate,'%Y-%m') =DATE_FORMAT(CURRENT_DATE,'%Y-%m')";
         $orderdateFormat="DATE_FORMAT(orderDate,'%M-%Y')as monthyear";
         $groupBy=" month(orderDate), year(orderDate)";
-        $orderBy="year(orderDate), month(orderDate),s_no";
+        $orderBy="year(orderDate), month(orderDate)";
     }elseif($inventoryType==="previous"){
        $where ="orderStatus='5' AND  DATE_format(orderDate,'%Y-%m') =DATE_FORMAT(SUBDATE(CURRENT_DATE, INTERVAL 1 MONTH),'%Y-%m')";
        $orderdateFormat="DATE_FORMAT(orderDate,'%M-%Y')as monthyear";
        $groupBy=" month(orderDate), year(orderDate)";
-       $orderBy="year(orderDate), month(orderDate) ,s_no";
+       $orderBy="year(orderDate), month(orderDate) ";
     }
     
 
  
    
-    $rows="ROW_NUMBER() OVER (order by orderDate DESC) AS s_no ,$orderdateFormat,sum(discount) as discount_expense,sum(deliveryCharge) as deliveryExpense,sum(gst) as tax_expense, count(*) as orderCompleted  ,sum(totalAmount)-(sum(gst)+sum(deliveryCharge)) as Earning ,sum(totalItem) as itemSold";
+    $rows=" $orderdateFormat,sum(discount) as discount_expense,sum(deliveryCharge) as deliveryExpense,sum(gst) as tax_expense, count(*) as orderCompleted  ,sum(totalAmount)-(sum(gst)+sum(deliveryCharge)) as Earning ,sum(totalItem) as itemSold";
     $inventorydata = $data->getData("orderscustomer",$rows,$groupBy,null,$where,$orderBy,null,null);
     $date_current=date("Y-m-d");
 

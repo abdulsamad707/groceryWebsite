@@ -27,7 +27,7 @@
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/style.css?v=<?= time();?>" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
@@ -494,13 +494,13 @@
         </a>
       </li><!-- End Error 404 Page Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
+        <a class="nav-link collapsed" href="products.php">
           <i class="bi bi-file-earmark"></i>
           <span>Product</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
+        <a class="nav-link collapsed" href="users.php">
           <i class="bi bi-file-earmark"></i>
           <span>Users</span>
         </a>

@@ -123,9 +123,9 @@ function NumberOfActiveRider($userType){
 
 
 
-function orderTotal($order_id){
+function High($orderId){
 
-   
+return   max($orderId);
 }
 
           ?>

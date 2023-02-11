@@ -195,15 +195,34 @@ console.log(finalResponse.id);
 let id=finalResponse.id;
 
 if(id!=undefined || id!=""){
-localStorage.setItem("id", id);
+ currentTime= new Date().getTime();
+const item={
+  userId:id,
+  expiry: currentTime+(1000*60*3)
+}
+
+localStorage.setItem("id",JSON.stringify(item));
+
+
 
 sessionStorage.setItem("id", id);
+
+
+
+
+
 window.location="index.php";
 
 }
 
 });
 }
+
+
+
+
+
+
 </script>
 </body>
 

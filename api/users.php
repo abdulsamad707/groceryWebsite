@@ -13,7 +13,7 @@ if(!isset($status)){
 
        if(isset($_GET['id'])){
        $id=  $_GET['id'];
-       $sql="SELECT * FROM users WHERE id='$id'";
+       $sql="SELECT  users.id as user_id,email,username,mobile,count(userId) as number_of_orders,users.status FROM users  LEFT JOIN orderscustomer ON 	orderscustomer.userId=users.id  WHERE users.id='$id' GROUP BY users.id";
        }else{
          if(isset($_GET["user_type"])){
            $user_type=$_GET["user_type"]; 
@@ -27,7 +27,7 @@ if(!isset($status)){
            $sql="SELECT count(userId) as number_of_order,users.email,users.username, userId FROM orderscustomer LEFT JOIN users ON users.id=orderscustomer.userId group by userId order by number_of_order DESC LIMIT 2";
            }
         }else{
-       $sql= "SELECT * FROM users";
+       $sql= "SELECT users.id as user_id,email,username,mobile,count(userId) as number_of_orders,users.status FROM users LEFT JOIN orderscustomer ON 	orderscustomer.userId=users.id Group BY users.id";
           }    
        }
 
@@ -37,9 +37,9 @@ if(!isset($status)){
        $userdata=$data->sql($sql,"read");
 
 
+  
+        echo  json_encode($userdata);
       
-        echo json_encode($userdata);
-           
     }
 
      
