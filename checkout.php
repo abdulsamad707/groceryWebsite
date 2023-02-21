@@ -1,194 +1,217 @@
 
+<?php include 'headerwebsite.php';    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Responsive Grocery Website Design Tutorial</title>
+ 
 
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
 
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Checkoutpage</title>
+    <style>
+    .container {
+  max-width: 700px;
+  position: relative;
+  top:29px;
+  /* border:2px solid red; */
+  box-shadow: -4px -2px 64px -17px #aaaaaa;
 
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/style.css?v=">
-<!--
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
--->
-<link rel="stylesheet" href="css/bootstrap.css?v=<?php echo rand()+time();?>">
-    </head>
+
+  margin-bottom:70px;
+  padding:30px;
+
+
+}
+.container2{
+    position: relative;
+    top: 64px;
+    z-index: 3; 
+    display:inline;
+    box-shadow: 4px 7px 9px #aaaaaa;
+
+    
+}
+
+.lh-condensed
+ { line-height: 1.25; }
+</style>
+</head>
 <body>
+<div class="container2">
+<div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your cart</span>
+                <span class="badge badge-secondary badge-pill">3</span>
+            </h4>
+            <ul class="list-group mb-3 sticky-top">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$12</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Second product</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$8</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Third item</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <div class="text-success">
+                        <h6 class="my-0">Promo code</h6>
+                        <small>EXAMPLECODE</small>
+                    </div>
+                    <span class="text-success">-$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>$20</strong>
+                </li>
+            </ul>
+</div>
     
-<!-- header section starts  -->
+        <div class="container">
 
 
-<header class="header">                   
-
-    <a href="#" class="logo"> <i class="fas fa-shopping-basket"></i> grocoery </a>
-
-    <nav class="navbar">
-
-        <a href="index.php">home</a>
-        <a href="#features">features</a>
-        <a href="#products">products</a>
-        <a href="#categories">categories</a>
-        <a href="#review">review</a>
-        <a href="#blogs">blogs</a>
-    </nav>
-
-    <div class="icons">
-        <div class="fas fa-bars" id="menu-btn"></div>
-        <div class="fas fa-search" id="search-btn"></div>
-        
-        <div class="fas fa-shopping-cart" id="cart-btn"></div>
-            
-        <div class="fas fa-user" id="login-btn"></div>
-    </div>
-
-    <form action="" class="search-form">
-        <input type="search" id="search-box" placeholder="search here...">
-        <label for="search-box" class="fas fa-search"></label>
-    </form>
-
-    <div class="shopping-cart">
-          <div id="Shopping_container">
-    
-    
-        
-    
-   
-       <!-- <div class="box">
-            <i class="fas fa-trash"></i>
-            <img src="image/cart-img-2.png" alt="">
-            <div class="content">
-                <h3>onion</h3>
-                <span class="price"> Rs 59/-</span>
-                <span class="quantity">qty : 1</span>
+            <div class="col-md-8 order-md-1">
+                <h4 class="mb-3">Billing address</h4>
+                <form class="needs-validation" novalidate="">
+                    <div class="row">
+                      
+                        <div class="col-md-12 mb-3">
+                            <label for="lastName">customer name</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                            <div class="invalid-feedback"> Valid last name is required. </div>
+                        </div>
+                    </div>
+       
+                    <div class="mb-3">
+                        <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                        <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+                        <div class="invalid-feedback"> Please enter your shipping address. </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="country">Country</label>
+                            <select class="custom-select d-block w-100" id="country" required="">
+                                <option value="">Choose...</option>
+                                <option>United States</option>
+                            </select>
+                            <div class="invalid-feedback"> Please select a valid country. </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="state">State</label>
+                            <select class="custom-select d-block w-100" id="state" required="">
+                                <option value="">Choose...</option>
+                                <option>California</option>
+                            </select>
+                            <div class="invalid-feedback"> Please provide a valid state. </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="zip">Zip</label>
+                            <input type="text" class="form-control" id="zip" placeholder="" required="">
+                            <div class="invalid-feedback"> Zip code required. </div>
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="same-address">
+                        <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="save-info">
+                        <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                    </div>
+                    <hr class="mb-4">
+                    <h4 class="mb-3">Payment</h4>
+                    <div class="d-block my-3">
+                        <div class="custom-control custom-radio">
+                            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                            <label class="custom-control-label" for="credit">Credit card</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                            <label class="custom-control-label" for="debit">Debit card</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                            <label class="custom-control-label" for="paypal">PayPal</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-name">Name on card</label>
+                            <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                            <small class="text-muted">Full name as displayed on card</small>
+                            <div class="invalid-feedback"> Name on card is required </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-number">Credit card number</label>
+                            <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                            <div class="invalid-feedback"> Credit card number is required </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="cc-expiration">Expiration</label>
+                            <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                            <div class="invalid-feedback"> Expiration date required </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="cc-cvv">CVV</label>
+                            <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                            <div class="invalid-feedback"> Security code required </div>
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <button class="btn  btn-lg btn-block" type="submit">Place Order</button>
+                </form>
             </div>
+        </div> 
         </div>
-       <div class="box">
-            <i class="fas fa-trash"></i>
-            <img src="image/cart-img-3.png" alt="">
-            <div class="content">
-                <h3>chicken</h3>
-                <span class="price"> Rs 499/-</span>
-                <span class="quantity">qty : 1</span>
-            </div>
-        </div>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
+</body>
+<script>
+    (function () {
+  'use strict'
 
-     </div>
-     <div class="total" id="cartDisplayTotal"> 
-    
-  
-  </div>
-   
-        <div id="checkout_btn">
-        
-        </div>
-    
-    </div>
+  window.addEventListener('load', function () {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation')
 
-    <form action="" class="login-form" id="LoginFORM">
-        <h3>login now</h3>
-        <input type="email" name="email" id="userEmail" placeholder="your email" class="box">
-        <input type="password" id="userPassword" name="password" placeholder="your password" class="box">
-        <p>forget your password <a href="#">click here</a></p>
-        <p>don't have an account <a href="#" class="reg-form">create now</a></p>
-        <input type="submit" value="login now" class="btn-product" id="loginBTN">
-    </form>
-    <form action="" method="POST" class="login-form regForm" id='userregis'>
-        <h3> Register Now</h3>
-        <div id="Error"><span><span id="ErrorMsg"class="errorHeading">Please Enter Correct Email Address</span></span> </div>
-        <input type="email" id="RegisterEmail" placeholder="your email" name="email" class="box">
-        <input type="text" id="RegisterUserName"  placeholder="your user name" name="username" class="box">
-        <input type="password" id="UserPassword" name="password" placeholder="your password" class="box">
-        <input type="text" id="MobileUser" name="mobile" placeholder="your mobile" class="box">
-       
-        <input type="submit" value="Register now" id="register" class="btn" >
-    </form>
-  
-</header>
-
-    <section class="home" id="home">
-
-<div class="content">
-   checkout Page 
-
-   
-</div>
-   
-</section>
-<!--container start-->
-<div class="checkout container-fluid">
-    <div class="row">
-        <div class=" col-lg-6 col-md-12 col-sm-12 col-xs-12">
-        <form action="/action_page.php" id="OrderFrom">
-  <div class="form-group">
-    <label for="email">Email address:</label>
-    <input type="email" class="form-control " name="customerEmail" placeholder="Enter email" id="email">
-  </div>
-
-  
-    
-    
-    
-       
-
-
-
-  <div class="form-group">
-    <label>Mobile</label>
-    <input type="text" class="form-control" name="mobile" placeholder="Enter Mobile " id="pwd">
-  </div>
-  <div class="form-group">
-  <label for="comment">Address:</label>
-  <textarea class="form-control" name="deliveryAddress" rows="5" cols="10" style="resize:none;" id="comment"></textarea>
-</div>
-<div class="form-check">
-  <label class="form-check-label">
-
-    <input type="radio"  name="paymentMethod" value="cod">cash On delivery
-  </label>
-  <button type="submit" class="btn btn-primary btn-block" id="PlaceOrder">Place Order</button>
-</div>
-
-
-</form>
-
-
-
-
-
-
-
-,     
-    </div>
-    <div class=" col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
-
-        
-        <h1 class="text-center"> cart Details </h1>
-
-
-
-        <div class="cartAmount">
-      Cart Total : <span class='cartsTotal'></span><br>
-      Delivery Charge : <span class="deliveryCharges"></span><br>
-      GST : <span class="gsts"></span><br>
-      Final Amount : <span></span>
-
-
-      
-      </div>
-       </div>
-       
-     
-    </div>
-
-    </div>
-</div>
-<!---container end-->
-
-
+    // Loop over them and prevent submission
+    Array.prototype.filter.call(forms, function (form) {
+      form.addEventListener('submit', function (event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  }, false)
+}())
+</script>
+</html>

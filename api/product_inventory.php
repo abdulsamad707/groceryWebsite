@@ -13,7 +13,7 @@ include("validkey.php");
 6-orderBy
 7-limit
 */
-$select_row="sum(orderdetail.qty)*orderdetail.price as revenue , orderdetail.price,products.productName,products.id as pid,sum(orderdetail.qty) as sold,products.image";
+$select_row="sum(orderdetail.qtyorder)*orderdetail.price as revenue , orderdetail.price,products.productName,products.id as pid,sum(orderdetail.qtyorder) as sold,products.image";
 $join="left join products on orderdetail.product_id=products.id left join orderscustomer on orderdetail.order_id=orderscustomer.id";
 $groupby="product_id";
 $limit=2;

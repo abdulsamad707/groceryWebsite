@@ -270,12 +270,16 @@
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
+                   <?php
 
+
+
+?>
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
         <a class="nav-link " href="index.php">
-          <i class="bi bi-grid"></i>
+    
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
@@ -495,20 +499,59 @@
       </li><!-- End Error 404 Page Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="products.php">
-          <i class="bi bi-file-earmark"></i>
+
           <span>Product</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="users.php">
-          <i class="bi bi-file-earmark"></i>
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           <span>Users</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
+        <a class="nav-link collapsed" href="orders.php">
+       
+          <span>Orders</span>
         </a>
       </li><!-- End Blank Page Nav -->
 

@@ -22,20 +22,44 @@ ob_start();
 
 */
 
+if(isset($_GET["status"])){
+$status=1;
+}else{
+  $status=0;
+}
 
  $reqMetod=$_SERVER["REQUEST_METHOD"];
 if($reqMetod=="GET"){
 if(isset($_GET["id"])){
-  $id=$_GET["id"];
-$whereConduction="products.id='$id'";
-}else{
-    $whereConduction=null;
-}
 
-$join="left JOIN orderdetail on orderdetail.product_id=products.id left JOIN productrating on productrating.product_id=products.id";
-$groupby="products.id";
-$rows="products.qty,products.status ,products.id,products.productName,products.price,CONCAT('http://localhost/groceryWebsite/api/',products.image) as ProductImage,products.price*ifnull(sum(orderdetail.qty),0) as revenue ,  ifnull(format(AVG(productrating.rating),2),0.00) as rating,ifnull(sum(orderdetail.qty),0) as qty_sold ,if(products.qty-ifnull(sum(orderdetail.qty),0)>0,products.qty-ifnull(sum(orderdetail.qty),0),0) as qty_remaining";
-$productData=$data->getData('products',$rows,$groupby,$join,$whereConduction,null,null,null);
+
+
+
+  $id=$_GET["id"];
+
+  if($status===1){
+    $whereConduction="products.status='1' AND products.id='$id'";
+
+  }else{
+    $whereConduction="products.id='$id'";
+  }
+  $groupby ="";
+  
+  $groupby =" group by products.id";
+
+}else{
+
+  if($status==1){
+    $whereConduction="products.status='1'";
+  }else{
+    $whereConduction=" products.status='0' or products.status='1'";
+  }
+
+  $groupby =" group by products.id";
+}
+ $sql="SELECT products.productqty,format(ifnull(AVG(productrating.rating),0),2) as rating,products.status,products.price,products.productName,products.id,concat('http://localhost/grocerywebsite/api/',products.image) as ProductImage,ifnull(sum(orderdetail.qtyorder),0) as qty_sold, ifnull(products.productqty-(ifnull(sum(orderdetail.qtyorder),0)),0) as qty_remaining,ifnull(sum(orderdetail.qtyorder*orderdetail.price),0) as revenue from products left join orderdetail on orderdetail.product_id=products.id  left join productrating  ON productrating.product_id=products.id where $whereConduction $groupby ";
+
+$productData=$data->sql($sql,"read");
 echo json_encode($productData);
 
 }
@@ -141,8 +165,14 @@ $productArray=$_POST;
                 // Specify the upload location
                 $file_destination = 'productImage/' . $file_name_new;
               if (move_uploaded_file($file_tmp, $file_destination)) {
-                
+          
+                if (file_exists($prveImag)) {
+                  unlink($prveImag);
             
+              }
+
+
+              
                 $productArray["image"]="productImage/".$file_name_new;
               }
 

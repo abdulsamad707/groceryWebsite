@@ -62,33 +62,7 @@ function sendMail($message,$email,$username,$subject){
         
        return $str;
    }
-   function cartTotal($cartData,$database,$discount,$code){
- 
- 
-$adminData=$database->getData("setting",null,null,null,null,null,null,null);
 
-
-$deliveryCharge=$adminData["data"][0]["deliveryCharge"];
-$gst=$adminData["data"][0]["gst"];
-        $totalprice=0;
-       $totalRecord= $cartData["totalRecord"];
-        foreach($cartData["data"] as $key => $value){
-            $totalprice=$totalprice+($value["qty"]*$value["price"]);
-        }
-     $totalprice;    
-  
-      $totalPrice=$totalprice-$discount;
-   $governmentTax=floor(($gst/100)*$totalPrice);
-    
-              $finalAmount=$totalprice+$governmentTax+$deliveryCharge;
-              echo $finalAmount;
-              $cartTotal["discount"]=$discount;
-              $cartTotal["deliveryCharge"]=$deliveryCharge;
-              $cartTotal["cartTotal"]=$totalprice;
-              $cartTotal["gst"]=$governmentTax;
-              $cartTotal["totalItem"]=$totalRecord;
-              return $cartTotal;
-        }
         function get_client_ip() {
           $ipaddress = '';
           if (getenv('HTTP_CLIENT_IP'))
@@ -111,5 +85,32 @@ $gst=$adminData["data"][0]["gst"];
       function checkCustomerHasItem($customerId,$dataBase){
           $checkSql="select ";
       }
+      function cartTotal($cartData,$database,$discount){
+                
+ 
+        $adminData=$database->getData("setting",null,null,null,null,null,null,null);
+        
+        
+        $deliveryCharge=$adminData["data"][0]["deliveryCharge"];
+        $gst=$adminData["data"][0]["gst"];
+                $totalprice=0;
+               $totalRecord= $cartData["totalRecord"];
+                foreach($cartData["data"] as $key => $value){
+                    $totalprice=$totalprice+($value["qty"]*$value["price"]);
+                }
+             $totalprice;    
+          
+              $totalPrice=$totalprice-$discount;
+           $governmentTax=floor(($gst/100)*$totalPrice);
+            
+                      $finalAmount=$totalPrice+$governmentTax+$deliveryCharge;
+                      $cartTotal["totalAmount"]=$finalAmount;
+                      $cartTotal["discount"]=$discount;
+                      $cartTotal["deliveryCharge"]=$deliveryCharge;
+                      $cartTotal["cartTotal"]=$totalprice;
+                      $cartTotal["gst"]=$governmentTax;
+                      $cartTotal["totalItem"]=$totalRecord;
+                      return $cartTotal;
+                }
 ?>
       

@@ -332,6 +332,7 @@ function CheckLogin() {
 
     if (LsId != null) {
         currentTime = new Date().getTime();
+        var LsId = localStorage.getItem("id");
         LsId = JSON.parse(LsId);
         expirydate = new Date(LsId.expiry);
         console.log(expirydate + LsId.expiry);

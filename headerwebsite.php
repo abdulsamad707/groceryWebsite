@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Responsive Grocery Website Design Tutorial</title>
     <?php include "function.php";?>
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7.4.1/swiper-bundle.css" />
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -14,6 +14,8 @@
     <!-- custom css file link  -->
     <link rel="stylesheet" href="css/style.css?v=<?php echo rand()+time();?>">
 <!--
+
+https://unpkg.com/swiper@7.4.1/swiper-bundle.css
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 -->
 <link rel="stylesheet" href="css/bootstrap.css?v=<?php echo rand()+time();?>">

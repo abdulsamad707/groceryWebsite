@@ -29,9 +29,12 @@
  $inventory= inventory();
 
  extract($inventory);
- 
+ if($totalEarning>0){
 
  $diff=(floor(($currentMonthEarning/$totalEarning)*100))-(floor(($previousMonthEarning/$totalEarning)*100));
+ }else{
+  $diff=0;
+ }
  $prec=abs($diff);
  if($diff<0){
        $perText="decrease";
@@ -41,8 +44,11 @@
 
 
     $previousMonthItemSold;
-  
+    if($totalItemSold > 0){
    $diffinitem =(floor(($CurrentMonthItemSold/$totalItemSold)*100))-(floor(($previousMonthItemSold/$totalItemSold)*100));
+    }else{
+      $diffinitem=0;
+    }
  $diffinitem;
     $totalItemSold;
   if($diffinitem>0){
@@ -646,9 +652,9 @@ data=jsonInventory.data;
 
 if(type==="pdf"){
 if(urlData=="monthly"){
- var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Month Year', style: 'tableHeader' }, { text: 'Earning', style: 'tableHeader' }];
+ var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Month Year', style: 'tableHeader' }, { text: 'Earning (Rs)', style: 'tableHeader' }];
 }else{
-  var headerPdf=  [{ text: 'S.No', style: 'tableHeader' },{ text: 'Date', style: 'tableHeader' }, { text: 'Earning', style: 'tableHeader' }]
+  var headerPdf=  [{ text: 'S.No', style: 'tableHeader' },{ text: 'Date', style: 'tableHeader' }, { text: 'Earning (Rs)', style: 'tableHeader' }]
 }
 TotalEarning=[];
 currDate=new Date().toLocaleString("en-US",{month:"long",day:"numeric",year:"numeric",minute:"numeric",hour:"numeric"}).replace("at"," ");
@@ -690,7 +696,7 @@ TotalEarning.push(item.Earning);
   
       }
     },
-    { text: 'Total Earning:'+TotalIncome(TotalEarning)+' Rs', style: 'thanks' }
+    { text: 'Total Earning:'+ TotalIncome(TotalEarning)+' Rs', style: 'thanks' }
   
   ],
   styles: {
@@ -784,3 +790,4 @@ link.click();
 </body>
 
 </html>
+

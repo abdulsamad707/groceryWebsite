@@ -34,6 +34,13 @@ $productData=$data->getData('admins',null,null,null,$whereCondition,null,null,nu
         $adminStatus["id"]=$id;
         $adminStatus["role"]=$role;
 
+        $payload=[
+"id"=>$id,
+"role"=>$role
+
+        ];
+        $jwt=  $data-> CreateToken($payload,'key');
+        $adminStatus["token"]=$jwt;
     }else{
         $adminStatus["error"]="Wrong Password";
         $adminStatus["error_type"]="Password";

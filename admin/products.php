@@ -12,12 +12,14 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Products</li>
+          <li class="breadcrumb-item ">Products</li>
         </ol>
       </nav>
     </div>
     <section class="section dashboard">
-      
+    <button type="button" class="btn btn-primary"   onclick="add()" data-bs-toggle="modal" data-bs-target="#largeModal">
+                Add Product
+              </button>
 <div class="row">
     <div class="col-12">
               <div class="card  overflow-auto">
@@ -121,9 +123,7 @@
                   </div>
                 </div>
               </div><!-- End Extra Large Modal-->
-              <button type="button" class="btn btn-primary"   onclick="add()" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Add Product
-              </button>
+
                 <div class="card-body pb-0">
           
         
@@ -144,7 +144,11 @@
                     <tbody id="productDisplay">
 
 
+<?php
 
+
+
+?>
 
 
                   </tbody>
@@ -157,9 +161,7 @@
 
                 </div>
 </div>
-</section>
 
-</main>
 
 <?php include "footer.php"?>
 <script>
@@ -188,10 +190,10 @@ jsonInventory.data.map((item,key)=>{
 
 if(item.status==1){
   status="Active";
-  badgeColor="bg-success";
+  badgeColor="btn-success";
 }else{
   status="Deactive";
-   badgeColor="bg-danger";
+   badgeColor="btn-danger";
 }
 
   console.log(item.ProductImage);
@@ -200,7 +202,7 @@ html+="<td>"+(key+1)+"</td>";
 html+="<td>"+capitalize(item.productName)+"</td>";
 html+="<td>"+item.price+" Rs </td>";
 html+="<td><img class='productsImage' src='"+item.ProductImage+"'></td>";
-html+="<td><span class='badge "+badgeColor+"'>"+status+"</span></td>";
+html+="<td><button class='btn "+badgeColor+"'>"+status+"</button></td>";
 html+="<td><button  class='btn btn-primary'  onclick='edit("+item.id+")'  data-bs-toggle='modal' data-bs-target='#largeModal' type='button'>Edit</button></td>";
 html+="<td> <button type='button' onclick='view("+item.id+")' class='btn btn-primary'data-bs-toggle='modal'  data-bs-target='#ExtralargeModal'>View</button></td>";
 html+="</tr>";
@@ -216,7 +218,8 @@ const jsonInventory=await inventory.json();
 const productName=jsonInventory.data[0].productName;
 document.getElementById("prices").value=jsonInventory.data[0].price;
 document.getElementById("productsNmae").value=productName;
-document.getElementById("qty").value=jsonInventory.data[0].qty;
+
+document.getElementById("qty").value=jsonInventory.data[0].productqty;
 document.getElementById("id_product").value=id;
 document.getElementById("formFile").required=false;
 if(jsonInventory.data[0].status==0){
@@ -234,7 +237,8 @@ console.log(id);
   const inventory=await fetch("http://localhost/groceryWebsite/api/products.php?key=avdfheuw23&id="+key);
 const jsonInventory=await inventory.json();
 const productName=capitalize(jsonInventory.data[0].productName);
- document.getElementById("productNmae").innerText=productName;
+ document.getElementById("productNmae").innerText=productName+" Pid ( "+key+" )";
+
  document.getElementById("qty_sold").innerText=jsonInventory.data[0].qty_sold;
  document.getElementById("qty_remaining").innerText=jsonInventory.data[0].qty_remaining;
  document.getElementById("revenue").innerText=jsonInventory.data[0].revenue+" Rs  ";
@@ -348,7 +352,7 @@ if(validProductName!=false && validProductQty!=false && validProductPrice!=false
   console.log(file);
 formData.append("file", file);
 formData.append("productName",ProductName);
-formData.append("qty",qty);
+formData.append("productqty",qty);
 formData.append("price",price);
 formData.append("pid",productId);
 formData.append("productStatus",available);

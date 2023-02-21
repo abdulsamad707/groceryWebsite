@@ -1,4 +1,14 @@
 <?php
+
+include "php-jwt-main/src/BeforeValidException.php";
+include "php-jwt-main/src/CachedKeySet.php";
+include "php-jwt-main/src/ExpiredException.php";
+include "php-jwt-main/src/SignatureInvalidException.php";
+include "php-jwt-main/src/JWT.php";
+include "php-jwt-main/src/JWK.php";
+include "php-jwt-main/src/Key.php";
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 class CRUDOPERATION {
 
 function __construct($host_name,$dbname,$username,$password){
@@ -201,6 +211,29 @@ function updateData ($table,$params=array(),$whereCod=null){
    }
    function generateRandomString($length = 10) {
       return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+  } 
+  public function CreateToken ($payload,$key){
+    $jwt = JWT::encode($payload, $key, 'HS256');
+ return  $jwt;
   }
+
+  public function DecodeToken($jwt,$key){
+
+
+    try {
+      $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+      $decoded_array = (array) $decoded;
+      return $decoded_array;
+      // token is valid
+  } catch (\Firebase\JWT\ExpiredException $e) {
+    return 0;
+  } catch (\Exception $e) {
+      // token is invalid]\\
+
+      return 0;
+  }
+  
+  }
+
 }
 ?>

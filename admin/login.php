@@ -191,14 +191,16 @@ console.log(response);
    return response.json();
     
 }).then((finalResponse)=>{
-console.log(finalResponse.id);
+console.log(finalResponse);
 let id=finalResponse.id;
 
 if(id!=undefined || id!=""){
  currentTime= new Date().getTime();
+
 const item={
-  userId:id,
-  expiry: currentTime+(1000*60*3)
+  id:id,
+  expiry: currentTime+(1000*60*3),
+  token:finalResponse.token
 }
 
 localStorage.setItem("id",JSON.stringify(item));
@@ -206,8 +208,6 @@ localStorage.setItem("id",JSON.stringify(item));
 
 
 sessionStorage.setItem("id", id);
-
-
 
 
 
