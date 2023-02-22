@@ -384,6 +384,7 @@ function cartDetail() {
         console.log(response);
 
         cartData = response.data;
+        localStorage.setItem("carts", JSON.stringify(cartData));
 
         $("#Shopping_container").html('');
 
@@ -399,8 +400,8 @@ function cartDetail() {
             cartHTML += "<i class='fas fa-trash' data-product_id='" + pid + "' onclick=deleteItem(this)></i>";
 
 
-
             cartHTML += "<div class='content'>";
+
             cartHTML += "<h3>" + cartData[i].productName + "</h3>";
             cartHTML += "<span class='price'>Rs" + price + "/-</span>";
             cartHTML += "</span>";
@@ -428,12 +429,17 @@ function cartDetail() {
 
         }
 
+        console.log(response.cartTotal.cartTotal);
 
         var checkoutBTN = "<a href='http://localhost/grocerywebsite/checkout.php' class='btn-product' id='nextStep'> Checkout </a>";
 
         document.getElementById("checkout_btn").innerHTML = checkoutBTN;
 
         document.getElementById("Shopping_container").innerHTML = cartHTML;
+
+        document.getElementById("cartDisplayTotal").innerText = "Cart Total " + response.cartTotal.cartTotal + " Rs";
+
+
         /* cart  total : <span id="cartTotal"></span> 
         deliveryCharge :<span id="deliveryCharge"></span> <br>
         Gst :<span id="gst"></span>  <br>
@@ -466,6 +472,7 @@ function decrease(de) {
     /*price=  de.getAttribute('data-price');*/
     action = "update";
     quantity = qty - 1;
+    console.log(pid);
     addtocart(pid, quantity, action);
     cartDetail();
 }

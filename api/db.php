@@ -149,8 +149,8 @@ function updateData ($table,$params=array(),$whereCod=null){
         return $result;
      
      }
-     function deleteData($table,$id){
-      $sql="DELETE FROM $table WHERE id='$id'";
+     function deleteData($table,$where){
+      $sql="DELETE FROM $table WHERE $where";
       $result= $this->sql($sql,"delete");
       return $result;
      }
@@ -212,6 +212,9 @@ function updateData ($table,$params=array(),$whereCod=null){
    function generateRandomString($length = 10) {
       return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
   } 
+
+ 
+
   public function CreateToken ($payload,$key){
     $jwt = JWT::encode($payload, $key, 'HS256');
  return  $jwt;

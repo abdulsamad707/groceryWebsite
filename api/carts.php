@@ -66,9 +66,6 @@ if ($error) {
 }
 $cartDataproduct=$data->getData('carts',"ifnull(qty,0) as qty",null,null,"productID='$productId' AND userId='$id'",null,null);
 $productincartData=$data->getData('carts',"ifnull(sum(qty),0) as in_cart",null,null,"productID='$productId'",null,null);
-   
-
-
 $remaining=$response["data"][0]["qty_remaining"]-$productincartData['data'][0]['in_cart'];
    if($qty < $remaining)
 {
@@ -83,14 +80,32 @@ $remaining=$response["data"][0]["qty_remaining"]-$productincartData['data'][0]['
         $data->insert("carts",$insertCart);
         echo json_encode(['MSG'=>"product added Successfully"]);
     }else{
+        if($qty===0){
+         $data->deleteData("carts","productID='$productId'");
+         
+      echo json_encode(['MSG'=>"product delete from cart"]);
+        }else{
 
-      echo json_encode(['MSG'=>"product updated Successfully"]);
+          if($action==="add"){
+            echo json_encode(['MSG'=>"product already exist in cart"]);
+          }else{
+            $data->updateData("carts",["qty"=>$qty],["productID"=>$productId]);
+            echo json_encode(['MSG'=>"product update "]);
+          }
+
+        }
+  
     }
-  } 
+  } else{
+    echo json_encode(['MSG'=>"your ordered qty is not avaiable"]);
+  }
  }else{
 
     $join="LEFT JOIN products ON carts.productID =products.id";
-    $cartDataproduct=$data->getData('carts',"products.productName,carts.qty,carts.price,CONCAT('http://localhost/groceryWebsite/api/',products.image) as image",null,$join,"carts.userId='$id'",null,null);
+    $cartDataproduct=$data->getData('carts',"carts.productID,products.productName,carts.qty,carts.price,CONCAT('http://localhost/groceryWebsite/api/',products.image) as image",null,$join,"carts.userId='$id'",null,null);
+ $discount=0;
+    $cartTotal=cartTotal($cartDataproduct,$data,$discount);
+ $cartDataproduct["cartTotal"]= $cartTotal;
     echo json_encode($cartDataproduct);
  }
 }    
