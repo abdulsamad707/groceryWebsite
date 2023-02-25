@@ -85,13 +85,41 @@ function sendMail($message,$email,$username,$subject){
       function checkCustomerHasItem($customerId,$dataBase){
           $checkSql="select ";
       }
-      function cartTotal($cartData,$database,$discount){
+      function cartTotal($cartData,$database,$discount,$code){
                 
- 
+         $curl = curl_init();
+
+      
+      $userId=$cartData["data"][0]['userId'];
+         // Set the URL and other options
+         curl_setopt_array($curl, array(
+           CURLOPT_URL => "http://localhost/groceryWebsite/api/users.php?key=avdfheuw23&id=".$userId,
+           CURLOPT_RETURNTRANSFER => true,  // Return the response instead of outputting it
+           CURLOPT_ENCODING => "",  // Accept any encoding
+           CURLOPT_MAXREDIRS => 10,
+           CURLOPT_TIMEOUT => 30,
+           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+           CURLOPT_CUSTOMREQUEST => "GET",  // Change this to the HTTP method you need
+         
+         ));
+         
+         // Send the request and get the response
+         $response = curl_exec($curl);
+         $error = curl_error($curl);
+         
+         // Close curl
+         curl_close($curl);
+         $response=json_decode($response,true);
+         $number_of_order=$response["data"][0]["number_of_orders"];
+   
+
         $adminData=$database->getData("setting",null,null,null,null,null,null,null);
-        
+        $deliverygst=$adminData["data"][0]["deliverygst"];
         
         $deliveryCharge=$adminData["data"][0]["deliveryCharge"];
+        $deliverygst=floor(($deliverygst/100)*$deliveryCharge);
+        $deliveryCharge=$deliveryCharge+(floor(($deliverygst/100)*$deliveryCharge));
+        $minOrder=$adminData["data"][0]["minOrder"];
         $gst=$adminData["data"][0]["gst"];
                 $totalprice=0;
                $totalRecord= $cartData["totalRecord"];
@@ -99,7 +127,22 @@ function sendMail($message,$email,$username,$subject){
                     $totalprice=$totalprice+($value["qty"]*$value["price"]);
                 }
              $totalprice;    
-          
+             if($number_of_order==0){
+                if($discount==0){
+                    $discount=floor((25/100)*$totalprice);
+                    $couponCode="FIRST ORDER";
+                }
+   
+        
+             }else{
+                if(empty($code)){
+                $couponCode="";
+                }else{
+                    $couponCode=$code;
+                }
+
+             }
+
               $totalPrice=$totalprice-$discount;
            $governmentTax=floor(($gst/100)*$totalPrice);
             
@@ -110,6 +153,9 @@ function sendMail($message,$email,$username,$subject){
                       $cartTotal["cartTotal"]=$totalprice;
                       $cartTotal["gst"]=$governmentTax;
                       $cartTotal["totalItem"]=$totalRecord;
+                      $cartTotal["minOrder"]=$minOrder;
+                      $cartTotal["couponCode"]=$couponCode;
+                      $cartTotal["deliverygst"]=$deliverygst;
                       return $cartTotal;
                 }
 ?>

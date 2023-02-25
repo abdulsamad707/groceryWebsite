@@ -87,7 +87,7 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
   </div>
    
         <div id="checkout_btn">
-        
+    <button  class=' btn-lg btn-product btn-block ' id='nextStep'  onclick='checkout()'> Checkout </button>;
         </div>
     
     </div>

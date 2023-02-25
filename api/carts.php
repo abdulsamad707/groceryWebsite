@@ -102,9 +102,10 @@ $remaining=$response["data"][0]["qty_remaining"]-$productincartData['data'][0]['
  }else{
 
     $join="LEFT JOIN products ON carts.productID =products.id";
-    $cartDataproduct=$data->getData('carts',"carts.productID,products.productName,carts.qty,carts.price,CONCAT('http://localhost/groceryWebsite/api/',products.image) as image",null,$join,"carts.userId='$id'",null,null);
+    $cartDataproduct=$data->getData('carts',"carts.userId,carts.productID,products.productName,carts.qty,carts.price,CONCAT('http://localhost/groceryWebsite/api/',products.image) as image",null,$join,"carts.userId='$id'",null,null);
  $discount=0;
-    $cartTotal=cartTotal($cartDataproduct,$data,$discount);
+ $code="";
+    $cartTotal=cartTotal($cartDataproduct,$data,$discount,$code);
  $cartDataproduct["cartTotal"]= $cartTotal;
     echo json_encode($cartDataproduct);
  }

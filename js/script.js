@@ -363,9 +363,12 @@ var swiper = new Swiper(".review-slider", {
 });
 
 WebSite = location.href;
-WebSite = WebSite.replace('http://localhost/grocery/', '');
+WebSite = WebSite.replace('http://localhost/grocerywebsite/', '');
 WebSite.replace('?', '');
 
+function checkout() {
+    window.location.href = "checkout.php";
+}
 
 
 function cartDetail() {
@@ -385,7 +388,10 @@ function cartDetail() {
 
         cartData = response.data;
         localStorage.setItem("carts", JSON.stringify(cartData));
-
+        localStorage.setItem("cartTotal", JSON.stringify(response.cartTotal));
+        if (WebSite === "checkout.php") {
+            cartCheckout();
+        }
         $("#Shopping_container").html('');
 
         cartHTML = "";
@@ -431,9 +437,18 @@ function cartDetail() {
 
         console.log(response.cartTotal.cartTotal);
 
-        var checkoutBTN = "<a href='http://localhost/grocerywebsite/checkout.php' class='btn-product' id='nextStep'> Checkout </a>";
+        if (response.cartTotal.cartTotal >= response.cartTotal.minOrder) {
 
-        document.getElementById("checkout_btn").innerHTML = checkoutBTN;
+            document.getElementById("nextStep").disabled = false;
+
+
+        } else {
+            document.getElementById("nextStep").disabled = true;
+        }
+
+
+
+
 
         document.getElementById("Shopping_container").innerHTML = cartHTML;
 
@@ -616,17 +631,82 @@ function displayProduct() {
               <i class="fas fa-star-half-alt"></i>
           </div>
           <a href="#" class="btn">add to cart</a>
-          </div>*/
-
-
+          </div>
+          admin_course123@AbdulSamad
+*/
 
 
     });
+
 }
 
 /*
 displayProduct();
 */
-function showItem(item, index, arr) {
+function cartCheckout() {
+    getCartItem = localStorage.getItem("carts");
+    getCartItem = JSON.parse(getCartItem);
+    getCartTotal = localStorage.getItem("cartTotal");
+    getCartTotal = JSON.parse(getCartTotal);
+    console.log(WebSite);
+    console.log(getCartTotal);
+    if (WebSite === "checkout.php" && getCartItem == undefined || getCartItem == "" && WebSite != "index.php") {
+        window.location.href = "index.php";
+        return false;
+    }
 
+    checkoutItem = "";
+
+    getCartItem.map((item) => {
+        checkoutItem += " <li class='list-group-item d-flex justify-content-between lh-condensed'>";
+        checkoutItem += "  <div>";
+
+        checkoutItem += "    <h2 class='text-muted'>" + item.productName + "</h2>";
+        checkoutItem += "   </div>";
+        checkoutItem += " <span><h2>" + item.price + "  Rs</h2></span>";
+        checkoutItem += "   <span><h2>" + item.qty + "</h2></span>";
+
+        checkoutItem += " </li>";
+
+    });
+
+    document.getElementById("productOrder").innerHTML = checkoutItem;
+    console.log(getCartItem);
+    console.log(getCartItem.length);
+    document.getElementById("numberofcart").innerText = getCartItem.length;
+    document.getElementById("cartTotal").innerText = getCartTotal.cartTotal;
+    document.getElementById("gst").innerText = getCartTotal.gst;
+    document.getElementById("deliveryCharge").innerText = getCartTotal.deliveryCharge;
+    document.getElementById("finalAmount").innerText = getCartTotal.totalAmount;
+    document.getElementById("discount").innerText = getCartTotal.discount;
+
+    if (getCartTotal.couponCode == "") {
+        code = "No Coupon Code";
+    } else {
+        code = getCartTotal.couponCode;
+    }
+    document.getElementById("couponcode").innerText = code;
+    if (getCartTotal.cartTotal < getCartTotal.minOrder) {
+        document.getElementById("placeOrder").disabled = true;
+
+    } else {
+        document.getElementById("placeOrder").disabled = false;
+
+    }
+}
+jwtToken = localStorage.getItem("key");
+const jwt = jwtToken;
+
+const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+const parsedJwtData = JSON.parse(decodedJwtData); // Parse the decoded JSON data
+
+console.log(parsedJwtData);
+
+if (WebSite === "checkout.php") {
+    document.getElementById("customerName").value = parsedJwtData.username;
+    document.getElementById("email").value = parsedJwtData.email;
+    document.getElementById("address2").value = parsedJwtData.mobile;
+    document.getElementById("address").value = parsedJwtData.address;
+    cartCheckout();
 }

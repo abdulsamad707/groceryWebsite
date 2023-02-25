@@ -19,17 +19,32 @@ $userDataformbase=$data->getData("users",null,null,null,$whereCondition,null,nul
 
 if(isset($userDataformbase["data"][0])){
 $username= $userDataformbase["data"][0]["username"];
+
+
 $customer_id=$userDataformbase["data"][0]["id"];
+$useraddressdata=$data->getData("address",null,null,null,"user_id='$customer_id'",null,null,null);
+if(isset($useraddressdata["data"][0])){
+  $useraddress=$useraddressdata["data"][0]["address"];
+}else{
+  $useraddress="";
+}
+
 $customer_status=$userDataformbase["data"][0]["status"];
+$email=$userDataformbase["data"][0]["email"];
+$username=$userDataformbase["data"][0]["username"];
 $newPassword=strtolower($username)."123";
 $userpassword= $userDataformbase["data"][0]["password"];
+$mobile= $userDataformbase["data"][0]["mobile"];
 if(password_verify($password,$userpassword)){
           if($customer_status==1){
 
 
             $payload=[
-              "id"=>$customer_id
-          
+              "id"=>$customer_id,
+              "email"=>$email,
+              "username"=>$username,
+               "address"=>$useraddress,
+               "mobile"=>$mobile
               
                       ];
                    $jwt=$data-> CreateToken($payload,'keys');

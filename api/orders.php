@@ -130,12 +130,14 @@ if (!isset($status)) {
 		$discount=$userdata["discount"];
 				$whereCondition="userId='$customer_id' AND ip_add='$ip'";
              $cart=$userDataformbase=$data->getData("carts",null,null,null,$whereCondition,null,null,null);
-			
-			$cartTotal=cartTotal($cart,$data,$discount);
+			 $code=$userdata["couponCode"];
+			$cartTotal=cartTotal($cart,$data,$discount,$code);
 			$userdata["userId"]=$customer_id;
-			$orderplaceArray=array_merge($userdata,$cartTotal);
+			unset($cartTotal['minOrder']);
 
-			
+			$orderplaceArray=array_merge($userdata,$cartTotal);
+             print_r($orderplaceArray);
+			die();
 			unset($orderplaceArray['type']);
               $placeOrder=$data->insert("orderscustomer",$orderplaceArray);
 
