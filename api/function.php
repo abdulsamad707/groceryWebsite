@@ -89,7 +89,7 @@ function sendMail($message,$email,$username,$subject){
                 
          $curl = curl_init();
 
-      
+      $discount;
       $userId=$cartData["data"][0]['userId'];
          // Set the URL and other options
          curl_setopt_array($curl, array(
@@ -118,7 +118,7 @@ function sendMail($message,$email,$username,$subject){
         
         $deliveryCharge=$adminData["data"][0]["deliveryCharge"];
         $deliverygst=floor(($deliverygst/100)*$deliveryCharge);
-        $deliveryCharge=$deliveryCharge+(floor(($deliverygst/100)*$deliveryCharge));
+        $deliveryCharge=$deliveryCharge+   $deliverygst;
         $minOrder=$adminData["data"][0]["minOrder"];
         $gst=$adminData["data"][0]["gst"];
                 $totalprice=0;
@@ -128,29 +128,32 @@ function sendMail($message,$email,$username,$subject){
                 }
              $totalprice;    
              if($number_of_order==0){
-                if($discount==0){
+                if($discount===0){
                     $discount=floor((25/100)*$totalprice);
                     $couponCode="FIRST ORDER";
+                }else{
+                    $discount=$discount;
+                    $couponCode=$code;
                 }
    
         
              }else{
                 if(empty($code)){
-                $couponCode="";
+                $couponCode="No Coupon Applied";
                 }else{
                     $couponCode=$code;
                 }
 
              }
 
-              $totalPrice=$totalprice-$discount;
+            $totalPrice=$totalprice-$discount;
            $governmentTax=floor(($gst/100)*$totalPrice);
             
                       $finalAmount=$totalPrice+$governmentTax+$deliveryCharge;
                       $cartTotal["totalAmount"]=$finalAmount;
                       $cartTotal["discount"]=$discount;
                       $cartTotal["deliveryCharge"]=$deliveryCharge;
-                      $cartTotal["cartTotal"]=$totalprice;
+                      $cartTotal["cartTotal"]=$totalPrice;
                       $cartTotal["gst"]=$governmentTax;
                       $cartTotal["totalItem"]=$totalRecord;
                       $cartTotal["minOrder"]=$minOrder;

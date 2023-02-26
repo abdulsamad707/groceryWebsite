@@ -384,75 +384,88 @@ function cartDetail() {
         return res.json();
     }).then(function(response) {
 
-        console.log(response);
+        console.log(response.data);
+        if (response.totalRecord > 0) {
+            cartData = response.data;
+            localStorage.setItem("carts", JSON.stringify(cartData));
+            localStorage.setItem("cartTotal", JSON.stringify(response.cartTotal));
+            if (WebSite === "checkout.php") {
+                cartCheckout();
+            }
+            $("#Shopping_container").html('');
 
-        cartData = response.data;
-        localStorage.setItem("carts", JSON.stringify(cartData));
-        localStorage.setItem("cartTotal", JSON.stringify(response.cartTotal));
-        if (WebSite === "checkout.php") {
-            cartCheckout();
-        }
-        $("#Shopping_container").html('');
-
-        cartHTML = "";
-        for (i in cartData) {
-
-            productPath = cartData[i].image;
-            pid = cartData[i].productID;
-            qty = cartData[i].qty;
-            price = cartData[i].price;
-            cartHTML += "<div class='box'>";
-
-            cartHTML += "<i class='fas fa-trash' data-product_id='" + pid + "' onclick=deleteItem(this)></i>";
+            cartHTML = "";
 
 
-            cartHTML += "<div class='content'>";
+            for (i in cartData) {
 
-            cartHTML += "<h3>" + cartData[i].productName + "</h3>";
-            cartHTML += "<span class='price'>Rs" + price + "/-</span>";
-            cartHTML += "</span>";
+                productPath = cartData[i].image;
+                pid = cartData[i].productID;
+                qty = cartData[i].qty;
+                price = cartData[i].price;
+                cartHTML += "<div class='box'>";
 
-            cartHTML += "<span class='quantity'  id='qty-" + pid + "'>qty:";
-
-            cartHTML += "<i class='fa fa-plus inc' onclick=increase(this)  data-qty='" + qty + "' data-price='" + price + "' data-action='in' data-product_id='" + pid + "'></i>";
-
-            cartHTML += qty;
-
-            cartHTML += "<i class='fa fa-minus de' onclick=decrease(this)   data-qty='" + qty + "' data-price='" + price + "' data-action='de' data-product_id='" + pid + "'></i>";
+                cartHTML += "<i class='fas fa-trash' data-product_id='" + pid + "' onclick=deleteItem(this)></i>";
 
 
+                cartHTML += "<div class='content'>";
 
+                cartHTML += "<h3>" + cartData[i].productName + "</h3>";
+                cartHTML += "<span class='price'>Rs" + price + "/-</span>";
+                cartHTML += "</span>";
 
+                cartHTML += "<span class='quantity'  id='qty-" + pid + "'>qty:";
 
-            cartHTML += "</span>";
-            cartHTML += "</div>";
-            cartHTML += "</div>";
+                cartHTML += "<i class='fa fa-plus inc' onclick=increase(this)  data-qty='" + qty + "' data-price='" + price + "' data-action='in' data-product_id='" + pid + "'></i>";
+
+                cartHTML += qty;
+
+                cartHTML += "<i class='fa fa-minus de' onclick=decrease(this)   data-qty='" + qty + "' data-price='" + price + "' data-action='de' data-product_id='" + pid + "'></i>";
 
 
 
 
 
+                cartHTML += "</span>";
+                cartHTML += "</div>";
+                cartHTML += "</div>";
 
-        }
 
-        console.log(response.cartTotal.cartTotal);
 
-        if (response.cartTotal.cartTotal >= response.cartTotal.minOrder) {
 
-            document.getElementById("nextStep").disabled = false;
 
+
+            }
+
+            console.log(response.cartTotal.cartTotal);
+
+            if (response.cartTotal.cartTotal >= response.cartTotal.minOrder) {
+
+                document.getElementById("nextStep").disabled = false;
+
+
+            } else {
+                document.getElementById("nextStep").disabled = true;
+            }
+            document.getElementById("cartDisplayTotal").innerText = "Cart Total " + response.cartTotal.cartTotal + " Rs";
 
         } else {
+            document.getElementById("cartDisplayTotal").innerText = "Cart Total 0 Rs";
             document.getElementById("nextStep").disabled = true;
+            cartHTML = "NO item In the Cart";
+            localStorage.removeItem("carts");
+            localStorage.removeItem("cartTotal");
+            if (WebSite === "checkout.php") {
+                window.location.href = "index.php";
+            }
         }
-
 
 
 
 
         document.getElementById("Shopping_container").innerHTML = cartHTML;
 
-        document.getElementById("cartDisplayTotal").innerText = "Cart Total " + response.cartTotal.cartTotal + " Rs";
+
 
 
         /* cart  total : <span id="cartTotal"></span> 

@@ -152,7 +152,7 @@
                         </div>
                         <div class="col-md-6">
                       
-                            <button type="button" class="couponCodeApply">Apply Coupon </buuton>
+                            <button type="button" class="couponCodeApply"  onclick="applyCoupon()">Apply Coupon </buuton>
                      
                         </div>
                   </div>
@@ -203,23 +203,111 @@ async function PlaceOrder(){
   alert(discount);
  var samae_addrees =document.getElementById("same-address").checked;
  var save_info= document.getElementById("save-info").checked;
+
+ alert(save_info);
  var paymentmethod="cash";
  var paymentStatus=1;
  var orderStatus=1;
-     
- var OrderObject={
+ const APIKEY = "avdfheuw23";
+
+
+localStoreAddrees=parsedJwtData.address;
+billingAddrees=document.getElementById("address").value;
+
+
+
+if(billingAddrees && localStoreAddrees==""){
+      alert("please");
+    return false;
+}else{
+if(billingAddrees==localStoreAddrees){
+    saveAddrees=0;
+    address=billingAddrees;
+}else {
+
+
+
+    if(samae_addrees==true){
+        address=billingAddrees;
+    }else{
+        if(localStoreAddrees!=""){
+            address=localStoreAddrees;
+        }else{
+            address=billingAddrees;
+        }
+    }
+
+    if(save_info==true){
+        saveAddrees=1;
+    }else{
+        saveAddrees=0;
+    }
+
+}
+}
+var OrderObject={
 	"orderStatus":1,
-	"userId":2,
+"save": saveAddrees,
 	"discount":discount,
-	"deliveryAddress":"delivery",
+	"deliveryAddress":address,
 	"couponCode":couponcode,
 	"type":"order_place",
 	"paymentStatus":1,
 	"paymentmethod":"cash",
 	"deliveryboyid":0
+};
+OrderObject=JSON.stringify(OrderObject);
+console.log(parsedJwtData);
+apiurl = "http://localhost/groceryWebsite/api/orders.php?key=" + APIKEY;
+ const orderResponse  =await fetch(apiurl, {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${jwtToken}`
+
+        },
+        body:OrderObject
+    });
+response=await orderResponse.text();
+console.log(response);
+
 }
-OrderStatusObj=JSON.stringify(OrderObject);
-console.log(OrderStatusObj);
+async function applyCoupon(){
+   CouponCode=document.getElementById("coupon").value;
+   if(CouponCode==""){
+
+   }else{
+    getCartItem = localStorage.getItem("carts");
+    getCartItem = JSON.parse(getCartItem);
+    getCartTotal = localStorage.getItem("cartTotal");
+    getCartTotal = JSON.parse(getCartTotal);
+    cartData={
+        "cartTotal":getCartTotal.cartTotal,
+        "couponCode":CouponCode,
+        "cart":{
+            "data":getCartItem,
+            "totalRecord":getCartTotal.totalItem
+        }
+       
+    };
+    cartData=JSON.stringify(cartData);
+    console.log(cartData);
+    apiurl = "http://localhost/groceryWebsite/api/applycoupon.php?key=" + APIKEY;
+    const orderResponse  =await fetch(apiurl, {
+        method: "POST",
+       
+        body:   cartData
+    });
+response=await orderResponse.json();
+console.log(response);
+document.getElementById("numberofcart").innerText = response.totalItem;
+    document.getElementById("cartTotal").innerText = response.cartTotal;
+    document.getElementById("gst").innerText = response.gst;
+    document.getElementById("deliveryCharge").innerText = response.deliveryCharge;
+    document.getElementById("finalAmount").innerText = response.totalAmount;
+    document.getElementById("discount").innerText = response.discount;
+    document.getElementById("couponcode").innerText =response.couponCode;
+
+   }
 }
 function backtoHome(){
 window.location.href="index.php";

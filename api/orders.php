@@ -80,8 +80,7 @@ if (!isset($status)) {
 			$userdata = file_get_contents("php://input");
 			$userdata = json_decode($userdata, true);
 			$adminData = $data->DecodeToken($jwt_token, "key");
-
-			$type = $userdata["type"];
+        $type=$userdata["type"];
 			if ($type === "order_status") {
 		
 				$adminId = $adminData["id"];
@@ -127,18 +126,32 @@ if (!isset($status)) {
 
 					  }
 				 $ip=get_client_ip();
-		$discount=$userdata["discount"];
+	 $discount=$userdata["discount"];
 				$whereCondition="userId='$customer_id' AND ip_add='$ip'";
              $cart=$userDataformbase=$data->getData("carts",null,null,null,$whereCondition,null,null,null);
 			 $code=$userdata["couponCode"];
 			$cartTotal=cartTotal($cart,$data,$discount,$code);
+		
 			$userdata["userId"]=$customer_id;
 			unset($cartTotal['minOrder']);
 
 			$orderplaceArray=array_merge($userdata,$cartTotal);
-             print_r($orderplaceArray);
-			die();
+            if($orderplaceArray['save']==1){
+				$whereConditions="user_id='$customer_id'";
+             
+			$address=$data->getData("address",null,null,null,$whereConditions,null,null,null);
+			$deliveryAddress=$userdata["deliveryAddress"];
+  $totalRecord=$address["totalRecord"];
+                 if(  $totalRecord  <=0){
+				$data->insert("address",["addrees"=>$deliveryAddress,"user_id"=>$customer_id]);
+				 }
+
+
+			}
 			unset($orderplaceArray['type']);
+			unset($orderplaceArray['save']);
+		
+		
               $placeOrder=$data->insert("orderscustomer",$orderplaceArray);
 
 			  foreach($cart["data"] as $value){

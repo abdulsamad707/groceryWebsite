@@ -144,6 +144,9 @@ CREATE TABLE IF NOT EXISTS `setting`(
   `webSiteStatus` ENUM('1','0','2'),
 PRIMARY KEY (id)
 );
+CREATE TABLE IF NOT EXISTS `couponcodes` (`coupon_id` INT NOT NULL AUTO_INCREMENT , `coupon_code` VARCHAR(255) NOT NULL , `max_discount` INT NOT NULL , `discount` INT NOT NULL , `min_cart_value` INT NOT NULL , `discount_type` ENUM("perc","value") NOT NULL ,
+ PRIMARY KEY (`coupon_id`)) ENGINE = InnoDB;
+
 ALTER TABLE orderdetail ADD FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE orderdetail ADD FOREIGN KEY (order_id) REFERENCES orderscustomer(id);
 SELECT count(*),orderdetail.price,product_id,SUM(orderdetail.qty)as qty_sold,sum(orderdetail.qty)*orderdetail.price as revenue,products.productName,products.image
