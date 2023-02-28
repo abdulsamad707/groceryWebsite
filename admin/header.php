@@ -504,6 +504,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="coupon.php">
+
+          <span>Coupon</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="users.php">
        
 

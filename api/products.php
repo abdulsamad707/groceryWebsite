@@ -57,7 +57,7 @@ if(isset($_GET["id"])){
 
   $groupby =" group by products.id";
 }
- $sql="SELECT products.productqty,format(ifnull(AVG(productrating.rating),0),2) as rating,products.status,products.price,products.productName,products.id,concat('http://localhost/grocerywebsite/api/',products.image) as ProductImage,ifnull(sum(orderdetail.qtyorder),0) as qty_sold, ifnull(products.productqty-(ifnull(sum(orderdetail.qtyorder),0)),0) as qty_remaining,ifnull(sum(orderdetail.qtyorder*orderdetail.price),0) as revenue from products left join orderdetail on orderdetail.product_id=products.id  left join productrating  ON productrating.product_id=products.id where $whereConduction $groupby ";
+ $sql="SELECT products.productqty,format(ifnull(AVG(productrating.rating),0),2) as rating,products.status,products.price,products.productName,products.id,concat('http://localhost/grocerywebsite/api/',products.image) as ProductImage,ifnull(sum(orderdetail.orderqty),0) as qty_sold, ifnull(products.productqty-(ifnull(sum(orderdetail.orderqty),0)),0) as qty_remaining,ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue from products left join orderdetail on orderdetail.product_id=products.id  left join productrating  ON productrating.product_id=products.id where $whereConduction $groupby ";
 
 $productData=$data->sql($sql,"read");
 echo json_encode($productData);

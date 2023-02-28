@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2023 at 03:17 AM
+-- Generation Time: Feb 27, 2023 at 02:30 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `myapi`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `address`
+--
+
+CREATE TABLE `address` (
+  `id_address` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `user_id` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `address`
+--
+
+INSERT INTO `address` (`id_address`, `address`, `user_id`) VALUES
+(1, 'd1 islamic arcade main university road', 2);
 
 -- --------------------------------------------------------
 
@@ -102,7 +121,16 @@ INSERT INTO `assignorder` (`id`, `order_id`, `deliveryboyid`) VALUES
 (19, 43, 2),
 (20, 45, 2),
 (21, 53, 2),
-(22, 53, 3);
+(22, 53, 3),
+(23, 54, 3),
+(24, 56, 3),
+(25, 57, 3),
+(26, 58, 3),
+(27, 59, 3),
+(28, 60, 3),
+(29, 61, 3),
+(30, 62, 3),
+(31, 63, 3);
 
 -- --------------------------------------------------------
 
@@ -125,12 +153,36 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`id`, `userId`, `productID`, `userType`, `qty`, `price`, `ip_add`) VALUES
-(63, 1, 3, 'Reg', '3', '120', '::1'),
-(64, 1, 4, 'Reg', '3', '50', '::1'),
-(65, 1, 6, 'Reg', '1', '100', '::1'),
-(67, 2, 2, 'Reg', '2', '100', '::1'),
-(68, 2, 4, 'Reg', '3', '50', '::1'),
-(69, 2, 7, 'Reg', '3', '100', '::1');
+(88, 2, 6, 'Reg', '1', '100', '::1'),
+(89, 2, 2, 'Reg', '1', '100', '::1'),
+(90, 2, 7, 'Reg', '2', '100', '::1'),
+(92, 2, 3, 'Reg', '1', '120', '::1'),
+(93, 2, 4, 'Reg', '1', '50', '::1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `couponcodes`
+--
+
+CREATE TABLE `couponcodes` (
+  `coupon_id` int(11) NOT NULL,
+  `coupon_code` varchar(255) NOT NULL,
+  `max_discount` int(11) NOT NULL,
+  `discount` int(11) NOT NULL,
+  `min_cart_value` int(11) NOT NULL,
+  `discount_type` enum('perc','value') NOT NULL,
+  `coupon_status` int(11) NOT NULL,
+  `added_on` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `couponcodes`
+--
+
+INSERT INTO `couponcodes` (`coupon_id`, `coupon_code`, `max_discount`, `discount`, `min_cart_value`, `discount_type`, `coupon_status`, `added_on`) VALUES
+(1, 'HALF50', 1000, 50, 400, 'perc', 0, '2023-02-26 18:30:17'),
+(2, '200OFF', 1000, 200, 100, 'value', 0, '2023-02-26 18:30:17');
 
 -- --------------------------------------------------------
 
@@ -269,7 +321,48 @@ INSERT INTO `orderdetail` (`id`, `product_id`, `qtyorder`, `price`, `user_id`, `
 (74, 6, 1, 100, 1, 53),
 (75, 2, 1, 100, 1, 53),
 (76, 7, 1, 100, 1, 53),
-(77, 8, 1, 100, 1, 53);
+(77, 8, 1, 100, 1, 53),
+(78, 6, 2, 100, 2, 54),
+(79, 8, 2, 100, 2, 54),
+(80, 3, 1, 120, 2, 54),
+(81, 2, 1, 100, 2, 54),
+(82, 4, 1, 50, 2, 54),
+(83, 7, 1, 100, 2, 54),
+(90, 6, 2, 100, 2, 56),
+(91, 8, 2, 100, 2, 56),
+(92, 3, 1, 120, 2, 56),
+(93, 2, 1, 100, 2, 56),
+(94, 4, 1, 50, 2, 56),
+(95, 7, 1, 100, 2, 56),
+(96, 4, 2, 50, 2, 57),
+(97, 7, 1, 100, 2, 57),
+(98, 3, 1, 120, 2, 57),
+(99, 2, 1, 100, 2, 57),
+(100, 6, 1, 100, 2, 57),
+(101, 4, 2, 50, 2, 58),
+(102, 7, 1, 100, 2, 58),
+(103, 3, 1, 120, 2, 58),
+(104, 2, 1, 100, 2, 58),
+(105, 6, 1, 100, 2, 58),
+(106, 6, 1, 100, 2, 59),
+(107, 2, 1, 100, 2, 59),
+(108, 7, 1, 100, 2, 59),
+(109, 6, 1, 100, 2, 60),
+(110, 2, 1, 100, 2, 60),
+(111, 7, 2, 100, 2, 60),
+(112, 3, 1, 120, 2, 60),
+(113, 6, 1, 100, 2, 61),
+(114, 2, 1, 100, 2, 61),
+(115, 7, 2, 100, 2, 61),
+(116, 3, 1, 120, 2, 61),
+(117, 6, 1, 100, 2, 62),
+(118, 2, 1, 100, 2, 62),
+(119, 7, 2, 100, 2, 62),
+(120, 3, 1, 120, 2, 62),
+(121, 6, 1, 100, 2, 63),
+(122, 2, 1, 100, 2, 63),
+(123, 7, 2, 100, 2, 63),
+(124, 3, 1, 120, 2, 63);
 
 -- --------------------------------------------------------
 
@@ -304,7 +397,16 @@ CREATE TABLE `orderscustomer` (
 
 INSERT INTO `orderscustomer` (`id`, `userId`, `gst`, `totalAmount`, `cartTotal`, `paymentStatus`, `orderStatus`, `deliveryboyid`, `deliverat`, `acceptat`, `deliveryCharge`, `paymentmethod`, `discount`, `couponCode`, `deliveryAddress`, `totalItem`, `orderDate`, `deliverygst`) VALUES
 (49, 1, '127', '997', '670', '1', 5, 1, NULL, NULL, '200', 'cash', '0', '', 'delivery', '6', '2023-02-24 19:11:40', 40),
-(53, 1, '108', '878', '570', '1', 5, 3, NULL, NULL, '200', 'cash', '0', '', 'delivery', '6', '2023-02-24 19:11:45', 40);
+(53, 1, '108', '878', '570', '1', 5, 3, NULL, NULL, '200', 'cash', '0', '', 'delivery', '6', '2023-02-24 19:11:45', 40),
+(54, 2, '104', '902', '770', '1', 5, 3, NULL, NULL, '220', 'cash', '192', 'FIRST ORDER', 'd1 islamic arcade main university road', '6', '2023-02-25 21:19:20', 10),
+(56, 2, '138', '1128', '770', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '6', '2023-02-25 21:19:40', 10),
+(57, 2, '93', '833', '520', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '5', '2023-02-25 21:37:47', 10),
+(58, 2, '93', '833', '520', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '5', '2023-02-25 21:37:58', 10),
+(59, 2, '54', '574', '300', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '3', '2023-02-26 00:14:07', 20),
+(60, 2, '93', '833', '520', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '4', '2023-02-26 00:14:17', 20),
+(61, 2, '46', '526', '260', '1', 5, 3, NULL, NULL, '220', 'cash', '260', 'HALF50', 'd1 islamic arcade main university road', '4', '2023-02-26 00:14:26', 20),
+(62, 2, '46', '526', '260', '1', 5, 3, NULL, NULL, '220', 'cash', '260', 'HALF50', 'd1 islamic arcade main university road', '4', '2023-02-26 00:14:41', 20),
+(63, 2, '57', '597', '320', '1', 5, 3, NULL, NULL, '220', 'cash', '200', '200OFF', 'd1 islamic arcade main university road', '4', '2023-02-26 00:21:06', 20);
 
 -- --------------------------------------------------------
 
@@ -420,7 +522,7 @@ CREATE TABLE `setting` (
 --
 
 INSERT INTO `setting` (`id`, `deliveryCharge`, `webSiteStatus`, `gst`, `minOrder`, `deliverygst`) VALUES
-(1, '200', '1', '18', 500, 5);
+(1, '200', '1', '18', 200, 10);
 
 -- --------------------------------------------------------
 
@@ -514,6 +616,12 @@ INSERT INTO `users` (`id`, `username`, `mobile`, `password`, `email`, `status`, 
 --
 
 --
+-- Indexes for table `address`
+--
+ALTER TABLE `address`
+  ADD PRIMARY KEY (`id_address`);
+
+--
 -- Indexes for table `admins`
 --
 ALTER TABLE `admins`
@@ -538,6 +646,12 @@ ALTER TABLE `carts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `userId` (`userId`),
   ADD KEY `productID` (`productID`);
+
+--
+-- Indexes for table `couponcodes`
+--
+ALTER TABLE `couponcodes`
+  ADD PRIMARY KEY (`coupon_id`);
 
 --
 -- Indexes for table `deliveryboy`
@@ -625,6 +739,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `address`
+--
+ALTER TABLE `address`
+  MODIFY `id_address` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
@@ -640,13 +760,19 @@ ALTER TABLE `apikey`
 -- AUTO_INCREMENT for table `assignorder`
 --
 ALTER TABLE `assignorder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+
+--
+-- AUTO_INCREMENT for table `couponcodes`
+--
+ALTER TABLE `couponcodes`
+  MODIFY `coupon_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `deliveryboy`
@@ -676,13 +802,13 @@ ALTER TABLE `emp_salary`
 -- AUTO_INCREMENT for table `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `orderscustomer`
 --
 ALTER TABLE `orderscustomer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `productrating`

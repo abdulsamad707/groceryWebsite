@@ -62,7 +62,7 @@ if (!isset($status)) {
 			$whereConditions = "orderdetail.order_id='$orderID'";
 			$joins = "LEFT JOIN products OM orderdetail.product_id=products.id";
 			$orderdetail = $data->sql(
-				"SELECT products.productName,orderdetail.qtyorder as qty FROM orderdetail LEFT JOIN  products ON orderdetail.product_id=products.id where orderdetail.order_id='$orderID'",
+				"SELECT product_id,orderdetail.price,products.productName,orderdetail.qtyorder as qty FROM orderdetail LEFT JOIN  products ON orderdetail.product_id=products.id where orderdetail.order_id='$orderID'",
 				"read"
 			);
 			$orderdata["products"] = $orderdetail['data'];
@@ -92,17 +92,23 @@ if (!isset($status)) {
 					if ($rider_id != 0) {
 						if ($ordStat == 5) {
 							$updateOrder = $data->updateData("deliveryboy", ["busy" => 0], ["id" => "'$rider_id'"]);
-						} else {
-							$updateOrder = $data->updateData("deliveryboy", ["busy" => 1], ["id" => "'$rider_id'"]);
-						}
-
+							$updateOrder = $data->sql("UPDATE orderdetail set orderqty=qtyorder WHERE order_id='$order_id'",'update');						} else {
+					
+						 } 
+						 if ($ordStat != 5) {
+						 		$updateOrder = $data->updateData("deliveryboy", ["busy" => 1], ["id" => "'$rider_id'"]);
+						 }
+						
 						$orderdata = $data->getData("assignorder", null, null, null, "deliveryboyid='$rider_id' AND order_id='$order_id'", null, null, null);
 						$totalRecord = $orderdata["totalRecord"];
 						if ($totalRecord > 0) {} else {
 							$data->insert("assignorder", ["order_id" => $order_id, "deliveryboyid" => $rider_id]);
 						}
 					}
-			
+					if($ordStat == 6){
+						$updateOrder = $data->updateData("deliveryboy", ["busy" => 0], ["id" => "'$rider_id'"]);
+						
+					}
 
 					$orderArray = [
 						"deliveryboyid" => $rider_id,
@@ -161,10 +167,12 @@ if (!isset($status)) {
 		$order_id=$placeOrder["insertId"];
 		$orderDetali["order_id"]=$order_id;
 		$orderDetali["user_id"]=$customer_id;
+		$orderDetali["orderqty"]=0;
         $data->insert('orderdetail',$orderDetali);
 			  }
+			  $data->deleteData("carts","userId='$customer_id'");
 		
-				
+				echo json_encode(["msg"=>"Order Place","status"=>"succcess"]);
 
 
          }

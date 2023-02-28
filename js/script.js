@@ -371,8 +371,10 @@ function checkout() {
 }
 
 
-function cartDetail() {
-    urlCart = "http://localhost/groceryWebsite/api/carts.php?key=" + APIKEY;
+function cartDetail(discount, code) {
+    alert(discount + "code" + code);
+
+    urlCart = "http://localhost/groceryWebsite/api/carts.php?key=" + APIKEY + "&discount=" + discount + "&code=" + code;
     jwtToken = localStorage.getItem("key");
     fetch(urlCart, {
         method: "GET",
@@ -387,8 +389,12 @@ function cartDetail() {
         console.log(response.data);
         if (response.totalRecord > 0) {
             cartData = response.data;
+            cartDatas = localStorage.getItem("carts");
+
+
             localStorage.setItem("carts", JSON.stringify(cartData));
             localStorage.setItem("cartTotal", JSON.stringify(response.cartTotal));
+
             if (WebSite === "checkout.php") {
                 cartCheckout();
             }
@@ -447,7 +453,15 @@ function cartDetail() {
             } else {
                 document.getElementById("nextStep").disabled = true;
             }
-            document.getElementById("cartDisplayTotal").innerText = "Cart Total " + response.cartTotal.cartTotal + " Rs";
+            getCartTotal = localStorage.getItem("cartTotal");
+            getCartTotal = JSON.parse(getCartTotal);
+
+            if (getCartTotal != undefined) {
+                cartTotal = getCartTotal.cartTotal;
+            } else {
+                cartTotal = response.cartTotal.cartTotal;
+            }
+            document.getElementById("cartDisplayTotal").innerText = "Cart Total " + cartTotal + " Rs";
 
         } else {
             document.getElementById("cartDisplayTotal").innerText = "Cart Total 0 Rs";
@@ -480,45 +494,12 @@ function cartDetail() {
 
 }
 
-function deleteItem(de) {
-    var conf = confirm('Are U Sure To delete Item From cart');
 
-    if (conf) {
-        pid = de.getAttribute('data-product_id');
-        quantity = 0;
-        action = "update";
-        addtocart(pid, quantity, action);
-        cartDetail();
-    }
-}
-cartDetail();
-
-function decrease(de) {
-
-    pid = de.getAttribute('data-product_id');
-    qty = de.getAttribute('data-qty');
-    /*price=  de.getAttribute('data-price');*/
-    action = "update";
-    quantity = qty - 1;
-    console.log(pid);
-    addtocart(pid, quantity, action);
-    cartDetail();
-}
-
-function increase(de) {
-
-    pid = de.getAttribute('data-product_id');
-    qty = de.getAttribute('data-qty');
-    /*price=  de.getAttribute('data-price');*/
-    action = "update";
-    quantity = parseInt(qty) + 1;
-    addtocart(pid, quantity, action);
-    cartDetail();
-}
 /*cartDetail();*/
 function addtocart(id, quantity, action) {
     var productId = id;
     var productQty = quantity;
+    console.log(action);
     cartObject = {
         productId: productId,
         qty: productQty,
@@ -555,7 +536,11 @@ function addtocart(id, quantity, action) {
         return response.text();
     }).then(function(text) {
         console.log(text);
-        cartDetail();
+
+        if (action === "add") {
+            cartDetail(0);
+        }
+
         /*
                     data = text.cartData.data;
                     cartTotal = text.cartData.cartTotal;
@@ -722,4 +707,82 @@ if (WebSite === "checkout.php") {
     document.getElementById("address2").value = parsedJwtData.mobile;
     document.getElementById("address").value = parsedJwtData.address;
     cartCheckout();
+}
+
+function deleteItem(de) {
+    var conf = confirm('Are U Sure To delete Item From cart');
+
+    if (conf) {
+        pid = de.getAttribute('data-product_id');
+        quantity = 0;
+        action = "update";
+        addtocart(pid, quantity, action);
+        if (WebSite === 'checkout.php') {
+            discount = document.getElementById("discount").innerText;
+            code = document.getElementById("couponcode").innerText;
+        } else {
+            discount = 0;
+            code = "";
+        }
+        cartDetail(discount, code);
+    }
+}
+
+cartDiscount = localStorage.getItem("cartDiscount");
+cartDiscount = JSON.parse(cartDiscount);
+
+if (cartDiscount != undefined) {
+    cartDetail(cartDiscount.discount, cartDiscount.code);
+} else {
+    cartDetail(0, "");
+}
+
+function decrease(de) {
+
+    pid = de.getAttribute('data-product_id');
+    qty = de.getAttribute('data-qty');
+    /*price=  de.getAttribute('data-price');*/
+    action = "update";
+    quantity = qty - 1;
+    console.log(pid);
+
+
+    if (quantity == 0) {
+        var conf = confirm('Are U Sure To delete Item From cart');
+        if (conf) {
+            addtocart(pid, quantity, action);
+        }
+    } else {
+        addtocart(pid, quantity, action);
+    }
+
+
+
+    if (WebSite === 'checkout.php') {
+        discount = document.getElementById("discount").innerText;
+        code = document.getElementById("couponcode").innerText;
+    } else {
+        discount = 0;
+        code = "";
+    }
+    cartDetail(discount, code);
+}
+
+function increase(de) {
+
+    pid = de.getAttribute('data-product_id');
+    qty = de.getAttribute('data-qty');
+    /*price=  de.getAttribute('data-price');*/
+    action = "update";
+    quantity = parseInt(qty) + 1;
+    addtocart(pid, quantity, action);
+    if (WebSite === 'checkout.php') {
+        discount = document.getElementById("discount").innerText;
+        code = document.getElementById("couponcode").innerText;
+    } else {
+        discount = 0;
+        code = "";
+    }
+
+    cartDetail(discount, code);
 }

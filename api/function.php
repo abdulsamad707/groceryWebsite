@@ -111,14 +111,37 @@ function sendMail($message,$email,$username,$subject){
          curl_close($curl);
          $response=json_decode($response,true);
          $number_of_order=$response["data"][0]["number_of_orders"];
-   
+   /*1-table
+2-rows
+3-groupBy
+4-join
+5-whereCondition
+6-orderBy
+7-limit
+
+
+
+
+*/
 
         $adminData=$database->getData("setting",null,null,null,null,null,null,null);
+        $adminDatas=$database->getData("couponcodes",null,null,null,"coupon_code='$code'",null,null,null);
+        if(isset($adminDatas["data"][0])){
+        $coupon_type=  $adminDatas["data"][0]["discount_type"];
+        }else{
+            $coupon_type="product";
+        }
         $deliverygst=$adminData["data"][0]["deliverygst"];
+        if($coupon_type==="deliveryoff"){
+            $deliveryCharge=0;
+        }else{
+            $deliveryCharge=$adminData["data"][0]["deliveryCharge"];
         
-        $deliveryCharge=$adminData["data"][0]["deliveryCharge"];
+        }
+   
         $deliverygst=floor(($deliverygst/100)*$deliveryCharge);
         $deliveryCharge=$deliveryCharge+   $deliverygst;
+
         $minOrder=$adminData["data"][0]["minOrder"];
         $gst=$adminData["data"][0]["gst"];
                 $totalprice=0;
@@ -132,6 +155,7 @@ function sendMail($message,$email,$username,$subject){
                     $discount=floor((25/100)*$totalprice);
                     $couponCode="FIRST ORDER";
                 }else{
+
                     $discount=$discount;
                     $couponCode=$code;
                 }
@@ -144,6 +168,12 @@ function sendMail($message,$email,$username,$subject){
                     $couponCode=$code;
                 }
 
+             }
+
+             if($coupon_type=="deliveryoff"){
+              $discount=0;
+              $deliveryCharge=0;
+              $deliverygst=0;
              }
 
             $totalPrice=$totalprice-$discount;

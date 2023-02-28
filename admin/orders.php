@@ -50,6 +50,7 @@
              <p>   Order Date :<span id="order_date"></span></p>
              <p>   Order Time :<span id="order_time"></span></p>
              <p>   Order Amount :<span id="order_amount"></span></p>
+             <p>   Delivery Charge :<span id="deliveryCharge"></span></p>
              <p id="rider_info">  Rider Name :<span id="rider_name"></span></p>
              <p>  Rider Number :<span id="rider_number"></span></p>
              <p>  Order Status :<span id="order_status">
@@ -70,6 +71,7 @@
                     <td>S.No</td>
               <td>Product Name</td>
               <td> Qty </td>
+              <td> Price </td>
                 </tr>
 </thead>
 <tbody  id='orderItemdetail'>
@@ -183,8 +185,11 @@ orderHTML+="</tr>";
 document.getElementById("orders").innerHTML=orderHTML;
 
 }
+setInterval(() => {
+  displayOrder();
+},1000);
 
-displayOrder();
+
 
 
 
@@ -250,7 +255,10 @@ pdfMake.createPdf(docDefinition).download("all order Invoice"+".pdf");
 
 
 
-
+function removeItem(product_id,orderid,price,qty){
+  alert(orderid);
+view(orderid);
+}
 
 async function view(id){
  document.getElementById("productNmae").innerHTML="Order Id "+id;
@@ -289,12 +297,21 @@ RiderNumber=jsonInventory.data[0].rider_number;
 if(RiderNumber==null){
   RiderNumber="No Rider Assigned";
 }
+if(jsonInventory.data[0].deliveryCharge ==0){
+deliveryCharge="Free";
+}else{
+  deliveryCharge=jsonInventory.data[0].deliveryCharge +" Rs";
+}
+
+
 ordersproductHTML="";
 jsonInventory.products.map((orderItems,i)=>{
   ordersproductHTML+="<tr>";
   ordersproductHTML+="<td>"+(i+1)+"</td>";
   ordersproductHTML+="<td>"+orderItems.productName+"</td>";
   ordersproductHTML+="<td>"+orderItems.qty+"</td>";
+  ordersproductHTML+="<td>"+orderItems.price+" Rs </td>";
+ 
   ordersproductHTML+="</tr>";
 });
 document.getElementById("orderItemdetail").innerHTML=ordersproductHTML;
@@ -303,18 +320,19 @@ document.getElementById("rider_name").innerText=RiderName;
 document.getElementById("orderStatusBtn").className=OrderStatusClass;
 document.getElementById("orderStatusBtn").innerText=Order_Status;
 document.getElementById("coupon_code").innerText=jsonInventory.data[0].couponCode;
-document.getElementById("gst").innerText=jsonInventory.data[0].gst;
-document.getElementById("discount").innerText=jsonInventory.data[0].discount;
+document.getElementById("gst").innerText=jsonInventory.data[0].gst+" Rs";
+document.getElementById("discount").innerText=jsonInventory.data[0].discount+" Rs";
 
-
+document.getElementById("deliveryCharge").innerText=deliveryCharge;
 
 
 }
 async function downloadInvoice(id){
   const inventory=await fetch("http://localhost/groceryWebsite/api/orders.php?key=avdfheuw23&id="+id);
 const jsonInventory=await inventory.json();
+console.log("Download ");
 console.log(jsonInventory);
-var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Product Name', style: 'tableHeader' }, { text: 'Qty', style: 'tableHeader' }];
+var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Product Name', style: 'tableHeader' }, { text: 'Qty', style: 'tableHeader' },{ text: 'Price (Rs)', style: 'tableHeader' }];
 RiderName=jsonInventory.data[0].rider_name;
 if(RiderName==null){
   RiderName="No Rider Assigned";
@@ -326,6 +344,15 @@ if(RiderNumber==null){
 currentDate=new Date();
 currentDate=currentDate.toLocaleString([],{month:"long",day:"numeric",year:"numeric",hour12:true,hour:"numeric",minute:"numeric"});
 alert(currentDate);
+var discount=jsonInventory.data[0].discount;
+
+  CouponApply=jsonInventory.data[0].couponCode;
+
+if(jsonInventory.data[0].deliveryCharge ==0){
+deliveryCharge="Free";
+}else{
+  deliveryCharge=jsonInventory.data[0].deliveryCharge +" Rs";
+}
 var docDefinition = {
 
 content: [
@@ -333,17 +360,21 @@ content: [
   {text:"Customer Name :"+jsonInventory.data[0].customer_name},
   {text:"Customer Number :"+jsonInventory.data[0].customer_mobile},
   {text:"Delivery Address :"+jsonInventory.data[0].deliveryAddress},
+  {text:"Coupon Code :"+  CouponApply},
+  {text:"Discount :"+  discount+" Rs"},
+  {text:"Gst :"+jsonInventory.data[0].gst+" Rs"},
   {text:"Order Amount :"+jsonInventory.data[0].totalAmount+" Rs"},
   {text:"Order Date :"+jsonInventory.data[0].orderDate},
   {text:"Order Status :"+jsonInventory.data[0].OrderStatus},
   {text:"Order Time :"+jsonInventory.data[0].order_time},
+  {text:"Delivery Charge:"+deliveryCharge},
   {text:"Rider Name :"+RiderName},
   {text:"Rider Number :"+RiderNumber},
     { text:'Product Detail', style: 'header' ,align:"center"},
   {
     table: {
       headerRows:2,
-      widths: ['*', '*','*'],
+      widths: ['*', '*','*','*'],
       body: [
 
 
@@ -360,7 +391,7 @@ console.log(index+1);
 
           IndexPdf=index+1;
 
-          return [IndexPdf,item.productName,item.qty];
+          return [IndexPdf,item.productName,item.qty,item.price];
       
 
 
@@ -370,7 +401,7 @@ console.log(index+1);
     }
   },
   {text:"Invoice For Order No "+id},
-  {text:"Generate At :"+currentDate}
+  {text:"Invoice Generate At :"+currentDate}
 ],
 styles: {
     header: {

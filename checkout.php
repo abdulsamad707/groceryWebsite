@@ -217,7 +217,7 @@ billingAddrees=document.getElementById("address").value;
 
 
 if(billingAddrees && localStoreAddrees==""){
-      alert("please");
+      alert("please provide delivery address");
     return false;
 }else{
 if(billingAddrees==localStoreAddrees){
@@ -267,49 +267,75 @@ apiurl = "http://localhost/groceryWebsite/api/orders.php?key=" + APIKEY;
         },
         body:OrderObject
     });
-response=await orderResponse.text();
-console.log(response);
-
-}
-async function applyCoupon(){
-   CouponCode=document.getElementById("coupon").value;
-   if(CouponCode==""){
-
-   }else{
-    getCartItem = localStorage.getItem("carts");
-    getCartItem = JSON.parse(getCartItem);
-    getCartTotal = localStorage.getItem("cartTotal");
-    getCartTotal = JSON.parse(getCartTotal);
-    cartData={
-        "cartTotal":getCartTotal.cartTotal,
-        "couponCode":CouponCode,
-        "cart":{
-            "data":getCartItem,
-            "totalRecord":getCartTotal.totalItem
-        }
-       
-    };
-    cartData=JSON.stringify(cartData);
-    console.log(cartData);
-    apiurl = "http://localhost/groceryWebsite/api/applycoupon.php?key=" + APIKEY;
-    const orderResponse  =await fetch(apiurl, {
-        method: "POST",
-       
-        body:   cartData
-    });
 response=await orderResponse.json();
 console.log(response);
-document.getElementById("numberofcart").innerText = response.totalItem;
-    document.getElementById("cartTotal").innerText = response.cartTotal;
-    document.getElementById("gst").innerText = response.gst;
-    document.getElementById("deliveryCharge").innerText = response.deliveryCharge;
-    document.getElementById("finalAmount").innerText = response.totalAmount;
-    document.getElementById("discount").innerText = response.discount;
-    document.getElementById("couponcode").innerText =response.couponCode;
-
-   }
+   localStorage.removeItem("carts");
+   localStorage.removeItem("cartTotal");
+   localStorage.removeItem("cartDiscount");
+    window.location.href="index.php";
 }
+
 function backtoHome(){
 window.location.href="index.php";
 }
+
+
+async function applyCoupon() {
+        CouponCode = document.getElementById("coupon").value;
+        if (CouponCode == "") {
+            alert("please provide coupon code");
+        } else {
+            getCartItem = localStorage.getItem("carts");
+            getCartItem = JSON.parse(getCartItem);
+            getCartTotal = localStorage.getItem("cartTotal");
+            getCartTotal = JSON.parse(getCartTotal);
+            cartData = {
+                "cartTotal": getCartTotal.cartTotal,
+                "couponCode": CouponCode,
+                "cart": {
+                    "data": getCartItem,
+                    "totalRecord": getCartTotal.totalItem
+                }
+
+            };
+            cartData = JSON.stringify(cartData);
+            console.log(cartData);
+            apiurl = "http://localhost/groceryWebsite/api/coupon.php?key=" + APIKEY;
+            const orderResponse = await fetch(apiurl, {
+                method: "POST",
+
+                body: cartData
+            });
+            response = await orderResponse.json();
+            console.log("Apply Coupon code");
+            console.log(response);
+            document.getElementById("numberofcart").innerText = response.totalItem;
+            document.getElementById("cartTotal").innerText = response.cartTotal.cartTotal;
+            document.getElementById("gst").innerText = response.gst;
+            document.getElementById("deliveryCharge").innerText = response.deliveryCharge;
+            document.getElementById("finalAmount").innerText = response.totalAmount;
+            document.getElementById("discount").innerText = response.discount;
+            document.getElementById("couponcode").innerText = response.couponCode;
+            discount = response.discount;
+            code = response.couponCode;
+                 var cartDiscount={
+                    discount:discount,
+                    code:code
+                 }
+                localStorage.removeItem("cartTotal");
+                localStorage.setItem("cartDiscount",JSON.stringify(cartDiscount));
+                
+        
+            cartDetail(discount,code);
+        
+          
+            if (response.cartTotal.cartTotal < response.cartTotal.minOrder) {
+                document.getElementById("placeOrder").disabled = true;
+            } else {
+                document.getElementById("placeOrder").disabled = false;
+            }
+        }
+
+    }
+
 </script>

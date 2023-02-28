@@ -67,10 +67,13 @@ if ($error) {
 $cartDataproduct=$data->getData('carts',"ifnull(qty,0) as qty",null,null,"productID='$productId' AND userId='$id'",null,null);
 $productincartData=$data->getData('carts',"ifnull(sum(qty),0) as in_cart",null,null,"productID='$productId'",null,null);
 $remaining=$response["data"][0]["qty_remaining"]-$productincartData['data'][0]['in_cart'];
-   if($qty < $remaining)
-{
-    $totalRecord=$cartDataproduct["totalRecord"];
+$qty;
+
+     $totalRecord=$cartDataproduct["totalRecord"];
     if($totalRecord<=0){
+
+        if($qty < $remaining ){
+
         $insertCart["userId"]=$id;
         $insertCart["qty"]=$qty;
         $insertCart["productID"]=$productId;
@@ -79,6 +82,9 @@ $remaining=$response["data"][0]["qty_remaining"]-$productincartData['data'][0]['
         $insertCart["userType"]="Reg";
         $data->insert("carts",$insertCart);
         echo json_encode(['MSG'=>"product added Successfully"]);
+        }else{
+          echo json_encode(['MSG'=>"Desired Qty is NOT available"]);
+        }
     }else{
         if($qty===0){
          $data->deleteData("carts","productID='$productId'");
@@ -89,22 +95,24 @@ $remaining=$response["data"][0]["qty_remaining"]-$productincartData['data'][0]['
           if($action==="add"){
             echo json_encode(['MSG'=>"product already exist in cart"]);
           }else{
+            if($qty < $remaining ){
             $data->updateData("carts",["qty"=>$qty],["productID"=>$productId]);
             echo json_encode(['MSG'=>"product update "]);
+            }else{
+              echo json_encode(['MSG'=>"Desired Qty is NOT available"]);
+            }
           }
 
         }
   
     }
-  } else{
-    echo json_encode(['MSG'=>"your ordered qty is not avaiable"]);
-  }
+  
  }else{
 
     $join="LEFT JOIN products ON carts.productID =products.id";
     $cartDataproduct=$data->getData('carts',"carts.userId,carts.productID,products.productName,carts.qty,carts.price,CONCAT('http://localhost/groceryWebsite/api/',products.image) as image",null,$join,"carts.userId='$id'",null,null);
- $discount=0;
- $code="";
+ $discount=$_GET["discount"];
+ $code=$_GET["code"];
  if(isset($cartDataproduct["data"][0])){
     $cartTotal=cartTotal($cartDataproduct,$data,$discount,$code);
     $cartDataproduct["cartTotal"]= $cartTotal;
