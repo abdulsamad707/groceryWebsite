@@ -149,11 +149,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="assets/js/constant.js"></script>
 <script>
  
 async function displayOrder(){
 
-  var  inventory=await fetch("http://localhost/groceryWebsite/api/orders.php?key=avdfheuw23");
+  var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23");
 var jsonInventory=await inventory.json();
 console.log(jsonInventory);
 
@@ -186,15 +187,15 @@ document.getElementById("orders").innerHTML=orderHTML;
 
 }
 setInterval(() => {
-  displayOrder();
+
 },1000);
 
-
+displayOrder();
 
 
 
 async  function downloadAllOrderReport(){
-  var  inventory=await fetch("http://localhost/groceryWebsite/api/orders.php?key=avdfheuw23");
+  var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23");
 var jsonInventory=await inventory.json();
 console.log(jsonInventory);
 var headerPdf= [{ text: 'S.No', style: 'tableHeader' },
@@ -262,7 +263,7 @@ view(orderid);
 
 async function view(id){
  document.getElementById("productNmae").innerHTML="Order Id "+id;
- const inventory=await fetch("http://localhost/groceryWebsite/api/orders.php?key=avdfheuw23&id="+id);
+ const inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
 let OrderStatus= jsonInventory.data[0].order_status;
@@ -328,7 +329,7 @@ document.getElementById("deliveryCharge").innerText=deliveryCharge;
 
 }
 async function downloadInvoice(id){
-  const inventory=await fetch("http://localhost/groceryWebsite/api/orders.php?key=avdfheuw23&id="+id);
+  const inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
 const jsonInventory=await inventory.json();
 console.log("Download ");
 console.log(jsonInventory);
@@ -431,9 +432,9 @@ pdfMake.createPdf(docDefinition).download("order Invoice"+".pdf");
 }
 async function updateOrder(id){
   console.log(id);
-  const inventory=await fetch("http://localhost/groceryWebsite/api/get_ridera_and_order_status.php?key=avdfheuw23");
+  const inventory=await fetch(API_PATH+"get_ridera_and_order_status.php?key=avdfheuw23");
 const jsonInventorys=await inventory.json();
-const current=await fetch("http://localhost/groceryWebsite/api/orders.php?key=avdfheuw23&id="+id);
+const current=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
 const currentOrder=await current.json();
 console.log(currentOrder);
 console.log(jsonInventorys);
@@ -518,7 +519,7 @@ return false;
 
       jwtToken=LsId.token;
  
-      sendRequest=await fetch("http://localhost/groceryWebsite/api/orders.php?key=avdfheuw23",
+      sendRequest=await fetch(API_PATH+"orders.php?key=avdfheuw23",
       {method:"POST",
         
         headers: {
@@ -527,7 +528,9 @@ return false;
   },
 
         body:OrderStatusObj});
-      sendRequestText=  await   sendRequest.text();
+      sendRequestText=  await   sendRequest.json();
+      displayMsg(      sendRequestText.msg,"success");
+    
 console.log(      sendRequestText);
       displayOrder();
       console.log( sendRequestText);

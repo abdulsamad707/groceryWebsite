@@ -86,14 +86,15 @@ function sendMail($message,$email,$username,$subject){
           $checkSql="select ";
       }
       function cartTotal($cartData,$database,$discount,$code){
-                
+      
          $curl = curl_init();
 
       $discount;
       $userId=$cartData["data"][0]['userId'];
          // Set the URL and other options
          curl_setopt_array($curl, array(
-           CURLOPT_URL => "http://localhost/groceryWebsite/api/users.php?key=avdfheuw23&id=".$userId,
+
+CURLOPT_URL =>API_FULL_PATH."users.php?key=avdfheuw23&id=".$userId,
            CURLOPT_RETURNTRANSFER => true,  // Return the response instead of outputting it
            CURLOPT_ENCODING => "",  // Accept any encoding
            CURLOPT_MAXREDIRS => 10,

@@ -171,6 +171,7 @@
 
 
 <?php include "footer.php"?>
+<script src="assets/js/constant.js"></script>
 <script>
 let formData = new FormData();
 /*
@@ -187,7 +188,7 @@ let capitalized = str.charAt(0).toUpperCase() + str.slice(1);
 async  function  displayProduct(){
 
         
-  const inventory=await fetch("http://localhost/groceryWebsite/api/coupon.php?key=avdfheuw23");
+  const inventory=await fetch(API_PATH+"coupon.php?key=avdfheuw23");
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
   console.log("helle"+Math.floor(Math.random()*10+1));
@@ -219,7 +220,7 @@ document.getElementById("productDisplay").innerHTML=html;
 }
 async function edit(id){
 document.getElementById("formHeading").innerText="Edit Coupon";
-const inventory=await fetch("http://localhost/groceryWebsite/api/coupon.php?key=avdfheuw23&id="+id);
+const inventory=await fetch(API_PATH+"coupon.php?key=avdfheuw23&id="+id);
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
 const productName=jsonInventory.data[0].max_discount;
@@ -258,7 +259,7 @@ console.log(id);
 }
  async function view(key){
   console.log("d"+key+Math.random()*100);
-  const inventory=await fetch("http://localhost/groceryWebsite/api/coupon.php?key=avdfheuw23&id="+key);
+  const inventory=await fetch(API_PATH+"coupon.php?key=avdfheuw23&id="+key);
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
 const productName=capitalize(jsonInventory.data[0].coupon_code);
@@ -372,7 +373,7 @@ id_coupon=document.getElementById("id_coupon").value;
    couponObject=JSON.stringify(couponObject);
    console.log(couponObject);
 alert(couponType);
-const inventory=await fetch("http://localhost/groceryWebsite/api/coupon.php?key=avdfheuw23",
+const inventory=await fetch(API_PATH+"coupon.php?key=avdfheuw23",
 {
 
   method:"POST",

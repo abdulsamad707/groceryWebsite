@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2023 at 02:30 AM
+-- Generation Time: Mar 01, 2023 at 02:34 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -130,7 +130,31 @@ INSERT INTO `assignorder` (`id`, `order_id`, `deliveryboyid`) VALUES
 (28, 60, 3),
 (29, 61, 3),
 (30, 62, 3),
-(31, 63, 3);
+(31, 63, 3),
+(32, 64, 3),
+(33, 65, 3),
+(34, 67, 3),
+(35, 68, 3),
+(36, 72, 3),
+(37, 71, 3),
+(38, 69, 3),
+(39, 70, 3),
+(40, 73, 3),
+(41, 75, 3),
+(42, 74, 3),
+(43, 76, 3),
+(44, 82, 3),
+(45, 81, 3),
+(46, 80, 3),
+(47, 79, 3),
+(48, 78, 3),
+(49, 77, 3),
+(50, 84, 3),
+(51, 83, 3),
+(52, 85, 3),
+(53, 86, 3),
+(54, 87, 3),
+(55, 88, 3);
 
 -- --------------------------------------------------------
 
@@ -148,17 +172,6 @@ CREATE TABLE `carts` (
   `ip_add` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `userId`, `productID`, `userType`, `qty`, `price`, `ip_add`) VALUES
-(88, 2, 6, 'Reg', '1', '100', '::1'),
-(89, 2, 2, 'Reg', '1', '100', '::1'),
-(90, 2, 7, 'Reg', '2', '100', '::1'),
-(92, 2, 3, 'Reg', '1', '120', '::1'),
-(93, 2, 4, 'Reg', '1', '50', '::1');
-
 -- --------------------------------------------------------
 
 --
@@ -171,7 +184,7 @@ CREATE TABLE `couponcodes` (
   `max_discount` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
   `min_cart_value` int(11) NOT NULL,
-  `discount_type` enum('perc','value') NOT NULL,
+  `discount_type` enum('perc','value','deliveryoff') NOT NULL,
   `coupon_status` int(11) NOT NULL,
   `added_on` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -181,8 +194,14 @@ CREATE TABLE `couponcodes` (
 --
 
 INSERT INTO `couponcodes` (`coupon_id`, `coupon_code`, `max_discount`, `discount`, `min_cart_value`, `discount_type`, `coupon_status`, `added_on`) VALUES
-(1, 'HALF50', 1000, 50, 400, 'perc', 0, '2023-02-26 18:30:17'),
-(2, '200OFF', 1000, 200, 100, 'value', 0, '2023-02-26 18:30:17');
+(1, '50OFF', 220, 50, 400, 'perc', 1, '2023-02-26 18:30:17'),
+(2, '200OFF', 1000, 200, 100, 'value', 1, '2023-02-26 18:30:17'),
+(3, 'FEULSAVE', 220, 220, 200, 'deliveryoff', 1, '2023-02-27 19:19:39'),
+(4, 'NOFEUL', 0, 0, 500, 'deliveryoff', 1, '2023-02-27 22:49:36'),
+(5, 'NOPETROL', 0, 0, 200, 'deliveryoff', 1, '2023-02-27 23:02:45'),
+(6, 'BIGSAVE', 600, 35, 1000, 'perc', 1, '2023-02-27 23:11:42'),
+(7, 'SAVEFEUL', 0, 0, 400, 'perc', 1, '2023-02-27 23:13:24'),
+(8, 'PETROLBACHAT', 0, 0, 0, 'deliveryoff', 1, '2023-02-27 23:18:23');
 
 -- --------------------------------------------------------
 
@@ -307,62 +326,92 @@ CREATE TABLE `orderdetail` (
   `qtyorder` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `order_id` int(11) DEFAULT NULL
+  `order_id` int(11) DEFAULT NULL,
+  `orderqty` int(11) NOT NULL,
+  `orderDetailStatus` int(255) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `orderdetail`
 --
 
-INSERT INTO `orderdetail` (`id`, `product_id`, `qtyorder`, `price`, `user_id`, `order_id`) VALUES
-(65, 2, 2, 100, 1, 49),
-(72, 3, 1, 120, 1, 53),
-(73, 4, 1, 50, 1, 53),
-(74, 6, 1, 100, 1, 53),
-(75, 2, 1, 100, 1, 53),
-(76, 7, 1, 100, 1, 53),
-(77, 8, 1, 100, 1, 53),
-(78, 6, 2, 100, 2, 54),
-(79, 8, 2, 100, 2, 54),
-(80, 3, 1, 120, 2, 54),
-(81, 2, 1, 100, 2, 54),
-(82, 4, 1, 50, 2, 54),
-(83, 7, 1, 100, 2, 54),
-(90, 6, 2, 100, 2, 56),
-(91, 8, 2, 100, 2, 56),
-(92, 3, 1, 120, 2, 56),
-(93, 2, 1, 100, 2, 56),
-(94, 4, 1, 50, 2, 56),
-(95, 7, 1, 100, 2, 56),
-(96, 4, 2, 50, 2, 57),
-(97, 7, 1, 100, 2, 57),
-(98, 3, 1, 120, 2, 57),
-(99, 2, 1, 100, 2, 57),
-(100, 6, 1, 100, 2, 57),
-(101, 4, 2, 50, 2, 58),
-(102, 7, 1, 100, 2, 58),
-(103, 3, 1, 120, 2, 58),
-(104, 2, 1, 100, 2, 58),
-(105, 6, 1, 100, 2, 58),
-(106, 6, 1, 100, 2, 59),
-(107, 2, 1, 100, 2, 59),
-(108, 7, 1, 100, 2, 59),
-(109, 6, 1, 100, 2, 60),
-(110, 2, 1, 100, 2, 60),
-(111, 7, 2, 100, 2, 60),
-(112, 3, 1, 120, 2, 60),
-(113, 6, 1, 100, 2, 61),
-(114, 2, 1, 100, 2, 61),
-(115, 7, 2, 100, 2, 61),
-(116, 3, 1, 120, 2, 61),
-(117, 6, 1, 100, 2, 62),
-(118, 2, 1, 100, 2, 62),
-(119, 7, 2, 100, 2, 62),
-(120, 3, 1, 120, 2, 62),
-(121, 6, 1, 100, 2, 63),
-(122, 2, 1, 100, 2, 63),
-(123, 7, 2, 100, 2, 63),
-(124, 3, 1, 120, 2, 63);
+INSERT INTO `orderdetail` (`id`, `product_id`, `qtyorder`, `price`, `user_id`, `order_id`, `orderqty`, `orderDetailStatus`) VALUES
+(143, 2, 3, 100, 2, 68, 3, 1),
+(144, 8, 2, 100, 2, 68, 2, 1),
+(145, 3, 1, 120, 2, 68, 1, 1),
+(146, 4, 1, 50, 2, 68, 1, 1),
+(147, 6, 1, 100, 2, 68, 1, 1),
+(148, 2, 3, 100, 2, 69, 3, 1),
+(149, 8, 2, 100, 2, 69, 2, 1),
+(150, 3, 1, 120, 2, 69, 1, 1),
+(151, 4, 1, 50, 2, 69, 1, 1),
+(152, 6, 1, 100, 2, 69, 1, 1),
+(153, 2, 3, 100, 2, 70, 3, 1),
+(154, 8, 2, 100, 2, 70, 2, 1),
+(155, 3, 1, 120, 2, 70, 1, 1),
+(156, 4, 1, 50, 2, 70, 1, 1),
+(157, 6, 1, 100, 2, 70, 1, 1),
+(158, 2, 4, 100, 2, 71, 0, 1),
+(159, 6, 2, 100, 2, 72, 2, 1),
+(160, 8, 1, 100, 2, 72, 1, 1),
+(161, 3, 1, 120, 2, 72, 1, 1),
+(162, 2, 1, 100, 2, 72, 1, 1),
+(163, 4, 1, 50, 2, 72, 1, 1),
+(164, 3, 2, 120, 2, 73, 2, 1),
+(165, 7, 2, 100, 2, 73, 2, 1),
+(166, 4, 2, 50, 2, 73, 2, 1),
+(167, 6, 2, 100, 2, 73, 2, 1),
+(168, 6, 2, 100, 2, 74, 2, 1),
+(169, 7, 2, 100, 2, 74, 2, 1),
+(170, 2, 1, 100, 2, 75, 1, 1),
+(171, 8, 1, 100, 2, 75, 1, 1),
+(172, 4, 2, 50, 2, 75, 2, 1),
+(173, 3, 2, 120, 2, 75, 2, 1),
+(174, 6, 2, 100, 2, 75, 2, 1),
+(175, 7, 3, 100, 2, 76, 3, 1),
+(176, 4, 2, 50, 2, 76, 2, 1),
+(177, 6, 2, 100, 2, 76, 2, 1),
+(178, 2, 3, 100, 2, 77, 3, 1),
+(179, 4, 1, 50, 2, 77, 1, 1),
+(180, 3, 2, 120, 2, 77, 2, 1),
+(181, 4, 2, 50, 2, 78, 2, 1),
+(182, 3, 2, 120, 2, 78, 2, 1),
+(183, 6, 3, 100, 2, 78, 3, 1),
+(184, 2, 5, 100, 2, 79, 5, 1),
+(185, 4, 1, 50, 2, 79, 1, 1),
+(186, 6, 1, 100, 2, 79, 1, 1),
+(187, 7, 1, 100, 2, 79, 1, 1),
+(188, 3, 2, 120, 2, 80, 2, 1),
+(189, 4, 1, 50, 2, 80, 1, 1),
+(190, 6, 1, 100, 2, 80, 1, 1),
+(191, 7, 1, 100, 2, 80, 1, 1),
+(192, 8, 1, 100, 2, 80, 1, 1),
+(193, 3, 5, 120, 2, 81, 5, 1),
+(194, 4, 1, 50, 2, 81, 1, 1),
+(195, 6, 1, 100, 2, 81, 1, 1),
+(196, 3, 2, 120, 2, 82, 2, 1),
+(197, 4, 2, 50, 2, 82, 2, 1),
+(198, 6, 1, 100, 2, 82, 1, 1),
+(199, 7, 1, 100, 2, 82, 1, 1),
+(200, 3, 1, 120, 2, 83, 1, 1),
+(201, 4, 1, 50, 2, 83, 1, 1),
+(202, 2, 4, 100, 2, 83, 4, 1),
+(203, 3, 3, 120, 2, 84, 3, 1),
+(204, 4, 2, 50, 2, 84, 2, 1),
+(205, 6, 1, 100, 2, 84, 1, 1),
+(206, 2, 1, 100, 2, 84, 1, 1),
+(207, 4, 1, 50, 2, 85, 1, 1),
+(208, 6, 1, 100, 2, 85, 1, 1),
+(209, 3, 1, 120, 2, 85, 1, 1),
+(210, 2, 1, 100, 2, 85, 1, 1),
+(211, 2, 3, 100, 2, 86, 3, 1),
+(212, 3, 2, 120, 2, 86, 2, 1),
+(213, 3, 2, 120, 2, 87, 2, 1),
+(214, 6, 3, 100, 2, 87, 3, 1),
+(215, 2, 1, 100, 2, 88, 1, 1),
+(216, 3, 2, 120, 2, 88, 2, 1),
+(217, 4, 1, 50, 2, 88, 1, 1),
+(218, 6, 2, 100, 2, 88, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -396,17 +445,27 @@ CREATE TABLE `orderscustomer` (
 --
 
 INSERT INTO `orderscustomer` (`id`, `userId`, `gst`, `totalAmount`, `cartTotal`, `paymentStatus`, `orderStatus`, `deliveryboyid`, `deliverat`, `acceptat`, `deliveryCharge`, `paymentmethod`, `discount`, `couponCode`, `deliveryAddress`, `totalItem`, `orderDate`, `deliverygst`) VALUES
-(49, 1, '127', '997', '670', '1', 5, 1, NULL, NULL, '200', 'cash', '0', '', 'delivery', '6', '2023-02-24 19:11:40', 40),
-(53, 1, '108', '878', '570', '1', 5, 3, NULL, NULL, '200', 'cash', '0', '', 'delivery', '6', '2023-02-24 19:11:45', 40),
-(54, 2, '104', '902', '770', '1', 5, 3, NULL, NULL, '220', 'cash', '192', 'FIRST ORDER', 'd1 islamic arcade main university road', '6', '2023-02-25 21:19:20', 10),
-(56, 2, '138', '1128', '770', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '6', '2023-02-25 21:19:40', 10),
-(57, 2, '93', '833', '520', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '5', '2023-02-25 21:37:47', 10),
-(58, 2, '93', '833', '520', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '5', '2023-02-25 21:37:58', 10),
-(59, 2, '54', '574', '300', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '3', '2023-02-26 00:14:07', 20),
-(60, 2, '93', '833', '520', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '4', '2023-02-26 00:14:17', 20),
-(61, 2, '46', '526', '260', '1', 5, 3, NULL, NULL, '220', 'cash', '260', 'HALF50', 'd1 islamic arcade main university road', '4', '2023-02-26 00:14:26', 20),
-(62, 2, '46', '526', '260', '1', 5, 3, NULL, NULL, '220', 'cash', '260', 'HALF50', 'd1 islamic arcade main university road', '4', '2023-02-26 00:14:41', 20),
-(63, 2, '57', '597', '320', '1', 5, 3, NULL, NULL, '220', 'cash', '200', '200OFF', 'd1 islamic arcade main university road', '4', '2023-02-26 00:21:06', 20);
+(68, 2, '100', '880', '560', '1', 5, 3, NULL, NULL, '220', 'cash', '210', 'HALF50', 'd1 islamic arcade main university road', '5', '2023-02-26 23:45:51', 20),
+(69, 2, '99', '869', '550', '1', 5, 3, NULL, NULL, '220', 'cash', '220', 'HALF50', 'd1 islamic arcade main university road', '5', '2023-02-26 23:53:47', 20),
+(70, 2, '99', '869', '550', '1', 5, 3, NULL, NULL, '220', 'cash', '220', 'HALF50', 'd1 islamic arcade main university road', '5', '2023-02-26 23:53:57', 20),
+(71, 2, '36', '456', '200', '1', 6, 3, NULL, NULL, '220', 'cash', '200', 'HALF50', 'd1 islamic arcade main university road', '1', '2023-02-26 23:45:42', 20),
+(72, 2, '63', '633', '350', '1', 5, 3, NULL, NULL, '220', 'cash', '220', 'HALF50', 'd1 islamic arcade main university road', '5', '2023-02-26 23:57:36', 20),
+(73, 2, '97', '857', '540', '1', 5, 3, NULL, NULL, '220', 'cash', '200', '200OFF', 'd1 islamic arcade main university road', '4', '2023-02-27 17:49:55', 20),
+(74, 2, '36', '456', '200', '1', 5, 3, NULL, NULL, '220', 'cash', '200', '200OFF', 'd1 islamic arcade main university road', '2', '2023-02-27 18:08:48', 20),
+(75, 2, '133', '1093', '740', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '5', '2023-02-27 18:05:03', 20),
+(76, 2, '108', '928', '600', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '3', '2023-02-27 18:31:17', 20),
+(77, 2, '106', '916', '590', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'PETROLBACHAO', 'd1 islamic arcade main university road', '3', '2023-02-27 20:29:04', 20),
+(78, 2, '115', '755', '640', '1', 5, 3, NULL, NULL, '0', 'cash', '0', 'PETROLBACHAO', 'd1 islamic arcade main university road', '3', '2023-02-27 20:28:54', 0),
+(79, 2, '95', '845', '530', '1', 5, 3, NULL, NULL, '220', 'cash', '220', 'HALF50', 'd1 islamic arcade main university road', '4', '2023-02-27 20:28:43', 20),
+(80, 2, '106', '916', '590', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'PETROLBACHAO', 'd1 islamic arcade main university road', '5', '2023-02-27 20:28:32', 20),
+(81, 2, '135', '885', '750', '1', 5, 3, NULL, NULL, '0', 'cash', '0', 'PETROLBACHAO', 'd1 islamic arcade main university road', '3', '2023-02-27 20:28:17', 0),
+(82, 2, '97', '637', '540', '1', 5, 3, NULL, NULL, '0', 'cash', '0', 'PETROLBACHAO', 'd1 islamic arcade main university road', '4', '2023-02-27 20:26:46', 0),
+(83, 2, '102', '672', '570', '1', 5, 3, NULL, NULL, '0', 'cash', '0', 'PETROLBACHAO', 'd1 islamic arcade main university road', '3', '2023-02-27 20:40:05', 0),
+(84, 2, '118', '998', '660', '1', 5, 3, NULL, NULL, '220', 'cash', '0', 'No Coupon Applied', 'd1 islamic arcade main university road', '4', '2023-02-27 20:39:58', 20),
+(85, 2, '66', '436', '370', '1', 5, 3, NULL, NULL, '0', 'cash', '0', 'FEULSAVE', 'd1 islamic arcade main university road', '4', '2023-02-28 00:18:20', 0),
+(86, 2, '97', '637', '540', '1', 5, 3, NULL, NULL, '0', 'cash', '0', 'FEULSAVE', 'd1 islamic arcade main university road', '2', '2023-02-28 00:44:36', 0),
+(87, 2, '57', '597', '320', '1', 5, 3, NULL, NULL, '220', 'cash', '220', '50OFF', 'd1 islamic arcade main university road', '2', '2023-02-28 00:44:49', 20),
+(88, 2, '66', '656', '370', '1', 5, 3, NULL, NULL, '220', 'cash', '220', '50OFF', 'd1 islamic arcade main university road', '4', '2023-02-28 00:48:42', 20);
 
 -- --------------------------------------------------------
 
@@ -455,10 +514,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `productName`, `productqty`, `keyword`, `price`, `status`, `added_on`, `image`) VALUES
-(2, 'Potato', '10', 'Potato', '100', '1', '2023-02-20 22:27:53', 'productImage/potato.png'),
-(3, 'Cabbage', '10', 'Cabbage', '120', '1', '2023-02-20 22:28:06', 'productImage/1676095070.png'),
-(4, 'Carrot', '10', 'Carrot', '50', '1', '2023-02-20 22:28:23', 'productImage/1676095337.png'),
-(6, 'Spanish', '10', 'Spanish', '100', '1', '2023-02-20 22:28:36', 'productImage/1676091475.jpg'),
+(2, 'Potato', '100', 'Potato', '100', '1', '2023-02-26 20:33:22', 'productImage/potato.png'),
+(3, 'Cabbage', '100', 'Cabbage', '120', '1', '2023-02-26 20:33:31', 'productImage/1676095070.png'),
+(4, 'Carrot', '100', 'Carrot', '50', '1', '2023-02-26 20:33:38', 'productImage/1676095337.png'),
+(6, 'Spanish', '100', 'Spanish', '100', '1', '2023-02-26 20:33:46', 'productImage/1676091475.jpg'),
 (7, 'Cauliflower', '10', 'Cauliflower', '100', '1', '2023-02-20 22:27:20', 'productImage/1676097285.jpg'),
 (8, 'Onion', '10', 'onion', '100', '1', '2023-02-20 23:56:09', 'productImage/1676961159.png');
 
@@ -514,12 +573,15 @@ CREATE TABLE `setting` (
   `webSiteStatus` enum('1','0','2') DEFAULT NULL,
   `gst` varchar(255) NOT NULL,
   `minOrder` int(11) NOT NULL,
-  `deliverygst` int(11) NOT NULL
+  `deliverygst` int(11) NOT NULL,
+  `company_mobile` varchar(255) NOT NULL,
+    `company_email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `setting`
 --
+ALTER TABLE `setting` ADD `company_email` VARCHAR(2555) NOT NULL AFTER `company_mobile`, ADD `comapny_twitter` VARCHAR(255) NOT NULL AFTER `company_email`, ADD `comapny_facebook` VARCHAR(255) NOT NULL AFTER `comapny_twitter`, ADD `comapny_instragram` VARCHAR(255) NOT NULL AFTER `comapny_facebook`, ADD `company_linkend` VARCHAR(255) NOT NULL AFTER `comapny_instragram`;
 
 INSERT INTO `setting` (`id`, `deliveryCharge`, `webSiteStatus`, `gst`, `minOrder`, `deliverygst`) VALUES
 (1, '200', '1', '18', 200, 10);
@@ -603,6 +665,8 @@ CREATE TABLE `users` (
 --
 -- Dumping data for table `users`
 --
+
+CREATE TABLE `notification` (`notify_id` INT NOT NULL AUTO_INCREMENT , `msg` VARCHAR(255) NOT NULL , `added_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`notify_id`)) ENGINE = InnoDB;
 
 INSERT INTO `users` (`id`, `username`, `mobile`, `password`, `email`, `status`, `added_on`) VALUES
 (1, 'Waqar', '923323565866', '$2y$12$XjfNg5NtFNIFb9yvHnjWj.DYhfe/Hkiqg1jACDPHnuVCJslptn6ti', 'waqar@gmail.com', '1', '2023-02-23 18:23:58'),
@@ -760,19 +824,19 @@ ALTER TABLE `apikey`
 -- AUTO_INCREMENT for table `assignorder`
 --
 ALTER TABLE `assignorder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 
 --
 -- AUTO_INCREMENT for table `couponcodes`
 --
 ALTER TABLE `couponcodes`
-  MODIFY `coupon_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `coupon_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `deliveryboy`
@@ -802,13 +866,13 @@ ALTER TABLE `emp_salary`
 -- AUTO_INCREMENT for table `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
 
 --
 -- AUTO_INCREMENT for table `orderscustomer`
 --
 ALTER TABLE `orderscustomer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `productrating`

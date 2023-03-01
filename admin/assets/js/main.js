@@ -333,7 +333,10 @@ function CheckLogin() {
     if (LsId != null) {
         currentTime = new Date().getTime();
         var LsId = localStorage.getItem("id");
+        console.log("adminTitle");
+
         LsId = JSON.parse(LsId);
+        console.log(LsId);
         expirydate = new Date(LsId.expiry);
         console.log(expirydate + LsId.expiry);
         console.log(Math.floor((LsId.expiry - currentTime) / (1000 * 60)));

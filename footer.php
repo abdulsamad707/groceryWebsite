@@ -6,9 +6,9 @@
             <h3> groco <i class="fas fa-shopping-basket"></i> </h3>
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam, saepe.</p>
             <div class="share">
-                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="" class="fab fa-facebook-f"></a>
                 <a href="#" class="fab fa-twitter"></a>
-                <a href="#" class="fab fa-instagram"></a>
+                <a href="https://instagram.com/" class="fab fa-instagram"></a>
                 <a href="#" class="fab fa-linkedin"></a>
             </div>
         </div>
@@ -75,6 +75,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="js/sweet.js"></script>
+<script src="js/constant.js"></script>
 <script src="js/script.js?tggx=<?php echo time();?>"></script>
 <!--<script
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALjpQp0rbk7coMTw-X845tOxIuTMkt7wA&callback=initMap"

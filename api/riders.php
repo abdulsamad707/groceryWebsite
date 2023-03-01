@@ -61,7 +61,7 @@ $join=" LEFT JOIN assignorder ON assignorder.deliveryboyid=deliveryboy.id  LEFT 
         $sql="SELECT count(DISTINCT deliveryboy.id) as numberofriders FROM `deliveryboy`";  
        }
     }else{
-        $sql="SELECT deliveryboy.username,deliveryboy.mobile,IFNULL(sum(orderscustomer.deliveryCharge),0) as Earning,count(orderscustomer.deliveryboyid) as number_of_order FROM deliveryboy LEFT JOIN orderscustomer ON deliveryboy.id=orderscustomer.deliveryboyid LEFT JOIN riderrating ON riderrating.rider_id=deliveryboy.id LEFT JOIN assignorder ON assignorder.deliveryboyid=deliveryboy.id GROUP BY deliveryboy.id order by number_of_order";
+        $sql="SELECT deliveryboy.username,deliveryboy.mobile,IFNULL(sum(orderscustomer.deliveryCharge),0)-IFNULL(sum(orderscustomer.deliverygst),0) as Earning,count(orderscustomer.deliveryboyid) as number_of_order FROM deliveryboy LEFT JOIN orderscustomer ON deliveryboy.id=orderscustomer.deliveryboyid LEFT JOIN riderrating ON riderrating.rider_id=deliveryboy.id group by deliveryboy.id order by number_of_order";
     }
     $riderData=$data->sql($sql,"read");
 

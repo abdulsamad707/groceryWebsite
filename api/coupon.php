@@ -14,12 +14,12 @@ $userdata = file_get_contents("php://input");
 include("function.php");
 $reqMetod = $_SERVER["REQUEST_METHOD"];
 if($reqMetod==="POST"){ 
-
+ /* Xy8F26QSThk8#yY*/
   if(!isset($userdata["type"])){
 $couponcode=$userdata["couponCode"];
 $cartTotal=$userdata["cartTotal"];
 $table="couponcodes";
-$coupoundata=$data->getData($table,null,null,null,"coupon_code='$couponcode' AND coupon_status='1' ",null,null);
+$coupoundata=$data->getData($table,null,null,null,"coupon_code='$couponcode' AND coupon_status=1 ",null,null);
 $discount=0;
 if(!isset($coupoundata["data"][0])){
 $disount=0;
@@ -31,7 +31,8 @@ $message="Coupon Code  Not Exist";
 $couponType=$coupoundata["data"][0]["discount_type"];
 $amountCoupon=$coupoundata["data"][0]["discount"];
 $max_discount=$coupoundata["data"][0]["max_discount"];
-
+$min_cart_value=$coupoundata["data"][0]["min_cart_value"];
+if($cartTotal >=$min_cart_value){
 if($couponType==="perc"){
    $discount=floor(($amountCoupon/100)*$cartTotal);
      if($discount > $max_discount){
@@ -45,6 +46,13 @@ if($couponType==="perc"){
  $code=$couponcode;
  $couponstatus="success";
  $message="$code Applied Successfully";
+}else{
+  $disount=0;
+$code="No Coupon Applied";
+$couponstatus="error";
+$message="Cart Total Is Less To Apply";
+}
+
 }
 $cartTotal=cartTotal($userdata["cart"],$data,$discount,$code);
 $cartTotal["cartTotal"]=$cartTotal;

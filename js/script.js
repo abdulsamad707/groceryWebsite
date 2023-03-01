@@ -367,14 +367,14 @@ WebSite = WebSite.replace('http://localhost/grocerywebsite/', '');
 WebSite.replace('?', '');
 
 function checkout() {
-    window.location.href = "checkout.php";
+    window.location.href = "http://localhost/grocerywebsite/checkout.php";
 }
 
 
 function cartDetail(discount, code) {
     alert(discount + "code" + code);
 
-    urlCart = "http://localhost/groceryWebsite/api/carts.php?key=" + APIKEY + "&discount=" + discount + "&code=" + code;
+    urlCart = API_PATH + "carts.php?key=" + APIKEY + "&discount=" + discount + "&code=" + code;
     jwtToken = localStorage.getItem("key");
     fetch(urlCart, {
         method: "GET",
@@ -462,11 +462,11 @@ function cartDetail(discount, code) {
                 cartTotal = response.cartTotal.cartTotal;
             }
             document.getElementById("cartDisplayTotal").innerText = "Cart Total " + cartTotal + " Rs";
-
+            document.getElementById("Shopping_container").innerHTML = cartHTML;
         } else {
-            document.getElementById("cartDisplayTotal").innerText = "Cart Total 0 Rs";
+            document.getElementById("cartDisplayTotal").innerText = "No Item In The Cart";
             document.getElementById("nextStep").disabled = true;
-            cartHTML = "NO item In the Cart";
+
             localStorage.removeItem("carts");
             localStorage.removeItem("cartTotal");
             if (WebSite === "checkout.php") {
@@ -477,7 +477,7 @@ function cartDetail(discount, code) {
 
 
 
-        document.getElementById("Shopping_container").innerHTML = cartHTML;
+
 
 
 
@@ -497,6 +497,7 @@ function cartDetail(discount, code) {
 
 /*cartDetail();*/
 function addtocart(id, quantity, action) {
+
     var productId = id;
     var productQty = quantity;
     console.log(action);
@@ -510,7 +511,7 @@ function addtocart(id, quantity, action) {
     jwtToken = localStorage.getItem("key");
 
 
-    if (jwtToken === undefined) {
+    if (jwtToken == undefined) {
         swal("Oops", "Please Login to Add To Cart", "error");
         return false;
     }
@@ -523,7 +524,7 @@ function addtocart(id, quantity, action) {
 
 
 
-    apiurl = "http://localhost/groceryWebsite/api/carts.php?key=" + APIKEY;
+    apiurl = API_PATH + "carts.php?key=" + APIKEY;
     fetch(apiurl, {
         method: "POST",
         headers: {
@@ -533,10 +534,14 @@ function addtocart(id, quantity, action) {
         body: cartObject
     }).then(function(response) {
 
-        return response.text();
+        return response.json();
     }).then(function(text) {
         console.log(text);
-
+        if (text.status === "success") {
+            swal("Congrats", text.MSG, "success");
+        } else {
+            swal("Oops!", text.MSG, "error");
+        }
         if (action === "add") {
             cartDetail(0);
         }
@@ -575,7 +580,7 @@ function addtocart(id, quantity, action) {
 function displayProduct() {
 
     searchItem = "";
-    apiurl = "http://localhost/groceryWebsite/api/products.php?key=" + APIKEY;
+    apiurl = API_PATH + "products.php?key=" + APIKEY;
     fetch(apiurl, {
         method: "GET"
     }).then(function(response) {
@@ -692,21 +697,25 @@ function cartCheckout() {
 
     }
 }
-jwtToken = localStorage.getItem("key");
-const jwt = jwtToken;
 
-const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
-const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
-const parsedJwtData = JSON.parse(decodedJwtData); // Parse the decoded JSON data
+alert(WebSite);
+if (WebSite == "checkout.php") {
 
-console.log(parsedJwtData);
 
-if (WebSite === "checkout.php") {
+    jwtToken = localStorage.getItem("key");
+    const jwt = jwtToken;
+
+    const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+    const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    const parsedJwtData = JSON.parse(decodedJwtData); // Parse the decoded JSON data
+
+    console.log(parsedJwtData);
     document.getElementById("customerName").value = parsedJwtData.username;
     document.getElementById("email").value = parsedJwtData.email;
     document.getElementById("address2").value = parsedJwtData.mobile;
-    document.getElementById("address").value = parsedJwtData.address;
+
     cartCheckout();
+    cartCheckout()
 }
 
 function deleteItem(de) {

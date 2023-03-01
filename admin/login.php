@@ -123,7 +123,7 @@
   <!-- Template Main JS File -->
   <script src="assets/js/jquery.js"></script>
 
-
+  <script src="assets/js/constant.js"></script>
 <script>
 function CheckLogin(){
  var LsId=localStorage.getItem("id");

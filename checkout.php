@@ -193,6 +193,7 @@
 </body>
 
 </html>
+
 <script>
 async function PlaceOrder(){
    alert("hi");
@@ -210,7 +211,12 @@ async function PlaceOrder(){
  var orderStatus=1;
  const APIKEY = "avdfheuw23";
 
+ jwtToken = localStorage.getItem("key");
+    const jwt = jwtToken;
 
+    const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+    const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    const parsedJwtData = JSON.parse(decodedJwtData);
 localStoreAddrees=parsedJwtData.address;
 billingAddrees=document.getElementById("address").value;
 
@@ -258,7 +264,7 @@ var OrderObject={
 };
 OrderObject=JSON.stringify(OrderObject);
 console.log(parsedJwtData);
-apiurl = "http://localhost/groceryWebsite/api/orders.php?key=" + APIKEY;
+apiurl = API_PATH+"orders.php?key=" + APIKEY;
  const orderResponse  =await fetch(apiurl, {
         method: "POST",
         headers: {
@@ -268,11 +274,16 @@ apiurl = "http://localhost/groceryWebsite/api/orders.php?key=" + APIKEY;
         body:OrderObject
     });
 response=await orderResponse.json();
+
+swal("Congrats","Order Placed Succesfully","success");
 console.log(response);
    localStorage.removeItem("carts");
    localStorage.removeItem("cartTotal");
    localStorage.removeItem("cartDiscount");
+   setTimeout(() => {
     window.location.href="index.php";
+   },1000);
+
 }
 
 function backtoHome(){
@@ -300,7 +311,7 @@ async function applyCoupon() {
             };
             cartData = JSON.stringify(cartData);
             console.log(cartData);
-            apiurl = "http://localhost/groceryWebsite/api/coupon.php?key=" + APIKEY;
+            apiurl =  API_PATH+"coupon.php?key=" + APIKEY;
             const orderResponse = await fetch(apiurl, {
                 method: "POST",
 
@@ -309,6 +320,12 @@ async function applyCoupon() {
             response = await orderResponse.json();
             console.log("Apply Coupon code");
             console.log(response);
+           if(response.status=="success"){
+            swal("Congrats",response.msg,response.status);
+           }else{
+            swal("Oops!",response.msg,response.status);
+           }
+        
             document.getElementById("numberofcart").innerText = response.totalItem;
             document.getElementById("cartTotal").innerText = response.cartTotal.cartTotal;
             document.getElementById("gst").innerText = response.gst;

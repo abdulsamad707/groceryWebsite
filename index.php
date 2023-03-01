@@ -57,7 +57,7 @@ include("apiCredential.php");
 <section class="products" id="products">
 <?php
             $keyApi=API_KEY;
-        $url = "http://localhost/grocerywebsite/api/products.php?key=$keyApi&productSearch=''&status";
+        $url = API_URL."products.php?key=$keyApi&productSearch=''&status";
        
  
 $curl = curl_init();
@@ -101,7 +101,7 @@ curl_close($curl);
                
                 </div>
        
-                <a href="#" class="btn-product" onclick="addtocart('<?= $value['id']?>','1','add')"  >add to cart</a>
+                <a href="#" class="btn-product" onclick="addtocart('<?= $value['id']?>','1','add',this)"  >add to cart</a>
             </div>
             <?php
             }

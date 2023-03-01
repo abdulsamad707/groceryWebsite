@@ -115,7 +115,7 @@ if (!isset($status)) {
 						"orderStatus" => $ordStat
 					];
 					$updateOrder = $data->updateData("orderscustomer", $orderArray, ["id" => "'$order_id'"]);
-
+                    $updateOrder["msg"]="Order Status Change";
 					echo json_encode($updateOrder);
 				
 			}else{
@@ -172,7 +172,7 @@ if (!isset($status)) {
 			  }
 			  $data->deleteData("carts","userId='$customer_id'");
 		
-				echo json_encode(["msg"=>"Order Place","status"=>"succcess"]);
+				echo json_encode(["msg"=>"Order Placed Succcessfully","status"=>"succcess"]);
 
 
          }

@@ -17,7 +17,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Users</li>
+          <li class="breadcrumb-item active">Riders</li>
         </ol>
       </nav>
     </div>
@@ -48,8 +48,9 @@
                       <tr>
                         <th scope="col">S.No </th>
                         <th scope="col">Users Name</th>
-                        <th scope="col">Users Email</th>
+                       
                         <th scope="col">Users Mobile</th>
+                        <th scope="col">Earning</th>
                         <th scope="col">Number of  order</th>
                         <th scope="col">Status</th>
                       </tr>
@@ -70,8 +71,9 @@
                 </div>
 </div>
 
-<script src="assets/js/constant.js"></script>
+
 <?php include "footer.php"?>
+<script src="assets/js/constant.js"></script>
 <script>
 
 
@@ -86,28 +88,21 @@ function capitalizeFirstWord(str) {
 async  function  displayUsers(){
 
         
-const inventory=await fetch(API_PATH+"users.php?key=avdfheuw23");
+const inventory=await fetch(API_PATH+"riders.php?key=avdfheuw23");
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
 
       var     userData="";
           jsonInventory.data.map((item,key)=>{
-           console.log(item.email);
-          if(item.status==1){
-            currentStatus="Active";
-            badgeColor="btn-success";
-          }else{
-            currentStatus="Deactive";
-            badgeColor="btn-danger";
-          }
+          
      
            userData+="<tr>";
            userData+="<td>"+(key+1)+"</td>";
            userData+="<td>"+capitalizeFirstWord(item.username)+"</td>";
-           userData+="<td>"+item.email+"</td>";
+        
            userData+="<td>"+item.mobile+"</td>";
-           userData+="<td>"+item.number_of_orders+"</td>";
-           userData+="<td><span class='btn "+badgeColor+"'  onclick=changeStatus('"+item.user_id+"')   >"+currentStatus+"</span></td>";
+           userData+="<td>"+item.Earning+" Rs </td>";
+           userData+="<td>"+item.number_of_order+"  </td>";
            userData+="</tr>";
           });
          document.getElementById("users").innerHTML=userData;
@@ -123,15 +118,15 @@ async  function changeStatus(id){
    console.log(formData);
 
 
-  const inventory=await fetch(API_PATH+"change_user.php?key=avdfheuw23",
+  const inventory=await fetch("http://localhost/groceryWebsite/api/change_user.php?key=avdfheuw23",
 {
 
   method:"POST",
   body:formData
 });
-  const inventoryJSON =await inventory.json();
+  const inventoryJSON =await inventory.text();
 
-
+    console.log(inventoryJSON);
     displayUsers();
 
 }

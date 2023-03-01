@@ -25,6 +25,6 @@ $productData=$data->getData("users",null,null,null,$whereConduction,null,null,nu
   }
 $updateStatus["status"]=  $newStatus;
 $data->updateData("users",$updateStatus,["id"=>"'$userId'"]);
-
+echo json_encode(["msg"=>"User Status Updated"]);
 
 ?>

@@ -165,7 +165,7 @@
                   <script>
                   async  function loadChart(){
 
-const inventory=await fetch("http://localhost/groceryWebsite/api/inventory.php?key=avdfheuw23&invtype=monthly");
+const inventory=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype=monthly");
 const jsonInventory=await inventory.json();
 console.log(inventory);
 console.log(jsonInventory);
@@ -220,10 +220,11 @@ console.log(inventoryMonth);
 
               <!-- Line Chart -->
               <div id="lineChart"></div>
-
+          <script src="assets/js/constant.js"></script>
               <script>
                 async   function showChart(){
-    const inventorydaily=await fetch("http://localhost/groceryWebsite/api/inventory.php?key=avdfheuw23&invtype=daily");
+              
+    const inventorydaily=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype=daily");
 
 const jsonInventorydaily=await inventorydaily.json();
 console.log(inventorydaily);
@@ -614,8 +615,9 @@ $urlinventorycurrentapi="product_inventory.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
 
-
+<script src="assets/js/constant.js"></script>
 <script>
+
  function  capitalize(stri){
   var str = stri;
 var capitalized = str.charAt(0).toUpperCase() + str.slice(1);
@@ -634,7 +636,7 @@ return TotalEarningInv;
 // data to be exported
 async   function downloadReport(urlData,type){
         
-  const inventory=await fetch("http://localhost/groceryWebsite/api/inventory.php?key=avdfheuw23&invtype="+urlData);
+  const inventory=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype="+urlData);
 const jsonInventory=await inventory.json();
 console.log(inventory);
 console.log(jsonInventory);

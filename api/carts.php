@@ -81,25 +81,25 @@ $qty;
         $insertCart["price"]=$price;
         $insertCart["userType"]="Reg";
         $data->insert("carts",$insertCart);
-        echo json_encode(['MSG'=>"product added Successfully"]);
+        echo json_encode(['MSG'=>"product added in the cart Successfully","status"=>"success"]);
         }else{
-          echo json_encode(['MSG'=>"Desired Qty is NOT available"]);
+          echo json_encode(['MSG'=>"Desired Qty is NOT available","status"=>"error"]);
         }
     }else{
         if($qty===0){
          $data->deleteData("carts","productID='$productId'");
          
-      echo json_encode(['MSG'=>"product delete from cart"]);
+      echo json_encode(['MSG'=>"product delete from cart","status"=>"success"]);
         }else{
 
           if($action==="add"){
-            echo json_encode(['MSG'=>"product already exist in cart"]);
+            echo json_encode(['MSG'=>"product already exist in cart","status"=>"error"]);
           }else{
             if($qty < $remaining ){
             $data->updateData("carts",["qty"=>$qty],["productID"=>$productId]);
-            echo json_encode(['MSG'=>"product update "]);
+            echo json_encode(['MSG'=>"product update in the cart ","status"=>"success"]);
             }else{
-              echo json_encode(['MSG'=>"Desired Qty is NOT available"]);
+              echo json_encode(['MSG'=>"Desired Qty is NOT available","status"=>"error"]);
             }
           }
 

@@ -164,6 +164,9 @@
 
 
 <?php include "footer.php"?>
+
+
+<script src="assets/js/constant.js"></script>
 <script>
 let formData = new FormData();
 /*
@@ -180,7 +183,7 @@ let capitalized = str.charAt(0).toUpperCase() + str.slice(1);
 async  function  displayProduct(){
 
         
-  const inventory=await fetch("http://localhost/groceryWebsite/api/products.php?key=avdfheuw23");
+  const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23");
 const jsonInventory=await inventory.json();
 console.log(jsonInventory.data);
   console.log("helle"+Math.floor(Math.random()*10+1));
@@ -213,7 +216,7 @@ document.getElementById("productDisplay").innerHTML=html;
 }
 async function edit(id){
 document.getElementById("formHeading").innerText="Edit Product";
-const inventory=await fetch("http://localhost/groceryWebsite/api/products.php?key=avdfheuw23&id="+id);
+const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23&id="+id);
 const jsonInventory=await inventory.json();
 const productName=jsonInventory.data[0].productName;
 document.getElementById("prices").value=jsonInventory.data[0].price;
@@ -234,7 +237,7 @@ console.log(id);
 }
  async function view(key){
   console.log("d"+key+Math.random()*100);
-  const inventory=await fetch("http://localhost/groceryWebsite/api/products.php?key=avdfheuw23&id="+key);
+  const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23&id="+key);
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
 const productName=capitalize(jsonInventory.data[0].productName);
@@ -358,7 +361,7 @@ formData.append("price",price);
 formData.append("pid",productId);
 formData.append("productStatus",available);
 console.log(formData);
-const inventory=await fetch("http://localhost/groceryWebsite/api/products.php?key=avdfheuw23",
+const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23",
 {
 
   method:"POST",
