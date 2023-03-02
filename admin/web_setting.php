@@ -238,7 +238,17 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/constant.js"></script>
 
+        <script>
+            async function setting(){
+                settingData=await fetch(API_PATH+"setting.php?key=avdfheuw23");
+                settingData=await   settingData.json();
+          console.log(   settingData);
+
+            }
+            setting();
+            </script>
 </body>
 
 </html>

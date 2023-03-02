@@ -179,11 +179,16 @@ section {
     box-shadow: var(--box-shadow);
     width: 35rem;
     background: #fff;
+    overflow: auto;
 }
 
 .header .shopping-cart.active {
     right: 2rem;
     transition: .4s linear;
+}
+
+#Shopping_container {
+    overflow-y: auto;
 }
 
 .header .shopping-cart .box {
@@ -192,10 +197,11 @@ section {
     gap: 1rem;
     position: relative;
     margin: 1rem 0;
+    overflow-y: auto;
 }
 
 .header .shopping-cart .box img {
-    height: 10rem;
+    height: 50px;
 }
 
 .header .shopping-cart .box .fa-trash {
@@ -853,4 +859,32 @@ section {
 .couponCodeApply {
     padding: 10px;
     background-color: red;
+}
+
+.productQty {
+    font-size: 24px;
+}
+
+.product_Qty {
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    align-items: center;
+}
+
+.product_Qty:hover {
+    background-color: aqua;
+}
+
+.delete_cart {
+    font-size: 24px;
+    color: red;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+}
+
+#numberofcart {
+    font-size: 24px;
 }

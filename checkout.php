@@ -181,6 +181,9 @@
                     </div>
                
                     <hr class="mb-4">
+                    <p id="errorMsg">
+       
+</p>
                     <button class="btn  btn-primary btn-block" id="backButton" type="button" onclick="backtoHome()">Back To Shopping</button>
                     <button class="btn  btn-lg btn-block" id="placeOrder"  onclick="PlaceOrder()" disabled=true type="button">Place Order</button>
                 </form>
@@ -347,9 +350,19 @@ async function applyCoupon() {
         
           
             if (response.cartTotal.cartTotal < response.cartTotal.minOrder) {
+              
+                alert("min");
+        errorMsg="";
+        errorMsg+="<div class='alert alert-success alert-dismissible'>";
+        errorMsg+=" <button type='button' class='close' data-dismiss='alert'>&times;</button>";
+        errorMsg+=" <strong>Success!</strong> <p> Minimum Amount To Place Is"+ response.cartTotal.minOrder+".</p>";
+        errorMsg+="</div>";
+        alert(errorMsg);
+        document.getElementById("errorMsg").innerHTML=errorMsg;
                 document.getElementById("placeOrder").disabled = true;
             } else {
-                document.getElementById("placeOrder").disabled = false;
+     
+           document.getElementById("placeOrder").disabled = false;
             }
         }
 

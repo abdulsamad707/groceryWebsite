@@ -61,6 +61,7 @@ if ($error) {
   $response=json_decode($response,true);
 
   $qty_remamining=$response["data"][0]["qty_remaining"];
+  $status=$response["data"][0]["status"];
   $price=$response["data"][0]["price"];
 
 }
@@ -71,7 +72,10 @@ $qty;
 
      $totalRecord=$cartDataproduct["totalRecord"];
     if($totalRecord<=0){
-
+      if($status==0){
+        echo json_encode(['MSG'=>"product is not available","status"=>"error"]);
+        return false;
+       }
         if($qty < $remaining ){
 
         $insertCart["userId"]=$id;
@@ -91,7 +95,11 @@ $qty;
          
       echo json_encode(['MSG'=>"product delete from cart","status"=>"success"]);
         }else{
-
+          if($status==0){
+            $data->deleteData("carts","productID='$productId'");
+            echo json_encode(['MSG'=>"product is not available and delete from cart","status"=>"error"]);
+            return false;
+           }
           if($action==="add"){
             echo json_encode(['MSG'=>"product already exist in cart","status"=>"error"]);
           }else{

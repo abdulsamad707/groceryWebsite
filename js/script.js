@@ -420,8 +420,8 @@ function cartDetail(discount, code) {
                 cartHTML += "<span class='price'>Rs" + price + "/-</span>";
                 cartHTML += "</span>";
 
-                cartHTML += "<span class='quantity'  id='qty-" + pid + "'>qty:";
 
+                cartHTML += "<span class='quantity'  id='qty-" + pid + "'>qty:";
                 cartHTML += "<i class='fa fa-plus inc' onclick=increase(this)  data-qty='" + qty + "' data-price='" + price + "' data-action='in' data-product_id='" + pid + "'></i>";
 
                 cartHTML += qty;
@@ -511,7 +511,7 @@ function addtocart(id, quantity, action) {
     jwtToken = localStorage.getItem("key");
 
 
-    if (jwtToken == undefined) {
+    if (jwtToken == undefined || jwtToken == '') {
         swal("Oops", "Please Login to Add To Cart", "error");
         return false;
     }
@@ -653,6 +653,7 @@ function cartCheckout() {
     getCartTotal = JSON.parse(getCartTotal);
     console.log(WebSite);
     console.log(getCartTotal);
+
     if (WebSite === "checkout.php" && getCartItem == undefined || getCartItem == "" && WebSite != "index.php") {
         window.location.href = "index.php";
         return false;
@@ -661,13 +662,19 @@ function cartCheckout() {
     checkoutItem = "";
 
     getCartItem.map((item) => {
-        checkoutItem += " <li class='list-group-item d-flex justify-content-between lh-condensed'>";
-        checkoutItem += "  <div>";
+        console.log(item.productID);
 
-        checkoutItem += "    <h2 class='text-muted'>" + item.productName + "</h2>";
+        checkoutItem += " <li class='list-group-item d-flex justify-content-between lh-condensed'>";
+        checkoutItem += "  <i class='fas fa-trash  delete_cart'></i><div>";
+
+        checkoutItem += "<img src='" + item.image + "' width='60'>";
+        checkoutItem += "    <h2 class='text-muted priceProduct '>" + item.productName + "</h2>";
         checkoutItem += "   </div>";
-        checkoutItem += " <span><h2>" + item.price + "  Rs</h2></span>";
-        checkoutItem += "   <span><h2>" + item.qty + "</h2></span>";
+        checkoutItem += " <span class='priceProduct'><h2>" + item.price + "  Rs</h2></span>";
+
+        checkoutItem += "   <span class='productQty'> <i class='fa fa-plus  product_Qty'> </i>" + item.qty + " <i class='fa fa-minus  product_Qty'></i></span>";
+
+
 
         checkoutItem += " </li>";
 
@@ -688,18 +695,28 @@ function cartCheckout() {
     } else {
         code = getCartTotal.couponCode;
     }
-    document.getElementById("couponcode").innerText = code;
+    if (WebSite === "checkout.php") {
+        document.getElementById("couponcode").innerText = code;
+    }
     if (getCartTotal.cartTotal < getCartTotal.minOrder) {
-        document.getElementById("placeOrder").disabled = true;
 
+        document.getElementById("placeOrder").disabled = true;
+        errorMsg = "<div class='alert alert-danger alert-dismissible'>";
+        errorMsg += " <button type='button' class='close' data-dismiss='alert'>&times;</button>";
+        errorMsg += " <strong>Warning!</strong> <p> Minimum Order Amount is " + getCartTotal.minOrder + " </p>";
+        errorMsg += "</div>";
+        document.getElementById("errorMsg").innerHTML = errorMsg;
     } else {
         document.getElementById("placeOrder").disabled = false;
+
+
+
 
     }
 }
 
 alert(WebSite);
-if (WebSite == "checkout.php") {
+if (WebSite == "checkout.php" || WebSite == "cart.php") {
 
 
     jwtToken = localStorage.getItem("key");
@@ -710,10 +727,11 @@ if (WebSite == "checkout.php") {
     const parsedJwtData = JSON.parse(decodedJwtData); // Parse the decoded JSON data
 
     console.log(parsedJwtData);
-    document.getElementById("customerName").value = parsedJwtData.username;
-    document.getElementById("email").value = parsedJwtData.email;
-    document.getElementById("address2").value = parsedJwtData.mobile;
-
+    if (WebSite === "checkout.php") {
+        document.getElementById("customerName").value = parsedJwtData.username;
+        document.getElementById("email").value = parsedJwtData.email;
+        document.getElementById("address2").value = parsedJwtData.mobile;
+    }
     cartCheckout();
     cartCheckout()
 }
@@ -743,7 +761,10 @@ cartDiscount = JSON.parse(cartDiscount);
 if (cartDiscount != undefined) {
     cartDetail(cartDiscount.discount, cartDiscount.code);
 } else {
-    cartDetail(0, "");
+    jwtToken = localStorage.getItem("key");
+    if (jwtToken != undefined && jwtToken != '') {
+        cartDetail(0, "");
+    }
 }
 
 function decrease(de) {
@@ -794,4 +815,8 @@ function increase(de) {
     }
 
     cartDetail(discount, code);
+}
+
+function deleteitemifnotavailavailbe(productId) {
+
 }

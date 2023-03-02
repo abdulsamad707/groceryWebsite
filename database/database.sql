@@ -674,7 +674,7 @@ INSERT INTO `users` (`id`, `username`, `mobile`, `password`, `email`, `status`, 
 (3, 'Naseem', '923323565866', '$2y$12$nwe9ioJ14wNeJpdogG75c.rsYoSc57s235Ct7Wy1biNvc2J4B2lC6', 'naseem@gmail.com', '1', '2023-02-19 19:27:26'),
 (4, 'Samad', '9234321462082', '$2y$12$WE4t32YSZwjzseH1q2LzXe/87gkz/V4.Y16h9YWcH2lLMtN6fngHm', 'abdulsamadahsan@gmail.com', '1', '2023-02-18 17:59:51'),
 (5, 'ali', '9234321462092', '$2y$12$66pzbMzpfenwz94otnzLLuFodNccsQvAH30mDlA4RCwBLKFWAyaF6', 'ali@gmail.com', '1', '2023-02-18 18:23:00');
-
+ALTER TABLE `deliveryboy` ADD `status` INT NOT NULL AFTER `busy`;
 --
 -- Indexes for dumped tables
 --
