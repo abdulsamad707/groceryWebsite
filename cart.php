@@ -1,5 +1,21 @@
+<?php include 'headerwebsite.php';  
+include("apiCredential.php");
+$ch = curl_init();
+    $keyApi=API_KEY;
+    $token=$_GET['token'];
+        $url = API_URL."carts.php?key=".$keyApi."&discount=0&code=''";
 
-<?php include 'headerwebsite.php';    ?>
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    "Authorization: Bearer $token"
+    
+));
+
+
+$response = curl_exec($ch);
+$response=json_decode($response,true);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,29 +64,28 @@
             </h4>
             <ul class="list-group mb-3 sticky-top">
                 <div id="productOrder">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                   
-                        <h2 class="text-muted">Brief description</h2>
-                    </div>
-                    <span><h2>120  Rs</h2></span>
-                    <span><h2>12</h2></span>
-                 
+
+
+
+                <?php
+foreach($response["data"] as $value){
+$qty=$value["qty"];
+$productID= $value["productID"];
+$productImage=$value['image'];
+?>
+                <li class='list-group-item d-flex justify-content-between lh-condensed'>
+<div>
+
+                <img src="<?PHP echo $productImage ;?>" width='60'>
+                    <h2 class='text-muted priceProduct '> <?php echo $value["productName"];?> </h2>
+                  </div>
+             <span class='priceProduct'><h2>   Rs</h2></span>
+
+            <span class='productQty'> <span class='productQty'> <i class='fa fa-plus  product_Qty' id='' onclick="increaseQty('<?php echo $qty;?>','<?php echo $productID;?>')"> </i> <?= $qty; ?> <i class='fa fa-minus  product_Qty'  onclick="decreaseQty('2','1')"></i></span> </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <h6 class="my-0">Second product</h6>
-                        <h2 class="text-muted">Brief description</h2>
-                    </div>
-                    <span class="text-muted">$8</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <h6 class="my-0">Third item</h6>
-                        <h2 class="text-muted">Brief description</h2>
-                    </div>
-                    <span class="text-muted">$5</span>
-                </li>
+                <?php
+}
+?>               
            </div>
 
      
@@ -152,9 +167,6 @@
                      
                         </div>
                   </div>
-
-
-
                     <hr class="mb-4">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="same-address">
@@ -170,7 +182,6 @@
                    
                    
                         <div class="custom-control custom-radio">
-
                             <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="" checked>
                             <label class="custom-control-label" for="paypal">Cash On Delivery</label>
                         </div>

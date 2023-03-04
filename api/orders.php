@@ -161,14 +161,41 @@ if (!isset($status)) {
               $placeOrder=$data->insert("orderscustomer",$orderplaceArray);
 
 			  foreach($cart["data"] as $value){
-			$orderDetali["product_id"]=$value["productID"];
-			$orderDetali["price"]=$value["price"];
+				$productId=$value["productID"];
+	   $orderDetali["product_id"]=$value["productID"];
+		$orderDetali["price"]=$value["price"];
 			$orderDetali["qtyorder"]=$value["qty"];
 		$order_id=$placeOrder["insertId"];
 		$orderDetali["order_id"]=$order_id;
 		$orderDetali["user_id"]=$customer_id;
 		$orderDetali["orderqty"]=0;
         $data->insert('orderdetail',$orderDetali);
+
+		$curl = curl_init();
+
+		// Set the URL and other options
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "http://localhost/groceryWebsite/api/products.php?key=avdfheuw23&id=".$productId,
+		  CURLOPT_RETURNTRANSFER => true,  // Return the response instead of outputting it
+		  CURLOPT_ENCODING => "",  // Accept any encoding
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",  // Change this to the HTTP method you need
+		
+		));
+		$response = curl_exec($curl);
+		$response=json_decode($response,true);
+
+		$qty_remamining=$response["data"][0]["qty_remaining"];
+	
+		$productincartData=$data->getData('carts',"ifnull(sum(qty),0) as in_cart",null,null,"productID='$productId'",null,null);
+		$remaining=$response["data"][0]["qty_remaining"]-$productincartData['data'][0]['in_cart'];
+		if($remaining==0){
+			$data->updateData("products",["status"=>0],["id"=>"'$productId'"]);
+		}
+
+
 			  }
 			  $data->deleteData("carts","userId='$customer_id'");
 		

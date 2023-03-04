@@ -205,7 +205,7 @@ var headerPdf= [{ text: 'S.No', style: 'tableHeader' },
 
 currentDate=new Date();
 currentDate=new Date().toLocaleString([],{month:"long",day:"numeric",year:"numeric",hour12:true,hour:"numeric",minute:"numeric"});
-alert(currentDate);
+
 var docDefinition = {
 
 content: [
@@ -257,7 +257,7 @@ pdfMake.createPdf(docDefinition).download("all order Invoice"+".pdf");
 
 
 function removeItem(product_id,orderid,price,qty){
-  alert(orderid);
+
 view(orderid);
 }
 
@@ -333,7 +333,7 @@ async function downloadInvoice(id){
 const jsonInventory=await inventory.json();
 console.log("Download ");
 console.log(jsonInventory);
-var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Product Name', style: 'tableHeader' }, { text: 'Qty', style: 'tableHeader' },{ text: 'Price (Rs)', style: 'tableHeader' }];
+var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Product Name', style: 'tableHeader' }, { text: 'Qty', style: 'tableHeader' },{ text: 'Price (Rs)', style: 'tableHeader' },{ text: 'Sub Total (Rs)', style: 'tableHeader' }];
 RiderName=jsonInventory.data[0].rider_name;
 if(RiderName==null){
   RiderName="No Rider Assigned";
@@ -344,7 +344,7 @@ if(RiderNumber==null){
 }
 currentDate=new Date();
 currentDate=currentDate.toLocaleString([],{month:"long",day:"numeric",year:"numeric",hour12:true,hour:"numeric",minute:"numeric"});
-alert(currentDate);
+
 var discount=jsonInventory.data[0].discount;
 
   CouponApply=jsonInventory.data[0].couponCode;
@@ -375,7 +375,7 @@ content: [
   {
     table: {
       headerRows:2,
-      widths: ['*', '*','*','*'],
+      widths: ['*', '*','*','*','*'],
       body: [
 
 
@@ -392,7 +392,7 @@ console.log(index+1);
 
           IndexPdf=index+1;
 
-          return [IndexPdf,item.productName,item.qty,item.price];
+          return [IndexPdf,item.productName,item.qty,item.price,item.qty*item.price];
       
 
 
@@ -505,8 +505,7 @@ return false;
 
     return false;
    }
-  
-  alert(order_status);
+
   OrderStatusObj={
      order_id:order_id,
      orderSt:order_status,

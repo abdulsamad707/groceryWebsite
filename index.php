@@ -101,7 +101,7 @@ curl_close($curl);
                
                 </div>
        
-                <a href="#" class="btn-product" onclick="addtocart('<?= $value['id']?>','1','add',this)"  >add to cart</a>
+                <a href="javascript:void(0)" class="btn-product" onclick="addtocart('<?= $value['id']?>','1','add',this)"  >add to cart</a>
             </div>
             <?php
             }

@@ -68,66 +68,71 @@
                                         <div class="row mb-3">
                                             <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
+                                                <input name="phone" type="text" class="form-control" id="Phone" value="">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                                                <input name="email" type="email" class="form-control" id="Email" value="">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
+                                                <input name="twitter" type="text" class="form-control" id="Twitter" value="">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
+                                                <input name="facebook" type="text" class="form-control" id="Facebook" value="">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
+                                                <input name="instagram" type="text" class="form-control" id="Instagram" value="">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Government Sales Tax(GST)</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="">
+                                                <input name="linkedin" type="text" class="form-control" id="gst" value="">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Delivery Charge</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="">
+                                                <input name="linkedin" type="text" class="form-control" id="deliveryCharge" value="">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Delivery Charge GST</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="">
+                                                <input name="linkedin" type="text" class="form-control" id="deliveryChargegst" value="">
                                             </div>
                                         </div>
-                                
+                                        <div class="row mb-3">
+                                            <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Min Order</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="linkedin" type="text" class="form-control" id="minOrder" value="">
+                                            </div>
+                                        </div>
                                             <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">WebSite Status</label>
                                        
-                                                <input name="linkedin" type="radio" id="Linkedin" value="">ON
-                                                <input name="linkedin" type="radio"  id="Linkedin" value=""> Off
+                                                <input name="linkedin" type="radio"  id="on"   value=""> ON
+                                                <input name="linkedin" type="radio" id="off"   value=""> Off
                                     
                                         <div class="row mb-3">
                                             <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
@@ -151,7 +156,7 @@
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="button" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-primary" onclick="submitSetting()">Save Changes</button>
                                         </div>
                                     </form>
                                     <!-- End Profile Edit Form -->
@@ -167,26 +172,10 @@
                                     <!-- Change Password Form -->
                                     <form>
 
-                                        <div class="row mb-3">
-                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control" id="currentPassword">
-                                            </div>
-                                        </div>
+                                        
 
-                                        <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                            </div>
-                                        </div>
 
-                                        <div class="row mb-3">
-                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                            </div>
-                                        </div>
+                                    
 
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-primary">Change Password</button>
@@ -245,8 +234,62 @@
                 settingData=await fetch(API_PATH+"setting.php?key=avdfheuw23");
                 settingData=await   settingData.json();
           console.log(   settingData);
+          document.getElementById('deliveryChargegst').value=settingData.data[0].deliverygst;
+          document.getElementById('gst').value=settingData.data[0].gst;
+          document.getElementById("deliveryCharge").value=settingData.data[0].deliveryCharge;
+          document.getElementById("Linkedin").value=settingData.data[0].company_linkend;
+          document.getElementById("Facebook").value=settingData.data[0].comapny_facebook;
+          document.getElementById("Twitter").value=settingData.data[0].comapny_twitter;
+          document.getElementById("Instagram").value=settingData.data[0].comapny_instragram;
+           document.getElementById("Phone").value=settingData.data[0].company_mobile;
+           document.getElementById("Email").value=settingData.data[0].company_email;
+           document.getElementById("minOrder").value=settingData.data[0].minOrder;
+           if(settingData.data[0].webSiteStatus==1){
+            document.getElementById("on").checked=true;
+           }
+           if(settingData.data[0].webSiteStatus==0){
+            document.getElementById("off").checked=true;
+           }
+            }   
+         async  function submitSetting(){
+            deliverygst=document.getElementById('deliveryChargegst').value;
+            gst=document.getElementById('gst').value;
+            deliveryCharge=document.getElementById("deliveryCharge").value;
+            company_linkend=  document.getElementById("Linkedin").value
+            comapny_facebook=   document.getElementById("Facebook").value;
+            comapny_twitter=  document.getElementById("Twitter").value;
+          comapny_instragram	=  document.getElementById("Instagram").value;
+          company_mobile= document.getElementById("Phone").value;
+           company_email= document.getElementById("Email").value;
+        minOrder =  document.getElementById("minOrder").value;
+           if(document.getElementById("on").checked==true){
+            webSiteStatus=1;
+           }else{
+            webSiteStatus=0;
+           }
 
-            }
+           settingObject={
+            deliverygst:deliverygst,
+            gst:gst,
+            deliveryCharge:deliveryCharge,
+            company_linkend:company_linkend,
+            comapny_facebook:comapny_facebook,
+            comapny_twitter:comapny_twitter,
+            comapny_instragram:comapny_instragram,
+            company_mobile:company_mobile,
+            company_email:company_email,
+            minOrder:minOrder,
+            webSiteStatus:webSiteStatus
+           }
+           settingObject=JSON.stringify(settingObject);
+
+ 
+sendRequest=await fetch(API_PATH+"setting.php?key=avdfheuw23",{
+    method:"POST",
+    body:settingObject
+});
+
+           }
             setting();
             </script>
 </body>

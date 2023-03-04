@@ -179,7 +179,7 @@ for (i = 0; i < arrayForm.length; i++) {
 console.log(obj);
 ObjLogin=JSON.stringify(obj);
 console.log(ObjLogin);
-apiurl="http://localhost/groceryWebsite/api/adminlogin.php?key="+APIKEY;
+apiurl=API_PATH+"adminlogin.php?key="+APIKEY;
 console.log(apiurl);
 
 

@@ -176,8 +176,11 @@ CURLOPT_URL =>API_FULL_PATH."users.php?key=avdfheuw23&id=".$userId,
               $deliveryCharge=0;
               $deliverygst=0;
              }
-
+            
             $totalPrice=$totalprice-$discount;
+            if($totalPrice<0){
+                $totalPrice=0;
+            }
            $governmentTax=floor(($gst/100)*$totalPrice);
             
                       $finalAmount=$totalPrice+$governmentTax+$deliveryCharge;

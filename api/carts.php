@@ -76,7 +76,7 @@ $qty;
         echo json_encode(['MSG'=>"product is not available","status"=>"error"]);
         return false;
        }
-        if($qty < $remaining ){
+        if($qty <= $remaining ){
 
         $insertCart["userId"]=$id;
         $insertCart["qty"]=$qty;
@@ -94,6 +94,7 @@ $qty;
          $data->deleteData("carts","productID='$productId'");
          
       echo json_encode(['MSG'=>"product delete from cart","status"=>"success"]);
+        return false;
         }else{
           if($status==0){
             $data->deleteData("carts","productID='$productId'");

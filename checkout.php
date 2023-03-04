@@ -1,5 +1,8 @@
 
 <?php include 'headerwebsite.php';    ?>
+<?php
+include("apiCredential.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,43 +43,94 @@
 </head>
 <body>
 <div class="container2">
+<?php
+/*
+$curl = curl_init();
+
+// Set the URL and other options
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://localhost/groceryWebsite/api/currentToken.php?key=avdfheuw23&id=",
+  CURLOPT_RETURNTRANSFER => true,  // Return the response instead of outputting it
+  CURLOPT_ENCODING => "",  // Accept any encoding
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",  // Change this to the HTTP method you need
+
+));
+// API endpoint URL
+$url = "";
+*/
+
+$ch = curl_init();
+    $keyApi=API_KEY;
+    $token=$_GET['token'];
+        $url = API_URL."carts.php?key=".$keyApi."&discount=0&code=''";
+
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    "Authorization: Bearer $token"
+    
+));
+
+
+$response = curl_exec($ch);
+
+// Check for errors
+if (curl_errno($ch)) {
+    echo 'Error: ' . curl_error($ch);
+}
+
+// Close the cURL session
+curl_close($ch);
+
+// Output the response
+ $response;
+// Send the request and get the response
+
+$response=json_decode($response,true);
+
+?>
 <div class="row">
-        <div class="col-md-4 order-md-2 mb-4">
+        <div class="col-lg-4 order-md-2 col-sm-12 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Your cart</span>
-                <span class="badge badge-secondary badge-pill" id="numberofcart">3</span>
+                <span class="badge badge-secondary badge-pill" id="numberofcart"><?php echo $response["totalRecord"]; ?></span>
             </h4>
             <ul class="list-group mb-3 sticky-top">
                 <div id="productOrder">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                   
-                        <h2 class="text-muted">Brief description</h2>
-                    </div>
-                    <span><h2>120  Rs</h2></span>
-                    <span><h2>12</h2></span>
-                 
+                    <?php
+               foreach( $response["data"]  as $key ){
+                $image_path=$key["image"];
+                ?>
+             <li class='list-group-item d-flex justify-content-between lh-condensed'>
+<div>
+
+                <img src='<?=$image_path; ?>' width='60'>
+                    <h2 class='text-muted priceProduct '> <?= $key["productName"];?></h2>
+                  </div>
+             <span class='priceProduct'><h2>  <?= $key["price"];?> Rs</h2></span>
+
+            <span class='productQty'> <?php echo $key["qty"];?> </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <h6 class="my-0">Second product</h6>
-                        <h2 class="text-muted">Brief description</h2>
-                    </div>
-                    <span class="text-muted">$8</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <h6 class="my-0">Third item</h6>
-                        <h2 class="text-muted">Brief description</h2>
-                    </div>
-                    <span class="text-muted">$5</span>
-                </li>
+<?php
+               }
+?>
+
+
+             
+
+            
            </div>
 
      
+<?php
 
 
-              <li class="list-group-item d-flex justify-content-between bg-light">
+?>
+
+              <li class="list-group-item  d-flex justify-content-between bg-light">
                     <div class="text-success">
                         <h6 class="my-0">Promo code</h6>
                         <h2 id="couponcode">EXAMPLECODE</h2>
@@ -85,27 +139,27 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>Total Cart (Rs)</h1>
-                    <h1 id="cartTotal">$20</h1>
+                    <h1 id="cartTotal"><?= $response["cartTotal"]["cartTotal"]; ?></h1>
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>GST (RS)</h1>
-                    <h1 id="gst">$20</h1>
+                    <h1 id="gst"><?= $response["cartTotal"]["gst"];?></h1>
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>Delivery Charge (RS)</h1>
-                    <h1 id="deliveryCharge">$20</h1>
+                    <h1 id="deliveryCharge"><?= $response["cartTotal"]["deliveryCharge"];?></h1>
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>Discount (RS)</h1>
-                    <h1 id="discount">$20</h1>
+                    <h1 id="discount"><?= $response["cartTotal"]["discount"];?></h1>
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>Final Amount (RS)</h1>
-                    <h1 id="finalAmount">$20</h1>
+                    <h1 id="finalAmount"><?= $response["cartTotal"]["totalAmount"];?></h1>
                   
                 </li>
             </ul>
@@ -118,7 +172,7 @@
         <div class="container">
 
 
-            <div class="col-md-8 order-md-1">
+            <div class="col-md-8 col-sm-12 order-md-1">
                 <h4 class="mb-3">Billing address</h4>
                 <form class="needs-validation" novalidate="">
                     <div class="row">
@@ -185,7 +239,7 @@
        
 </p>
                     <button class="btn  btn-primary btn-block" id="backButton" type="button" onclick="backtoHome()">Back To Shopping</button>
-                    <button class="btn  btn-lg btn-block" id="placeOrder"  onclick="PlaceOrder()" disabled=true type="button">Place Order</button>
+                    <button class="btn  btn-lg btn-block" id="placeOrder"  onclick="PlaceOrder()"  type="button">Place Order</button>
                 </form>
             </div>
         </div> 
@@ -299,6 +353,7 @@ async function applyCoupon() {
         if (CouponCode == "") {
             alert("please provide coupon code");
         } else {
+            CouponCode=CouponCode.toUpperCase();
             getCartItem = localStorage.getItem("carts");
             getCartItem = JSON.parse(getCartItem);
             getCartTotal = localStorage.getItem("cartTotal");
@@ -353,9 +408,9 @@ async function applyCoupon() {
               
                 alert("min");
         errorMsg="";
-        errorMsg+="<div class='alert alert-success alert-dismissible'>";
+        errorMsg+="<div class='alert alert-danger alert-dismissible'>";
         errorMsg+=" <button type='button' class='close' data-dismiss='alert'>&times;</button>";
-        errorMsg+=" <strong>Success!</strong> <p> Minimum Amount To Place Is"+ response.cartTotal.minOrder+".</p>";
+        errorMsg+=" <strong>Warning!</strong> <p> Minimum Amount To Place Is "+ response.cartTotal.minOrder+" Rs . </p>";
         errorMsg+="</div>";
         alert(errorMsg);
         document.getElementById("errorMsg").innerHTML=errorMsg;

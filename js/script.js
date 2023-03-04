@@ -100,14 +100,10 @@ loginBTN.addEventListener("click", function(e) {
 
 
         /*
-
                 message = response.message;
-
                 actionStatusText = response.actionStatusText;
-
                 actionStatusTextSymbol = response.actionStatusTextSymbol;
                 console.log(actionStatusTextSymbol);
-
                 if (response.action_status == 1) {
                     swal("Congratulation", message, "success");
                     varco = decodeURIComponent(document.cookie);
@@ -177,7 +173,6 @@ registerComplete.addEventListener("click", function(e) {
     console.log(formData);
     console.log(this);
     /*
-
                formData.append('username',RegisterUserName);
                formData.append('mobile',mobileNumber);
                formData.append('email',EmailAddress);
@@ -216,10 +211,8 @@ registerComplete.addEventListener("click", function(e) {
 });
 
 /*
-
 $('#register').click(function(e){
 e.preventDefault();
-
 let data=$('#userregis').serializeArray();
 let obj= {};
   let dataLength= data.length;
@@ -230,7 +223,6 @@ let obj= {};
           if(fieldValue==''){
             $('#Error').css('display','block');
             $('#ErrorMsg').text('All Field Are Required To Proceed');
-
                setTimeout(function(){
           
                 
@@ -238,7 +230,6 @@ let obj= {};
                },4000);
             return false;
           }else{
-
        EmailAddress=$('#RegisterEmail').val();
            EmailPattern=/[A-Za-z0-9,-_.]{3,}[@]{1}[A-Za-z]{5,7}[.]{1}[A-Za-z]{3,}/;
            var mobileNumber=$('#MobileUser').val();
@@ -311,7 +302,6 @@ let obj= {};
           $("#register").prop("disabled",false);
         }
           
-
            
        }*/
 
@@ -364,116 +354,47 @@ var swiper = new Swiper(".review-slider", {
 
 WebSite = location.href;
 WebSite = WebSite.replace('http://localhost/grocerywebsite/', '');
-WebSite.replace('?', '');
+token = localStorage.getItem("key");
+if (token != undefined && WebSite != 'index.php') {
+    WebSite = WebSite.replaceAll('?token=' + token, '');
+} else {
+    WebSite = WebSite;
+}
+alert(WebSite);
 
 function checkout() {
-    window.location.href = "http://localhost/grocerywebsite/checkout.php";
+    token = localStorage.getItem("key");
+    window.location.href = "http://localhost/grocerywebsite/checkout.php?token=" + token;
 }
 
+function cart() {
+    token = localStorage.getItem("key");
+    window.location.href = "http://localhost/grocerywebsite/cart.php?token=" + token;
+}
 
-function cartDetail(discount, code) {
-    alert(discount + "code" + code);
+async function cartDetail(discount = 0, code = "") {
+
 
     urlCart = API_PATH + "carts.php?key=" + APIKEY + "&discount=" + discount + "&code=" + code;
     jwtToken = localStorage.getItem("key");
-    fetch(urlCart, {
+    carts = await fetch(urlCart, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${jwtToken}`
 
-        },
-    }).then(function(res) {
-        return res.json();
-    }).then(function(response) {
-
-        console.log(response.data);
-        if (response.totalRecord > 0) {
-            cartData = response.data;
-            cartDatas = localStorage.getItem("carts");
-
-
-            localStorage.setItem("carts", JSON.stringify(cartData));
-            localStorage.setItem("cartTotal", JSON.stringify(response.cartTotal));
-
-            if (WebSite === "checkout.php") {
-                cartCheckout();
-            }
-            $("#Shopping_container").html('');
-
-            cartHTML = "";
-
-
-            for (i in cartData) {
-
-                productPath = cartData[i].image;
-                pid = cartData[i].productID;
-                qty = cartData[i].qty;
-                price = cartData[i].price;
-                cartHTML += "<div class='box'>";
-
-                cartHTML += "<i class='fas fa-trash' data-product_id='" + pid + "' onclick=deleteItem(this)></i>";
-
-
-                cartHTML += "<div class='content'>";
-
-                cartHTML += "<h3>" + cartData[i].productName + "</h3>";
-                cartHTML += "<span class='price'>Rs" + price + "/-</span>";
-                cartHTML += "</span>";
-
-
-                cartHTML += "<span class='quantity'  id='qty-" + pid + "'>qty:";
-                cartHTML += "<i class='fa fa-plus inc' onclick=increase(this)  data-qty='" + qty + "' data-price='" + price + "' data-action='in' data-product_id='" + pid + "'></i>";
-
-                cartHTML += qty;
-
-                cartHTML += "<i class='fa fa-minus de' onclick=decrease(this)   data-qty='" + qty + "' data-price='" + price + "' data-action='de' data-product_id='" + pid + "'></i>";
-
-
-
-
-
-                cartHTML += "</span>";
-                cartHTML += "</div>";
-                cartHTML += "</div>";
-
-
-
-
-
-
-            }
-
-            console.log(response.cartTotal.cartTotal);
-
-            if (response.cartTotal.cartTotal >= response.cartTotal.minOrder) {
-
-                document.getElementById("nextStep").disabled = false;
-
-
-            } else {
-                document.getElementById("nextStep").disabled = true;
-            }
-            getCartTotal = localStorage.getItem("cartTotal");
-            getCartTotal = JSON.parse(getCartTotal);
-
-            if (getCartTotal != undefined) {
-                cartTotal = getCartTotal.cartTotal;
-            } else {
-                cartTotal = response.cartTotal.cartTotal;
-            }
-            document.getElementById("cartDisplayTotal").innerText = "Cart Total " + cartTotal + " Rs";
-            document.getElementById("Shopping_container").innerHTML = cartHTML;
-        } else {
-            document.getElementById("cartDisplayTotal").innerText = "No Item In The Cart";
-            document.getElementById("nextStep").disabled = true;
-
-            localStorage.removeItem("carts");
-            localStorage.removeItem("cartTotal");
-            if (WebSite === "checkout.php") {
-                window.location.href = "index.php";
-            }
         }
 
+    });
+    response = await carts.json();
+
+    /*
+        cartData = response.data;
+        cartDatas = localStorage.getItem("carts");
+
+
+        localStorage.setItem("carts", JSON.stringify(cartData));
+        localStorage.setItem("cartTotal", JSON.stringify(response.cartTotal));
+    */
 
 
 
@@ -482,7 +403,17 @@ function cartDetail(discount, code) {
 
 
 
-        /* cart  total : <span id="cartTotal"></span> 
+
+
+
+
+    return response;
+
+
+
+
+
+    /* cart  total : <span id="cartTotal"></span> 
         deliveryCharge :<span id="deliveryCharge"></span> <br>
         Gst :<span id="gst"></span>  <br>
         Order Total :<span id="orderAmount"></span>
@@ -490,14 +421,13 @@ function cartDetail(discount, code) {
     cartDisplayTotal
          console.log(cartTotalDisplay);
         */
-    });
+
 
 }
 
 
 /*cartDetail();*/
-function addtocart(id, quantity, action) {
-
+async function addtocart(id, quantity, action) {
     var productId = id;
     var productQty = quantity;
     console.log(action);
@@ -535,44 +465,51 @@ function addtocart(id, quantity, action) {
     }).then(function(response) {
 
         return response.json();
-    }).then(function(text) {
+    }).then(async function(text) {
         console.log(text);
+
         if (text.status === "success") {
             swal("Congrats", text.MSG, "success");
         } else {
             swal("Oops!", text.MSG, "error");
         }
         if (action === "add") {
-            cartDetail(0);
+
         }
+        crt = await cartDetail(0, "");
+        totalItem = "<h1>You Have " + crt.totalRecord + " Item In The Cart</h1>";
+        console.log(totalItem);
+        document.getElementById("Shopping_container").innerHTML = totalItem;
 
-        /*
-                    data = text.cartData.data;
-                    cartTotal = text.cartData.cartTotal;
-                    for (i in data) {
-
-                        productQty = data[i].ProductQty;
-                        productName = data[i].productsName;
-                        productPrice = data[i].ProductPrice;
-                        productImage = data[i].productImage;
-                    }
-                    message = text.message;
-                    operationStatus = text.statusOp;
-
-                    if (operationStatus == 'success') {
-                        title = "congratulations";
-                    } else {
-                        title = "Oops!";
-                    }
-                    swal(title, message, operationStatus);
-
-                    cartDetail();
-                    */
+        /*    data = text.cartData.data;
+            cartTotal = text.cartData.cartTotal;
+            for (i in data) {
+                productQty = data[i].ProductQty;
+                productName = data[i].productsName;
+                productPrice = data[i].ProductPrice;
+                productImage = data[i].productImage;
+            }
+            message = text.message;
+            operationStatus = text.statusOp;
+            if (operationStatus == 'success') {
+                title = "congratulations";
+            } else {
+                title = "Oops!";
+            }
+            swal(title, message, operationStatus);
+            cartDetail();
+            */
 
     })
 
 }
-
+async function DisplayCartItem() {
+    crt = await cartDetail(0, "");
+    totalItem = "<h1> You Have " + crt.totalRecord + " Item In The Cart </h1>";
+    console.log(totalItem);
+    document.getElementById("Shopping_container").innerHTML = totalItem;
+}
+DisplayCartItem();
 
 
 
@@ -646,94 +583,212 @@ function displayProduct() {
 /*
 displayProduct();
 */
-function cartCheckout() {
-    getCartItem = localStorage.getItem("carts");
-    getCartItem = JSON.parse(getCartItem);
-    getCartTotal = localStorage.getItem("cartTotal");
-    getCartTotal = JSON.parse(getCartTotal);
-    console.log(WebSite);
-    console.log(getCartTotal);
-
-    if (WebSite === "checkout.php" && getCartItem == undefined || getCartItem == "" && WebSite != "index.php") {
-        window.location.href = "index.php";
-        return false;
-    }
-
-    checkoutItem = "";
-
-    getCartItem.map((item) => {
-        console.log(item.productID);
-
-        checkoutItem += " <li class='list-group-item d-flex justify-content-between lh-condensed'>";
-        checkoutItem += "  <i class='fas fa-trash  delete_cart'></i><div>";
-
-        checkoutItem += "<img src='" + item.image + "' width='60'>";
-        checkoutItem += "    <h2 class='text-muted priceProduct '>" + item.productName + "</h2>";
-        checkoutItem += "   </div>";
-        checkoutItem += " <span class='priceProduct'><h2>" + item.price + "  Rs</h2></span>";
-
-        checkoutItem += "   <span class='productQty'> <i class='fa fa-plus  product_Qty'> </i>" + item.qty + " <i class='fa fa-minus  product_Qty'></i></span>";
+async function cartCheckout() {
+    /*
+        localStorage.setItem("carts", JSON.stringify(cartData));
+        localStorage.setItem("cartTotal", JSON.stringify(response.cartTotal));
+       localStorage.setItem("carts", JSON.stringify(cartData));
+            localStorage.setItem("cartTotal", JSON.stringify(response.cartTotal));
+    */
+    if (WebSite == "cart.php") {
+        checkoutItem = "";
+        cartData = await cartDetail(0, "");
 
 
+        localStorage.setItem("carts", JSON.stringify(cartData.data));
+        localStorage.setItem("cartTotal", JSON.stringify(cartData.cartTotal));
 
-        checkoutItem += " </li>";
+        console.log(cartData);
+        if (cartData.totalRecord > 0) {
+            cartData.data.map((item) => {
+                checkoutItem += " <li class='list-group-item d-flex justify-content-between lh-condensed'>";
+                checkoutItem += "  <i class='fas fa-trash  delete_cart' onclick=deleteQty('" + item.qty + "','" + item.productID + "')></i><div>";
 
-    });
+                checkoutItem += "<img src='" + item.image + "' width='60'>";
+                checkoutItem += "    <h2 class='text-muted priceProduct '>" + item.productName + "</h2>";
+                checkoutItem += "   </div>";
+                checkoutItem += " <span class='priceProduct'><h2>" + item.price + "  Rs</h2></span>";
 
-    document.getElementById("productOrder").innerHTML = checkoutItem;
-    console.log(getCartItem);
-    console.log(getCartItem.length);
-    document.getElementById("numberofcart").innerText = getCartItem.length;
-    document.getElementById("cartTotal").innerText = getCartTotal.cartTotal;
-    document.getElementById("gst").innerText = getCartTotal.gst;
-    document.getElementById("deliveryCharge").innerText = getCartTotal.deliveryCharge;
-    document.getElementById("finalAmount").innerText = getCartTotal.totalAmount;
-    document.getElementById("discount").innerText = getCartTotal.discount;
+                checkoutItem += "   <span class='productQty'> <i class='fa fa-plus  product_Qty' id='increaseBtn-" + item.productID + "' onclick=increaseQty('" + item.qty + "','" + item.productID + "')> </i>" + item.qty + " <i class='fa fa-minus  product_Qty'  onclick=decreaseQty('" + item.qty + "','" + item.productID + "')></i></span>";
+                checkoutItem += " </li>";
 
-    if (getCartTotal.couponCode == "") {
-        code = "No Coupon Code";
-    } else {
-        code = getCartTotal.couponCode;
-    }
-    if (WebSite === "checkout.php") {
-        document.getElementById("couponcode").innerText = code;
-    }
-    if (getCartTotal.cartTotal < getCartTotal.minOrder) {
+            });
 
-        document.getElementById("placeOrder").disabled = true;
-        errorMsg = "<div class='alert alert-danger alert-dismissible'>";
-        errorMsg += " <button type='button' class='close' data-dismiss='alert'>&times;</button>";
-        errorMsg += " <strong>Warning!</strong> <p> Minimum Order Amount is " + getCartTotal.minOrder + " </p>";
-        errorMsg += "</div>";
-        document.getElementById("errorMsg").innerHTML = errorMsg;
-    } else {
-        document.getElementById("placeOrder").disabled = false;
+        } else {
 
+            window.location.href = "index.php";
 
+        }
+        document.getElementById("productOrder").innerHTML = checkoutItem;
+        document.getElementById("cartTotal").innerText = cartData.cartTotal.cartTotal;
+        document.getElementById("gst").innerText = cartData.cartTotal.gst;
+        document.getElementById("deliveryCharge").innerText = cartData.cartTotal.deliveryCharge;
+        document.getElementById("finalAmount").innerText = cartData.cartTotal.totalAmount;
+        document.getElementById("discount").innerText = cartData.cartTotal.discount;
+        document.getElementById("numberofcart").innerText = cartData.totalRecord;
 
+    } else if (WebSite == "checkout.php") {
 
-    }
-}
+        jwtToken = localStorage.getItem("key");
+        const jwt = jwtToken;
 
-alert(WebSite);
-if (WebSite == "checkout.php" || WebSite == "cart.php") {
+        const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+        const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+        const parsedJwtData = JSON.parse(decodedJwtData);
 
 
-    jwtToken = localStorage.getItem("key");
-    const jwt = jwtToken;
+        cartData = await cartDetail(0, "");
 
-    const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
-    const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
-    const parsedJwtData = JSON.parse(decodedJwtData); // Parse the decoded JSON data
-
-    console.log(parsedJwtData);
-    if (WebSite === "checkout.php") {
+        localStorage.setItem("carts", JSON.stringify(cartData.data));
+        localStorage.setItem("cartTotal", JSON.stringify(cartData.cartTotal));
         document.getElementById("customerName").value = parsedJwtData.username;
         document.getElementById("email").value = parsedJwtData.email;
         document.getElementById("address2").value = parsedJwtData.mobile;
+        if (cartData.cartTotal.code == undefined) {
+            code = "No Coupon Code Applied";
+        } else {
+            code = cartData.cartTotal.code;
+        }
+
+        document.getElementById("couponcode").innerText = code;
+        console.log(cartData);
+        checkoutItem = "";
+        if (cartData.totalRecord > 0) {
+            cartData.data.map((item) => {
+                checkoutItem += " <li class='list-group-item d-flex justify-content-between lh-condensed'>";
+
+
+                checkoutItem += "<img src='" + item.image + "' width='60'>";
+                checkoutItem += "    <h2 class='text-muted priceProduct '>" + item.productName + "</h2>";
+                checkoutItem += "   </div>";
+                checkoutItem += " <span class='priceProduct'><h2>" + item.price + "  Rs</h2></span>";
+
+                checkoutItem += "   <span class='productQty'>" + item.qty + "</span>";
+
+
+
+                checkoutItem += " </li>";
+
+            });
+            document.getElementById("productOrder").innerHTML = checkoutItem;
+            document.getElementById("cartTotal").innerText = cartData.cartTotal.cartTotal;
+            document.getElementById("gst").innerText = cartData.cartTotal.gst;
+            document.getElementById("deliveryCharge").innerText = cartData.cartTotal.deliveryCharge;
+            document.getElementById("finalAmount").innerText = cartData.cartTotal.totalAmount;
+            document.getElementById("discount").innerText = cartData.cartTotal.discount;
+            document.getElementById("numberofcart").innerText = cartData.totalRecord;
+            if (cartData.cartTotal.cartTotal < cartData.cartTotal.minOrder) {
+
+                document.getElementById("placeOrder").disabled = true;
+                errorMsg = "<div class='alert alert-danger alert-dismissible'>";
+                errorMsg += " <button type='button' class='close' data-dismiss='alert'>&times;</button>";
+                errorMsg += " <strong>Warning!</strong> <p> Minimum Order Amount is " + cartData.cartTotal.minOrder + " Rs. </p>";
+                errorMsg += "</div>";
+                document.getElementById("errorMsg").innerHTML = errorMsg;
+            } else {
+                document.getElementById("placeOrder").disabled = false;
+
+
+
+
+            }
+        } else {
+            window.location.href = "index.php";
+        }
+
     }
+
+}
+
+
+cartCheckout();
+
+function increaseQty(qty, product_id) {
+    qty = parseInt(qty);
+    qty = qty + 1;
+    console.log("qty" + qty, "product_id" + product_id);
+    updateCart(qty, product_id);
+    buttonId = "increaseBtn-" + product_id;
+    document.getElementById(buttonId).disabled = true;
+    document.getElementById("increaseBtn-" + product_id).disabled = true;
+    /*
+
+     getCartItem = localStorage.getItem("carts");
+
+    getCartTotal = localStorage.getItem("cartTotal");       getCartItem = localStorage.getItem("carts");
+
+        getCartTotal = localStorage.getItem("cartTotal");
+      */
+
+
+}
+
+function deleteQty(qty, product_id) {
+    console.log(qty);
+    qty = 0;
+    conf = confirm("Are You Sure To Delete ");
+    if (conf) {
+        updateCart(qty, product_id);
+    }
+}
+
+function decreaseQty(qty, product_id) {
+    qty = parseInt(qty);
+
+    if (qty >= 0) {
+        qty = qty - 1;
+        if (qty === 0) {
+            deleteQty(qty, product_id);
+            return false;
+        }
+        console.log("qty" + qty, "product_id" + product_id);
+        updateCart(qty, product_id);
+    }
+
+    /*
+
+     getCartItem = localStorage.getItem("carts");
+
+    getCartTotal = localStorage.getItem("cartTotal");       getCartItem = localStorage.getItem("carts");
+
+        getCartTotal = localStorage.getItem("cartTotal");
+      */
+
+
+}
+
+async function updateCart(qty, product_id) {
+    console.log("qty" + qty, "product_id" + product_id);
+
+    cartObject = {
+        productId: product_id,
+        qty: qty,
+        action: "update"
+    }
+    cartObject = JSON.stringify(cartObject);
+    jwtToken = localStorage.getItem("key");
+
+    apiurl = API_PATH + "carts.php?key=" + APIKEY;
+    const CartDataBase = await fetch(apiurl, {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${jwtToken}`
+
+        },
+        body: cartObject
+    });
+    replayfromdatabase = await CartDataBase.json();
+    buttonId = "increaseBtn-" + product_id;
+    console.log(replayfromdatabase);
+
+
+
+
+    /* cartDetail(0, "");*/
+
     cartCheckout();
-    cartCheckout()
+
+
 }
 
 function deleteItem(de) {
@@ -806,6 +861,7 @@ function increase(de) {
     action = "update";
     quantity = parseInt(qty) + 1;
     addtocart(pid, quantity, action);
+
     if (WebSite === 'checkout.php') {
         discount = document.getElementById("discount").innerText;
         code = document.getElementById("couponcode").innerText;
