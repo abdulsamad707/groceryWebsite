@@ -244,6 +244,7 @@
            document.getElementById("Phone").value=settingData.data[0].company_mobile;
            document.getElementById("Email").value=settingData.data[0].company_email;
            document.getElementById("minOrder").value=settingData.data[0].minOrder;
+          
            if(settingData.data[0].webSiteStatus==1){
             document.getElementById("on").checked=true;
            }
@@ -262,11 +263,33 @@
           company_mobile= document.getElementById("Phone").value;
            company_email= document.getElementById("Email").value;
         minOrder =  document.getElementById("minOrder").value;
+        newPassword =  document.getElementById("newPassword").value;
+        if(newPassword!=""){
+          id=localStorage.getItem("id");
+          id=JSON.parse(id);
+          token=id.token;
+          settingObject={
+            password:newPassword,
+            token:token
+          }
+          settingObject=JSON.stringify(settingObject);
+          sendRequest=await fetch(API_PATH+"admin.php?key=avdfheuw23",{
+    method:"POST",
+    headers: {
+            'Authorization': `Bearer ${token}`
+
+        },
+    body:settingObject
+});
+     console.log( await sendRequest.text());
+        
+        }
            if(document.getElementById("on").checked==true){
             webSiteStatus=1;
            }else{
             webSiteStatus=0;
            }
+           var LsId = localStorage.getItem("id");
 
            settingObject={
             deliverygst:deliverygst,

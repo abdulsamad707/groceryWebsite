@@ -24,13 +24,7 @@ regForm.onclick = () => {
 
 
 
-document.querySelector('#cart-btn').onclick = () => {
-    shoppingCart.classList.toggle('active');
-    searchForm.classList.remove('active');
-    loginForm.classList.remove('active');
-    navbar.classList.remove('active');
-    regFormdata.classList.remove('active');
-}
+
 
 
 document.querySelector('#login-btn').onclick = () => {
@@ -360,7 +354,6 @@ if (token != undefined && WebSite != 'index.php') {
 } else {
     WebSite = WebSite;
 }
-alert(WebSite);
 
 function checkout() {
     token = localStorage.getItem("key");
@@ -390,8 +383,6 @@ async function cartDetail(discount = 0, code = "") {
     /*
         cartData = response.data;
         cartDatas = localStorage.getItem("carts");
-
-
         localStorage.setItem("carts", JSON.stringify(cartData));
         localStorage.setItem("cartTotal", JSON.stringify(response.cartTotal));
     */
@@ -476,10 +467,8 @@ async function addtocart(id, quantity, action) {
         if (action === "add") {
 
         }
-        crt = await cartDetail(0, "");
-        totalItem = "<h1>You Have " + crt.totalRecord + " Item In The Cart</h1>";
-        console.log(totalItem);
-        document.getElementById("Shopping_container").innerHTML = totalItem;
+
+        DisplayCartItem();
 
         /*    data = text.cartData.data;
             cartTotal = text.cartData.cartTotal;
@@ -505,9 +494,9 @@ async function addtocart(id, quantity, action) {
 }
 async function DisplayCartItem() {
     crt = await cartDetail(0, "");
-    totalItem = "<h1> You Have " + crt.totalRecord + " Item In The Cart </h1>";
+    totalItem = crt.totalRecord;
     console.log(totalItem);
-    document.getElementById("Shopping_container").innerHTML = totalItem;
+    document.getElementById("numberofcart").innerText = totalItem;
 }
 DisplayCartItem();
 
@@ -712,11 +701,8 @@ function increaseQty(qty, product_id) {
     document.getElementById(buttonId).disabled = true;
     document.getElementById("increaseBtn-" + product_id).disabled = true;
     /*
-
      getCartItem = localStorage.getItem("carts");
-
     getCartTotal = localStorage.getItem("cartTotal");       getCartItem = localStorage.getItem("carts");
-
         getCartTotal = localStorage.getItem("cartTotal");
       */
 
@@ -726,10 +712,9 @@ function increaseQty(qty, product_id) {
 function deleteQty(qty, product_id) {
     console.log(qty);
     qty = 0;
-    conf = confirm("Are You Sure To Delete ");
-    if (conf) {
-        updateCart(qty, product_id);
-    }
+
+    updateCart(qty, product_id);
+
 }
 
 function decreaseQty(qty, product_id) {
@@ -746,11 +731,8 @@ function decreaseQty(qty, product_id) {
     }
 
     /*
-
      getCartItem = localStorage.getItem("carts");
-
     getCartTotal = localStorage.getItem("cartTotal");       getCartItem = localStorage.getItem("carts");
-
         getCartTotal = localStorage.getItem("cartTotal");
       */
 
@@ -782,8 +764,17 @@ async function updateCart(qty, product_id) {
     console.log(replayfromdatabase);
 
 
-
-
+    if (replayfromdatabase.status == "error") {
+        statusDisplay = "alert-danger";
+    } else {
+        statusDisplay = "alert-success";
+    }
+    cartMSG = "<div class='alert " + statusDisplay + " fade in alert-dismissible show'>";
+    cartMSG += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
+    cartMSG += "  <span aria-hidden='true' style='font-size:20px'>×</span>";
+    cartMSG += "</button>" + replayfromdatabase.MSG;
+    cartMSG += "</div>";
+    $("#msgDisplay").html(cartMSG);
     /* cartDetail(0, "");*/
 
     cartCheckout();

@@ -78,10 +78,10 @@ curl_close($curl);
 
       ?>
     <h1 class="heading"> our <span>products</span> </h1>
+ 
+    <div class="swiper product-slider" >
 
-    <div class="swiper product-slider">
-
-        <div class="swiper-wrapper" id="swiper">
+        <div class="swiper-wrapper" id="swiper" >
             <?php
       
 
@@ -111,8 +111,7 @@ curl_close($curl);
 
     </div>
 
-  
-
+    
 
 </section>
 
@@ -282,6 +281,10 @@ curl_close($curl);
      <a href="https://wa.me/923323565866" width="50"  height="50" target="_blank"> <img src="image/WhatApp.jpg"></a>
      </div>
 <?php include "footer.php";?>
+<script>
+
+
+    </script>
 <!-- blogs section ends -->
 
 <!-- footer section starts  -->

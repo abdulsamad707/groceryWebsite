@@ -44,6 +44,13 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
         
+
+
+
+                <?php
+
+            echo    mt_rand(1111,9999);
+                ?>
                   <span class="d-none d-lg-block">Admin</span>
                 </a>
               </div><!-- End Logo -->
@@ -209,9 +216,9 @@ localStorage.setItem("id",JSON.stringify(item));
 
 sessionStorage.setItem("id", id);
 
+console.log(finalResponse);
+window.location.href="index.php";
 
-
-window.location="index.php";
 
 }
 

@@ -47,7 +47,9 @@ if(password_verify($password,$userpassword)){
                "mobile"=>$mobile
               
                       ];
+
                    $jwt=$data-> CreateToken($payload,'keys');
+                   
             echo json_encode(["message"=>"Login Successfully","key"=>$jwt,"code"=>200,"status"=>"success"]);
           }else{
             echo json_encode(["message"=>"Your Id is blocked By Admin","key"=>" ","code"=>404,"status"=>"error"]);

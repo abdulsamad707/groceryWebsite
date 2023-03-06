@@ -65,20 +65,31 @@
                     <input class="form-control" type="file" id="formFile">
                   </div>
                 </div>
+                <label for="inputNumber" class=" col-form-label">Product Description</label>
+                <div class="quill-editor-full">
+                <p>Hello World!</p>
+                <p>This is Quill <strong>full</strong> editor</p>
+              </div>
+
                 <input type="text" hidden="true" class="form-control" id="id_product">
+          
+
+                
+
 
                                 <fieldset class="row mb-3">
-                                    <legend class="col-form-label col-sm-2 pt-0">Product Status</legend>
+                                    <legend class="col-form-label  pt-0">Product Status</legend>
                                     <div class="col-sm-10">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                                            <label class="form-check-label" for="gridRadios1">
+                                            <input  type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                            <label  for="gridRadios1">
                     Available
                       </label>
                                         </div>
+
                              <div class="form-check">
-                   <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                             <label class="form-check-label" for="gridRadios2">
+                   <input  type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                             <label  for="gridRadios2">
                       Not Avaliable
                       </label>
                                         </div>

@@ -25,6 +25,12 @@ if (!isset($status)) {
 
 															$reqMetod = $_SERVER["REQUEST_METHOD"];
 	if ($reqMetod == "GET") {
+
+
+         if(isset($_REQUEST["customer_order"])){
+		$customer_id=$_REQUEST["customer_order"];
+		 }
+
 		if (isset($_REQUEST['id'])) {
 			$orderID = $_REQUEST['id'];
 			$whereCondition = " orderscustomer.id ='$orderID'";
@@ -45,7 +51,7 @@ if (!isset($status)) {
 					$limit = 5;
 				}
 			} else {
-				$orderBy = null;
+				$orderBy = "orderscustomer.id DESC";
 				$limit = null;
 			}
 

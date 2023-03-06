@@ -24,37 +24,47 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
     
 <!-- header section starts  -->
 
+<script>
+    function redirect(link){
+        window.location.href=link;
+    }
 
+
+</script>
 <header class="header">                   
 
     <a href="#" class="logo"> <i class="fas fa-shopping-basket"></i> grocoery </a>
 
     <nav class="navbar">
-    <?php   $fullPATTH;   $WEBBASEPATH; ?>
-        <a href="index.php">home</a>
-        <a href="#features">features</a>
-        <a href="#products">products</a>
-        <a href="#categories">categories</a>
-        <a href="#review">review</a>
-        <a href="#blogs">blogs</a>
+       <div id="navBar" >
+        <a href='index.php'>home</a>
+        <a href='#features'>features</a>
+        <a href='#products'>products</a>
+        <a href='#categories'[>categories</a>
+        <a href='#review'>review</a>
+</div>
     </nav>
 
     <div class="icons">
         <div class="fas fa-bars" id="menu-btn"></div>
         <div class="fas fa-search" id="search-btn"></div>
         
-        <div class="fas fa-shopping-cart" id="cart-btn"></div>
-            
+        <div class="cart-icon">
+        <i class="fas fa-shopping-cart"    ></i>
+  <span class="cart-count"  onclick="cart()"  id="numberofcart">````</span>
+</div>
+
         <div class="fas fa-user" id="login-btn"></div>
+        <span class="fas fa-log-out"></span>
     </div>
 
     <form action="" class="search-form">
         <input type="search" id="search-box" placeholder="search here...">
-        <label for="search-box" class="fas fa-search"></label>
+        <label for="search-box" class="fas fa-search" onclick="searchproduct()" ></label>
     </form>
 
     <div class="shopping-cart">
-          <div id="Shopping_container">
+          <div id="">
     
     
         
@@ -87,7 +97,7 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
   </div>
    
         <div id="checkout_btn">
-    <button  class=' btn-lg btn-product btn-block '   onclick='cart()'> View Cart </button>;
+    <button  class=' btn-lg btn-product btn-block '  onclick='cart()'> View Cart <span id="Shopping_container"></sapn>    </button>;
         </div>
     
     </div>
@@ -112,3 +122,6 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
     </form>
   
 </header>
+<script>
+ 
+    </script>

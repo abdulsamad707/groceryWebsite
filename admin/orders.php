@@ -333,7 +333,7 @@ async function downloadInvoice(id){
 const jsonInventory=await inventory.json();
 console.log("Download ");
 console.log(jsonInventory);
-var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Product Name', style: 'tableHeader' }, { text: 'Qty', style: 'tableHeader' },{ text: 'Price (Rs)', style: 'tableHeader' },{ text: 'Sub Total (Rs)', style: 'tableHeader' }];
+var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Product Name', style: 'tableHeader' }, { text: 'Qty', style: 'tableHeader' },{ text: 'Unit Price (Rs)', style: 'tableHeader' },{ text: 'Sub Total (Rs)', style: 'tableHeader' }];
 RiderName=jsonInventory.data[0].rider_name;
 if(RiderName==null){
   RiderName="No Rider Assigned";

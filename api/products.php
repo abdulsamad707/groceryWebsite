@@ -1,4 +1,3 @@
-
 <?php
 
 try{
@@ -16,10 +15,6 @@ ob_start();
 5-whereCondition
 6-orderBy
 7-limit
-
-
-
-
 */
 
 if(isset($_GET["status"])){
@@ -107,8 +102,6 @@ $productArray=$_POST;
    5-whereCondition
    6-orderBy
    7-limit
-
-
    */
   $whereConduction="products.productName='$productName'";
   $productData=$data->getData("products",null,null,null,$whereConduction,null,null,null);

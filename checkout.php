@@ -32,7 +32,7 @@ include("apiCredential.php");
     top: 114px;
     z-index: 3; 
     display:inline;
-    box-shadow: 4px 7px 9px #aaaaaa;
+
 
     
 }
@@ -133,7 +133,14 @@ $response=json_decode($response,true);
               <li class="list-group-item  d-flex justify-content-between bg-light">
                     <div class="text-success">
                         <h6 class="my-0">Promo code</h6>
-                        <h2 id="couponcode">EXAMPLECODE</h2>
+                        <?php
+if($response["cartTotal"]["couponCode"]==""){
+    $code="No Coupon Code Applied";
+}else{
+    $code=$response["cartTotal"]["couponCode"];
+}
+                        ?>
+                        <h2 id="couponcode"><?php echo $code;?></h2>
                     </div>
                  
                 </li>
@@ -253,16 +260,15 @@ $response=json_decode($response,true);
 
 <script>
 async function PlaceOrder(){
-   alert("hi");
+
   var discount= document.getElementById("discount").innerText;
   var couponcode= document.getElementById("couponcode").innerText;
   discount=parseInt(discount);
 
-  alert(discount);
+
  var samae_addrees =document.getElementById("same-address").checked;
  var save_info= document.getElementById("save-info").checked;
 
- alert(save_info);
  var paymentmethod="cash";
  var paymentStatus=1;
  var orderStatus=1;
@@ -280,7 +286,7 @@ billingAddrees=document.getElementById("address").value;
 
 
 if(billingAddrees && localStoreAddrees==""){
-      alert("please provide delivery address");
+      swal("Oops","please provide delivery address","error");
     return false;
 }else{
 if(billingAddrees==localStoreAddrees){

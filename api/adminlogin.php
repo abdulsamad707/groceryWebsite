@@ -25,7 +25,7 @@ $productData=$data->getData('admins',null,null,null,$whereCondition,null,null,nu
      if(isset($remember)){
 
      }  
-    if($dbpassword===$dbpassword){
+    if(password_verify($password,$dbpassword)){
         setcookie("userid",$id,time() + (86400 * 30));
         setcookie("user_role",$role,time() + (86400 * 30));
         $_SESSION["user_id"]=1;

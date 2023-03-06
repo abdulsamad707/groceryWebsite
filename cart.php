@@ -15,6 +15,10 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 
 $response = curl_exec($ch);
 $response=json_decode($response,true);
+echo $response["totalRecord"];
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +50,8 @@ $response=json_decode($response,true);
     z-index: 3; 
     display:inline;
     box-shadow: 4px 7px 9px #aaaaaa;
+    width:140x;
+
 
     
 }
@@ -56,18 +62,27 @@ $response=json_decode($response,true);
 </head>
 <body>
 <div class="container2">
+
 <div class="row">
         <div class="col-md-12 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your cart</span>
-                <span class="badge badge-secondary badge-pill" id="numberofcart">3</span>
+               
+               <span> 
+
+<div id="msgDisplay">          
+</div>
+               </span>
+                <span class="badge badge-secondary badge-pill" id="numberofcart"></span>
             </h4>
             <ul class="list-group mb-3 sticky-top">
+
+          
                 <div id="productOrder">
 
 
 
                 <?php
+                if(isset($response["data"][0])){
 foreach($response["data"] as $value){
 $qty=$value["qty"];
 $productID= $value["productID"];
@@ -79,47 +94,61 @@ $productImage=$value['image'];
                 <img src="<?PHP echo $productImage ;?>" width='60'>
                     <h2 class='text-muted priceProduct '> <?php echo $value["productName"];?> </h2>
                   </div>
-             <span class='priceProduct'><h2>   Rs</h2></span>
+             <span class='priceProduct'><h2>  <?php echo $value["price"];?> Rs</h2></span>
 
             <span class='productQty'> <span class='productQty'> <i class='fa fa-plus  product_Qty' id='' onclick="increaseQty('<?php echo $qty;?>','<?php echo $productID;?>')"> </i> <?= $qty; ?> <i class='fa fa-minus  product_Qty'  onclick="decreaseQty('2','1')"></i></span> </span>
                 </li>
                 <?php
+                
+}
 }
 ?>               
            </div>
-
-     
-
-
-         
-                <li class="list-group-item d-flex justify-content-between">
+           <?php
+           if(isset($response["data"][0])){
+            ?>
+           <li class="list-group-item d-flex justify-content-between">
                     <h1>Total Cart (Rs)</h1>
-                    <h1 id="cartTotal">$20</h1>
+                    <h1 id="cartTotal"><?= $response["cartTotal"]["cartTotal"]; ?></h1>
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>GST (RS)</h1>
-                    <h1 id="gst">$20</h1>
+                    <h1 id="gst"><?= $response["cartTotal"]["gst"];?></h1>
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>Delivery Charge (RS)</h1>
-                    <h1 id="deliveryCharge">$20</h1>
+                    <h1 id="deliveryCharge"><?= $response["cartTotal"]["deliveryCharge"];?></h1>
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>Discount (RS)</h1>
-                    <h1 id="discount">$20</h1>
+                    <h1 id="discount"><?= $response["cartTotal"]["discount"];?></h1>
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>Final Amount (RS)</h1>
-                    <h1 id="finalAmount">$20</h1>
+                    <h1 id="finalAmount"><?= $response["cartTotal"]["totalAmount"];?></h1>
                   
                 </li>
+
+
+         
+             <div class="row">
+             <div class="col-md-6">
                 <button class="btn btn-primary btn-lg btn-block" id="placeOrder"  onclick='checkout()'  type="button">Proceed To Checkout</button>
-                
-            
+
+                </div>
+                <div class="col-md-6">
+
+                <button class="btn  btn-primary btn-block" id="backButton" type="button" onclick="backtoHome()">Back To Shopping</button>
+           </div>
+            </div>
+            <?php
+
+           }
+           ?>
             </ul>
     
             <ul>
@@ -199,7 +228,12 @@ $productImage=$value['image'];
        
         </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script>
+    function backtoHome(){
+window.location.href="index.php";
+}
 
+    </script>
     <?php include "footer.php";?>
 </body>
 
