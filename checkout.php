@@ -65,6 +65,10 @@ $url = "";
 $ch = curl_init();
     $keyApi=API_KEY;
     $token=$_GET['token'];
+    if($token==null){
+        header("location:index.php");
+        return false;
+    }
         $url = API_URL."carts.php?key=".$keyApi."&discount=0&code=''";
 
 curl_setopt($ch, CURLOPT_URL, $url);
@@ -150,7 +154,7 @@ if($response["cartTotal"]["couponCode"]==""){
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
-                    <h1>GST (RS)</h1>
+                    <h1>GST <span id="gstperc"></span> (RS)</h1>
                     <h1 id="gst"><?= $response["cartTotal"]["gst"];?></h1>
                   
                 </li>
@@ -205,18 +209,7 @@ if($response["cartTotal"]["couponCode"]==""){
                         <label for="address2">Mobile <span class="text-muted">(Optional)</span></label>
                         <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                        <input type="text" class="form-control" id="coupon" placeholder="Coupon Code">
-                           
-                       
-                        </div>
-                        <div class="col-md-6">
-                      
-                            <button type="button" class="couponCodeApply"  onclick="applyCoupon()">Apply Coupon </buuton>
-                     
-                        </div>
-                  </div>
+              
 
 
 
@@ -336,7 +329,7 @@ apiurl = API_PATH+"orders.php?key=" + APIKEY;
         },
         body:OrderObject
     });
-response=await orderResponse.json();
+response=await orderResponse.text();
 
 swal("Congrats","Order Placed Succesfully","success");
 console.log(response);
@@ -344,8 +337,9 @@ console.log(response);
    localStorage.removeItem("cartTotal");
    localStorage.removeItem("cartDiscount");
    setTimeout(() => {
-    window.location.href="index.php";
+window.location.href="index.php";
    },1000);
+   
 
 }
 

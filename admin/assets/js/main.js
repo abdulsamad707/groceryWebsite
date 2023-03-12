@@ -372,3 +372,10 @@ displayProduct();
 
 str = "03-December-2022";
 console.log(str.length);
+
+
+
+
+
+
+/*Samad123456@ABCDEFGHIJKL*/

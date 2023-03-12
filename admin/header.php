@@ -353,12 +353,7 @@
           <span>Riders</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="coupon.php">
-
-          <span>Coupon</span>
-        </a>
-      </li>
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="users.php">
        
@@ -404,6 +399,13 @@
           <span>Users</span>
         </a>
       </li>
+
+
+
+
+
+
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="orders.php">
        
@@ -415,3 +417,29 @@
 
   </aside><!-- End Sidebar-->
   <script src="assets/js/constant.js"></script>
+  <script>
+
+
+jwtToken = localStorage.getItem("id");
+    const jwt = jwtToken;
+
+    const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+    const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    const parsedJwtData = JSON.parse(decodedJwtData);
+console.log(parsedJwtData);
+    role=parsedJwtData.role;
+
+    if(role==0){
+    LINK="<li class='nav-item'><a class='nav-link collapsed' href='users.php'><span>Users</span></a></li>"; 
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='riders.php'><span>Ride</span></a></li>";
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='orders.php'><span>Order</span></a></li>";
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='products.php'><span>Products</span></a></li>";
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='index.php'><span>Dashboard</span></a></li>";
+    } 
+    document.getElementById("sidebar-nav").innerHTML=   LINK;
+
+    console.log(LINK);        
+
+
+
+</script>

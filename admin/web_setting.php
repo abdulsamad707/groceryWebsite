@@ -264,12 +264,17 @@
            company_email= document.getElementById("Email").value;
         minOrder =  document.getElementById("minOrder").value;
         newPassword =  document.getElementById("newPassword").value;
+        renewPassword =document.getElementById("renewPassword").value;
+        currentPassword=document.getElementById("currentPassword").value;
         if(newPassword!=""){
           id=localStorage.getItem("id");
+
+          if(renewPassword===newPassword){
           id=JSON.parse(id);
           token=id.token;
           settingObject={
             password:newPassword,
+            currentPassword:currentPassword,
             token:token
           }
           settingObject=JSON.stringify(settingObject);
@@ -282,7 +287,9 @@
     body:settingObject
 });
      console.log( await sendRequest.text());
-        
+}else{
+    console.warn("Re-Enter Password MUst Be Same");
+}
         }
            if(document.getElementById("on").checked==true){
             webSiteStatus=1;

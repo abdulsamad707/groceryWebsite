@@ -113,7 +113,7 @@ $productImage=$value['image'];
                   
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
-                    <h1>GST (RS)</h1>
+                    <h1>GST <span id="gstperc"></span> (RS)</h1>
                     <h1 id="gst"><?= $response["cartTotal"]["gst"];?></h1>
                   
                 </li>

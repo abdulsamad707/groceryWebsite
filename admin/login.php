@@ -49,7 +49,7 @@
 
                 <?php
 
-            echo    mt_rand(1111,9999);
+   
                 ?>
                   <span class="d-none d-lg-block">Admin</span>
                 </a>
@@ -201,7 +201,7 @@ console.log(response);
 console.log(finalResponse);
 let id=finalResponse.id;
 
-if(id!=undefined || id!=""){
+if(id!=undefined && id!=""){
  currentTime= new Date().getTime();
 
 const item={

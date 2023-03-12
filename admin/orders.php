@@ -50,6 +50,7 @@
              <p>   Order Date :<span id="order_date"></span></p>
              <p>   Order Time :<span id="order_time"></span></p>
              <p>   Order Amount :<span id="order_amount"></span></p>
+             <p>   Cart Total :<span id="cart_total"></span></p>
              <p>   Delivery Charge :<span id="deliveryCharge"></span></p>
              <p id="rider_info">  Rider Name :<span id="rider_name"></span></p>
              <p>  Rider Number :<span id="rider_number"></span></p>
@@ -255,9 +256,23 @@ pdfMake.createPdf(docDefinition).download("all order Invoice"+".pdf");
 }
 
 
-
+async function canRemoveItem(product_id,orderid,price,qty){
+            var deleteObj={
+             product_id:product_id,
+             orderId:orderid,
+             price:price,
+             qty:qty,
+             type:"check"
+            };
+            deleteObj=JSON.stringify(deleteObj);
+     
+         data =  await fetch  (API_PATH+"remove_item.php?key=avdfheuw23",{method:"POST",body:deleteObj});
+         responseData=await data.text();
+    console.log(responseData);
+    view(orderid);
+}
 function removeItem(product_id,orderid,price,qty){
-
+  canRemoveItem(product_id,orderid,price,qty);
 view(orderid);
 }
 
@@ -312,7 +327,9 @@ jsonInventory.products.map((orderItems,i)=>{
   ordersproductHTML+="<td>"+orderItems.productName+"</td>";
   ordersproductHTML+="<td>"+orderItems.qty+"</td>";
   ordersproductHTML+="<td>"+orderItems.price+" Rs </td>";
- 
+  if(i >= 0  && OrderStatus==1){
+  ordersproductHTML+="<td><button class='btn btn-danger' onclick=canRemoveItem('"+orderItems.product_id+"','"+id+"','"+orderItems.price+"','"+orderItems.qty+"')>Remove</button></td>";
+  }
   ordersproductHTML+="</tr>";
 });
 document.getElementById("orderItemdetail").innerHTML=ordersproductHTML;
@@ -323,7 +340,7 @@ document.getElementById("orderStatusBtn").innerText=Order_Status;
 document.getElementById("coupon_code").innerText=jsonInventory.data[0].couponCode;
 document.getElementById("gst").innerText=jsonInventory.data[0].gst+" Rs";
 document.getElementById("discount").innerText=jsonInventory.data[0].discount+" Rs";
-
+document.getElementById("cart_total").innerText=jsonInventory.data[0].cartTotal+"Rs";
 document.getElementById("deliveryCharge").innerText=deliveryCharge;
 
 
@@ -365,6 +382,7 @@ content: [
   {text:"Discount :"+  discount+" Rs"},
   {text:"Gst :"+jsonInventory.data[0].gst+" Rs"},
   {text:"Order Amount :"+jsonInventory.data[0].totalAmount+" Rs"},
+  {text:"Cart Total :"+jsonInventory.data[0].cartTotal+" Rs"},
   {text:"Order Date :"+jsonInventory.data[0].orderDate},
   {text:"Order Status :"+jsonInventory.data[0].OrderStatus},
   {text:"Order Time :"+jsonInventory.data[0].order_time},
@@ -436,19 +454,28 @@ async function updateOrder(id){
 const jsonInventorys=await inventory.json();
 const current=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
 const currentOrder=await current.json();
+console.log("current Order ");
 console.log(currentOrder);
 console.log(jsonInventorys);
 
 OrderStatusCurrent=currentOrder.data[0].OrderStatus;
-OrderStatusRider=currentOrder.data[0].rider_name;
+OrderStatusRider=currentOrder.data[0].deliveryboyid;
+OrderStatusRiderName=currentOrder.data[0].rider_name;
 RiderHTML="";
+if(OrderStatusRider==0){
 RiderHTML+="<option value='0'> Select Rider </option>";
+}else{
+  RiderHTML+="<option value="+OrderStatusRider+" selected>"+OrderStatusRiderName+"</option>";
+}
 jsonInventorys.riders_active.map((item,key)=>{
-if(OrderStatusRider===item.username){
+if(OrderStatusRider === item.id){
+  console.log("rider");
   RiderHTML+="<option value="+item.id+" selected>"+item.username+"</option>";
 }else{
- if(OrderStatusRider!=item.username){
+ if(OrderStatusRider!=item.id){
+  if(item.id!=OrderStatusRider){
   RiderHTML+="<option value="+item.id+">"+item.username+"</option>";
+  }
  }
 }
  

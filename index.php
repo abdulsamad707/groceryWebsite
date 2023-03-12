@@ -78,10 +78,11 @@ curl_close($curl);
 
       ?>
     <h1 class="heading"> our <span>products</span> </h1>
- 
+    <div id="msgDisplay">          
+</div>
     <div class="swiper product-slider" >
 
-        <div class="swiper-wrapper" id="swiper" >
+        <div class="swiper-wrapper " id="swiper" >
             <?php
       
 
@@ -92,7 +93,8 @@ curl_close($curl);
   <?php
             foreach($dataUrl['data'] as $key => $value){
   ?>
-           <div class="swiper-slide box">
+      
+        <div class='box swiper-slide'  >
                 <img src="<?=$value['ProductImage'] ;?>" alt="">
                 <h3> <?= $value["productName"];?></h3>
                 <div class="price"> <?php echo  $value["price"]; ?> Rs </div>
@@ -100,13 +102,13 @@ curl_close($curl);
                   <?= $value["rating"]; ?>  <i class="fas fa-star"></i>
                
                 </div>
-       
+          
                 <a href="javascript:void(0)" class="btn-product" onclick="addtocart('<?= $value['id']?>','1','add',this)"  >add to cart</a>
             </div>
             <?php
             }
             ?>
-
+    
         </div>
 
     </div>

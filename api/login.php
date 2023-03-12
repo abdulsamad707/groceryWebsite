@@ -7,6 +7,7 @@
 <?php
 include "validkey.php";
 header('Access-Control-Allow-Origin:*');
+include("function.php");
 $userdata=file_get_contents("php://input");
 
 $userdata=json_decode($userdata,true);
@@ -37,19 +38,23 @@ $userpassword= $userDataformbase["data"][0]["password"];
 $mobile= $userDataformbase["data"][0]["mobile"];
 if(password_verify($password,$userpassword)){
           if($customer_status==1){
-
+$otp=mt_rand(1111,9999);
 
             $payload=[
               "id"=>$customer_id,
               "email"=>$email,
               "username"=>$username,
                "address"=>$useraddress,
-               "mobile"=>$mobile
-              
+               "mobile"=>$mobile,
+                 "otp"=>$otp
                       ];
 
+
+$data->updateData("users",["otp"=>$otp,"otp_verify"=>0],["id"=>"'$customer_id'"]);
                    $jwt=$data-> CreateToken($payload,'keys');
-                   
+                   $message="Your Otp  Is $otp";
+                   $subject="OTP Verification ";
+                   	   sendMail($message,$email,$username,$subject);
             echo json_encode(["message"=>"Login Successfully","key"=>$jwt,"code"=>200,"status"=>"success"]);
           }else{
             echo json_encode(["message"=>"Your Id is blocked By Admin","key"=>" ","code"=>404,"status"=>"error"]);

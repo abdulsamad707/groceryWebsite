@@ -13,7 +13,7 @@
 
 
     <div class="pagetitle">
-      <h1>Users</h1>
+      <h1>Rider</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -95,7 +95,11 @@ console.log(jsonInventory);
       var     userData="";
           jsonInventory.data.map((item,key)=>{
           
-     
+            if(item.status==1){
+              Btn="<button onclick=riderstatus('"+item.id+"','"+item.status+"') class='btn btn-success'>Active</button>";
+            }else{
+              Btn="<button onclick=riderstatus('"+item.id+"','"+item.status+"') class='btn btn-danger'>Deactive</button>";
+            }
            userData+="<tr>";
            userData+="<td>"+(key+1)+"</td>";
            userData+="<td>"+capitalizeFirstWord(item.username)+"</td>";
@@ -103,33 +107,32 @@ console.log(jsonInventory);
            userData+="<td>"+item.mobile+"</td>";
            userData+="<td>"+item.Earning+" Rs </td>";
            userData+="<td>"+item.number_of_order+"  </td>";
+           userData+="<td>"+Btn+"</td>";
            userData+="</tr>";
           });
          document.getElementById("users").innerHTML=userData;
 }
 displayUsers();
 
+async function riderstatus(rider_id,status){
 
-async  function changeStatus(id){
-       formData={
-        userId:id
-       }
-   formData  =  JSON.stringify(formData);
-   console.log(formData);
+     if(status==0){
+      newStatus=1;
+     }else{
+      newStatus=0;
+     }
 
+     riderObject={
+      RiderId:rider_id,
+      status:newStatus
+     } 
 
-  const inventory=await fetch("http://localhost/groceryWebsite/api/change_user.php?key=avdfheuw23",
-{
-
-  method:"POST",
-  body:formData
-});
-  const inventoryJSON =await inventory.text();
-
-    console.log(inventoryJSON);
-    displayUsers();
-
+     riderObject=JSON.stringify(riderObject);
+rider_data = await fetch(API_PATH+"change_rider.php?key=avdfheuw23",{method:"POST",body:riderObject});
+   console.log(await rider_data.text());
+displayUsers();
 }
+
 
 
 </script>

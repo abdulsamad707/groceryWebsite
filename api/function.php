@@ -1,34 +1,31 @@
 <?php
-include("important_credential.php");
+
+include "important_credential.php";
 function sendMail($message,$email,$username,$subject){
-    $mail = new PHPMailer(true);
-  /*  $mail->SMTPDebug = SMTP::DEBUG_SERVER;  */                    //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = "abdulsamadahsan@gmail.com";                     //SMTP username
-    $mail->Password   ="lgbjiahmdxixbqdd" ;                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-    //Recipients
-    $mail->setFrom("abdulsamadahsan@gmail.com", 'Grocery.pk');
-      //Add a recipient
-    $mail->addAddress($email,$username);               //Name is optional
-    $mail->addReplyTo('abdulsamadahsan@gmail.com', 'Grocery.pk');
-    
+    include "phpmail.php";
+    include "smtp.php";
+    $mail = new PHPMailer;
 
-    //Attachments
+    $mail->setFrom('abdulsamadahsan@gmail.com', 'Sender Name');
+$mail->addAddress($email, 'Recipient Name');
+$mail->Subject = $subject;
+$mail->Body =$message;
 
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = $subject;
+$mail->isHTML(true);
+$mail->isSMTP(); // Set mailer to use SMTP
+$mail->Host = 'smtp.gmail.com'; // Specify SMTP server
+$mail->SMTPAuth = true; // Enable SMTP authentication
+$mail->Username = 'abdulsamadahsan@gmail.com'; // SMTP username
+$mail->Password = 'answbrnvzoqgtduf'; // SMTP password
+$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
+$mail->Port = 587; 
 
-    $mail->Body = $message;
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
- $sendMailer=   $mail->send();
-     return $sendMailer;
+if(!$mail->send()) {
+    echo 'Error sending email: ' . $mail->ErrorInfo;
+} else {
+ 
+}
       }
      function SendSms($number,$message){
       define('APIKEY', 'd47d5752ecb3350de255ef9322eff59d13925d9e');
@@ -132,7 +129,7 @@ CURLOPT_URL =>API_FULL_PATH."users.php?key=avdfheuw23&id=".$userId,
         }else{
             $coupon_type="product";
         }
-        $deliverygst=$adminData["data"][0]["deliverygst"];
+    
         if($coupon_type==="deliveryoff"){
             $deliveryCharge=0;
         }else{
@@ -140,8 +137,8 @@ CURLOPT_URL =>API_FULL_PATH."users.php?key=avdfheuw23&id=".$userId,
         
         }
    
-        $deliverygst=floor(($deliverygst/100)*$deliveryCharge);
-        $deliveryCharge=$deliveryCharge+   $deliverygst;
+        
+        $deliveryCharge=$deliveryCharge;
 
         $minOrder=$adminData["data"][0]["minOrder"];
         $gst=$adminData["data"][0]["gst"];
@@ -181,14 +178,15 @@ CURLOPT_URL =>API_FULL_PATH."users.php?key=avdfheuw23&id=".$userId,
             if($totalPrice<0){
                 $totalPrice=0;
             }
-           $governmentTax=floor(($gst/100)*$totalPrice);
-            
+           $governmentTax=ceil(($gst/100)*$totalPrice);
+           $deliverygst=0;
                       $finalAmount=$totalPrice+$governmentTax+$deliveryCharge;
                       $cartTotal["totalAmount"]=$finalAmount;
                       $cartTotal["discount"]=$discount;
                       $cartTotal["deliveryCharge"]=$deliveryCharge;
                       $cartTotal["cartTotal"]=$totalPrice;
                       $cartTotal["gst"]=$governmentTax;
+            $cartTotal["gstperc"]=$gst;
                       $cartTotal["totalItem"]=$totalRecord;
                       $cartTotal["minOrder"]=$minOrder;
                       $cartTotal["couponCode"]=$couponCode;

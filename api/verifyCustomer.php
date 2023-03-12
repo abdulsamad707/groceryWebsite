@@ -9,16 +9,23 @@ header('Access-Control-Allow-Headers:Access-Control-Allow-Headers,Content-Type,A
 
 
 include("validkey.php");
+
+include("function.php");
 ob_start();
 if(!isset($status)){
-   echo  $userdata=file_get_contents("php://input");
-           $userdata=json_decode($userdata);
-  
-    echo json_encode($userdata);
-  $insertStatus['message']=' Mobile Verified Successfully';
-  $insertStatus['code']=500;
-  $insertStatus['insertId']=0;
-  $insertStatus['http_code']=200;
+     $userdata=file_get_contents("php://input");
+           $userdata=json_decode($userdata,true);
+          $customer_id=$userdata["id"];
+
+  $insertStatus['message']='Customer Verified Successfully';
+  $useraddressdata=$data->getData("users",null,null,null,"id='$customer_id'",null,null,null);
+  $email=$useraddressdata["data"][0]["email"];
+  $username=$useraddressdata["data"][0]["username"];
+  $message="OTP Has Been Verified Login Successfully";
+  $subject="OTP Verification";
+  sendMail($message,$email,$username,$subject);
+  $updatedata=  $data->updateData("users",['otp_verify'=>1,'otp'=>0],["id"=>"'$customer_id'"]);
+
   echo json_encode($insertStatus);
   
  /*$updatedata=  $data->updateData("users",['verified'=>1,'str_rand'=>'','otp'=>'']

@@ -9,10 +9,11 @@ include "php-jwt-main/src/JWK.php";
 include "php-jwt-main/src/Key.php";
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+
 class CRUDOPERATION {
 
 function __construct($host_name,$dbname,$username,$password){
-
+  date_default_timezone_set('Asia/Karachi');
 $this->host_name=$host_name;
 
 $pdo=new PDO('mysql:host='.$host_name.';dbname='.$dbname.';',$username,$password);
@@ -201,7 +202,7 @@ function updateData ($table,$params=array(),$whereCod=null){
 
           }if($type=="delete"){
             $result["code"]=200;
-            $result["message"]="Data Upated";
+            $result["message"]="Data Delewted";
            $result["totalRecord"]=$totalRecord;
           }
         

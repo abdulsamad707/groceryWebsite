@@ -113,8 +113,6 @@ section {
     width: 4.5rem;
     line-height: 4.5rem;
     border-radius: .5rem;
-    background: #eee;
-    color: var(--black);
     font-size: 2rem;
     margin-left: .3rem;
     cursor: pointer;
@@ -259,6 +257,10 @@ section {
     text-align: center;
 }
 
+#logout {
+    color: #ff7800;
+}
+
 .header .login-form.active {
     right: 2rem;
     transition: .4s linear;
@@ -339,11 +341,6 @@ section {
     box-shadow: var(--box-shadow);
 }
 
-.features .box-container .box:hover {
-    outline: var(--outline-hover);
-    outline-offset: 0rem;
-}
-
 .features .box-container .box img {
     margin: 1rem 0;
     height: 15rem;
@@ -376,14 +373,12 @@ section {
     text-align: center;
     padding: 3rem 2rem;
     outline-offset: -1rem;
-    outline: var(--outline);
     box-shadow: var(--box-shadow);
     transition: .2s linear;
 }
 
 .products .product-slider .box:hover {
     outline-offset: 0rem;
-    outline: var(--outline-hover);
 }
 
 .products .product-slider .box img {
@@ -425,7 +420,6 @@ section {
 }
 
 .categories .box-container .box:hover {
-    outline: var(--outline-hover);
     outline-offset: 0rem;
 }
 
@@ -527,10 +521,6 @@ section {
 .blogs .box-container .box .content .icons a {
     color: var(--light-color);
     font-size: 1.5rem;
-}
-
-.blogs .box-container .box .content .icons a:hover {
-    color: var(--black);
 }
 
 .blogs .box-container .box .content .icons a i {
@@ -836,7 +826,6 @@ section {
 
 #proceed a {
     text-decoration: none;
-    color: black;
 }
 
 @media (max-width:768px) {
@@ -872,6 +861,7 @@ section {
     align-items: center;
     align-content: center;
     align-self: center;
+    box-sizing: border-box;
 }
 
 .product_Qty {
@@ -912,19 +902,22 @@ section {
 
 .cart-count {
     position: absolute;
-    top: -2rem;
-    font-size: 18px;
-    font-weight: bold;
+    top: -1.6rem;
+    font-size: 12px;
     border-radius: 100%;
     z-index: 1;
     left: 19px;
+    border-radius: 1px solid blue;
+    width: 25px;
+    height: 25px;
 }
 
 .cart-icon {
     position: relative;
     display: inline-block;
     border-radius: 50%;
-    background-color: #130f40;
+    color: black;
+    z-index: 0;
 }
 
 #cart-btn {

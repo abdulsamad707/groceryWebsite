@@ -58,7 +58,7 @@ if (!isset($status)) {
 			$whereCondition = null;
 		}
 		$table = "orderscustomer";
-		$rows = "orderscustomer.orderStatus as order_status, DATE_format(orderscustomer.orderDate,'%h:%i %p') as order_time,orderscustomer.gst,users.mobile as customer_mobile,users.username as customer_name,statusorder.status as OrderStatus,deliveryboy.username as rider_name,deliveryboy.mobile as rider_number,orderscustomer.id as orderID,date_format(orderDate,'%d-%M-%Y') as orderDate , totalAmount,deliveryCharge,deliveryAddress,paymentmethod,discount,couponCode,totalItem";
+		$rows = "deliveryboyid,orderscustomer.cartTotal,orderscustomer.orderStatus as order_status, DATE_format(orderscustomer.orderDate,'%h:%i %p') as order_time,orderscustomer.gst,users.mobile as customer_mobile,users.username as customer_name,statusorder.status as OrderStatus,deliveryboy.username as rider_name,deliveryboy.mobile as rider_number,orderscustomer.id as orderID,date_format(orderDate,'%d-%M-%Y') as orderDate , totalAmount,deliveryCharge,deliveryAddress,paymentmethod,discount,couponCode,totalItem";
 		$join = "LEFT JOIN users on orderscustomer.userId=users.id LEFT JOIN  deliveryboy  on orderscustomer.deliveryboyid=deliveryboy.id  LEFT JOIN statusorder ON orderscustomer.orderStatus=statusorder.status_id";
 
 		$orderdata = $data->getData($table, $rows, null, $join, $whereCondition, $orderBy, $limit, null);
@@ -89,7 +89,7 @@ if (!isset($status)) {
         $type=$userdata["type"];
 			if ($type === "order_status") {
 		
-				$adminId = $adminData["id"];
+			
 		
 					$rider_id = $userdata["RiderId"];
 
@@ -101,7 +101,7 @@ if (!isset($status)) {
 							$updateOrder = $data->sql("UPDATE orderdetail set orderqty=qtyorder WHERE order_id='$order_id'",'update');						} else {
 					
 						 } 
-						 if ($ordStat != 5) {
+						 if ($ordStat ==4 ) {
 						 		$updateOrder = $data->updateData("deliveryboy", ["busy" => 1], ["id" => "'$rider_id'"]);
 						 }
 						
@@ -138,12 +138,53 @@ if (!isset($status)) {
 
 					  }
 				 $ip=get_client_ip();
+				 $email=$adminData['email'];
+				 $username=$adminData['username'];
+				 $message="Order Has Been Placed";
+			
+			
 	 $discount=$userdata["discount"];
 				$whereCondition="userId='$customer_id' AND ip_add='$ip'";
-             $cart=$userDataformbase=$data->getData("carts",null,null,null,$whereCondition,null,null,null);
+				$join="LEFT JOIN products ON carts.productID =products.id";
+
+
+             $cart=$userDataformbase=$data->getData("carts","carts.userId,carts.productID,products.productName,carts.qty,carts.price,CONCAT('http://localhost/groceryWebsite/api/',products.image) as image",null,$join,$whereCondition,null,null,null);
 			 $code=$userdata["couponCode"];
 			$cartTotal=cartTotal($cart,$data,$discount,$code);
-		
+			$subject="Order Place Confirmation";
+				
+				
+
+			$message.="<tr>";
+			$message.="<td> Product Name </td>";
+			$message.="<td> Product Qty </td>";
+			$message.="<td> Unit Price </td>";
+			$message.="<td> Sub Total </td>";
+			$message.="</tr>";
+	           foreach($cart["data"] as $cartData){
+				$message.="<tr>";
+				$message.="<td>".$cartData["productName"]."</td>";
+				$message.="<td>".$cartData["qty"]."</td>";
+				$message.="<td>".$cartData["price"]." Rs </td>";
+				$message.="<td>".$cartData["price"]*$cartData["qty"]." Rs</td>";
+				$message.="</tr>";
+			   }
+			   	$message.="<tr>";
+				   	$message.="<td>Cart  Total</td>";
+					   $message.="<td>".$cartTotal['cartTotal']. "  Rs </td>";
+					   $message.="</tr>";
+					   $message.="<tr>";
+				   	$message.="<td>Delivery Charge</td>";
+					   $message.="<td>".$cartTotal['deliveryCharge']. " Rs </td>";
+					   $message.="</tr>";
+					   $message.="<tr>";
+				   	$message.="<td>GST</td>";
+					   $message.="<td>".$cartTotal['gst']. " Rs </td>";
+					   $message.="</tr>";
+					   $message.="<td>Final Amount</td>";
+					   $message.="<td>".$cartTotal['totalAmount']. " Rs </td>";
+					   $message.="</tr>";
+		   sendMail($message,$email,$username,$subject);
 			$userdata["userId"]=$customer_id;
 			unset($cartTotal['minOrder']);
 
@@ -162,8 +203,8 @@ if (!isset($status)) {
 			}
 			unset($orderplaceArray['type']);
 			unset($orderplaceArray['save']);
-		
-		
+	
+			 $orderplaceArray["gstperc"]=floor(($orderplaceArray["gst"]/$orderplaceArray["cartTotal"])*100);
               $placeOrder=$data->insert("orderscustomer",$orderplaceArray);
 
 			  foreach($cart["data"] as $value){
