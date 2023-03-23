@@ -191,15 +191,35 @@ formData.append("file", file);
 let capitalized = str.charAt(0).toUpperCase() + str.slice(1);
    return capitalized;
   }
+  var LsId = localStorage.getItem("id");
+        console.log("adminTitle");
+
+        LsId = JSON.parse(LsId);
+        Token=LsId.token;
+
+
+        var jwt = Token;
+        var jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+        var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+        var parsedJwtData = JSON.parse(decodedJwtData);
+         role=parsedJwtData.role;  
+         id=parsedJwtData.id;  
+         if(role==0){
+          adminType="admin";
+          id=0;  
+         }else{
+          adminType="vendor";
+          id=parsedJwtData.id;  
+         }
 async  function  displayProduct(){
 
         
-  const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23");
+  const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23&vendor="+adminType+"&vendor_id="+id);
 const jsonInventory=await inventory.json();
-console.log(jsonInventory.data);
+console.log(jsonInventory);
   console.log("helle"+Math.floor(Math.random()*10+1));
 let html="";
-
+if(jsonInventory.totalRecord > 0 ){
 jsonInventory.data.map((item,key)=>{
 
 if(item.status==1){
@@ -224,6 +244,12 @@ html+="</tr>";
 
 
 document.getElementById("productDisplay").innerHTML=html;
+}else{
+  html="<tr>";
+  html+="<td colspan='7' class='text-center text-danger'>No Product</td>";
+  html+="<tr>";
+  document.getElementById("productDisplay").innerHTML=html;
+}
 }
 async function edit(id){
 document.getElementById("formHeading").innerText="Edit Product";
@@ -313,7 +339,16 @@ function validInput(input,pattern,msg,type){
 async function  submitProduct(){
   let file = document.querySelector("#formFile").files[0];
 
+  jwtToken = localStorage.getItem("id");
+jwtToken = JSON.parse(jwtToken);
+jwtToken = jwtToken.token;
+var jwts = jwtToken;
+var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+var parsedJwtData = JSON.parse(decodedJwtData);
 
+
+    admin_id=parsedJwtData.id;
 
 var available=document.getElementById("gridRadios1").checked;
   if(available==true){
@@ -340,7 +375,8 @@ if(validImage!=true){
 return false;
 }
     }
-
+    id=parsedJwtData.id;
+formData.append("admin_id",id);
  let price= document.getElementById("prices").value;
 let ProductName=document.getElementById("productsNmae").value;
 
@@ -371,6 +407,8 @@ formData.append("productqty",qty);
 formData.append("price",price);
 formData.append("pid",productId);
 formData.append("productStatus",available);
+
+
 console.log(formData);
 const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23",
 {

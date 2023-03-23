@@ -6,7 +6,10 @@ header('Access-Control-Allow-Headers:Access-Control-Allow-Headers,Content-Type,A
 include("validkey.php");
 if(!isset($status)){
 @$inventoryType=$_GET["invtype"];
+@$vendorType=$_GET["vendorType"];
+@$rider_id=$_GET["id"];
 if(isset($inventoryType)){
+    if($vendorType=="admin"){
     $Sql="";
     $orderdateFormat="";
     if($inventoryType==="yesterday_sale"){
@@ -53,11 +56,39 @@ if(isset($inventoryType)){
  
       $prevDate = date('Y-m-d',strtotime("-1 month"));
  
+      echo json_encode($inventorydata);
 
 
 
-
-
+    }else{
+      
+        if($inventoryType==="monthly"){
+            $orderdateFormat="DATE_FORMAT(orderDate,'%M-%Y')as monthyear";
+            $groupBy=" month(orderDate), year(orderDate)";
+            $orderBy="year(orderDate), month(orderDate)";
+            $where="orderStatus='5' AND orderscustomer.deliveryboyid='$rider_id'";
+         
+   
+        }elseif($inventoryType==="daily"){
+            $orderdateFormat="DATE_FORMAT(orderDate,'%d-%b-%Y') as OrderDate";
+            $groupBy=" day(orderDate), month(orderDate),year(orderDate)";
+            $orderBy=" date(orderDate)";
+            $where="orderStatus='5' AND orderscustomer.deliveryboyid='$rider_id'";
+        }elseif($inventoryType==="current"){
+            $where ="orderStatus='5' AND  DATE_format(orderDate,'%Y-%m') =DATE_FORMAT(CURRENT_DATE,'%Y-%m') AND orderscustomer.deliveryboyid='$rider_id'";
+            $orderdateFormat="DATE_FORMAT(orderDate,'%M-%Y')as monthyear";
+            $groupBy=" month(orderDate), year(orderDate)";
+            $orderBy="year(orderDate), month(orderDate)";
+        }elseif($inventoryType==="previous"){
+           $where ="orderStatus='5' AND  DATE_format(orderDate,'%Y-%m') =DATE_FORMAT(SUBDATE(CURRENT_DATE, INTERVAL 1 MONTH),'%Y-%m') AND orderscustomer.deliveryboyid='$rider_id'";
+           $orderdateFormat="DATE_FORMAT(orderDate,'%M-%Y')as monthyear";
+           $groupBy=" month(orderDate), year(orderDate)";
+           $orderBy="year(orderDate), month(orderDate) ";
+        }
+        $rows=" $orderdateFormat,sum(deliveryCharge) as Earning, count(*) as orderCompleted";
+        $inventorydata = $data->getData("orderscustomer",$rows,$groupBy,null,$where,$orderBy,null,null);
+        echo json_encode($inventorydata);
+    }
 
 
 
@@ -71,7 +102,7 @@ if(isset($inventoryType)){
 
 }
 
-echo json_encode($inventorydata);
+
  
 
 }

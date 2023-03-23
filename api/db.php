@@ -13,7 +13,7 @@ use Firebase\JWT\Key;
 class CRUDOPERATION {
 
 function __construct($host_name,$dbname,$username,$password){
-  date_default_timezone_set('Asia/Karachi');
+
 $this->host_name=$host_name;
 
 $pdo=new PDO('mysql:host='.$host_name.';dbname='.$dbname.';',$username,$password);
@@ -220,7 +220,19 @@ function updateData ($table,$params=array(),$whereCod=null){
     $jwt = JWT::encode($payload, $key, 'HS256');
  return  $jwt;
   }
+   public function checkRecord($table,$row,$operator){
+    $args=array();
+    foreach($row as $key => $value){
+      $args[]="$key = '$value'";
+      
+      }
+    $row=implode(",",array_keys($row));
 
+  echo  $wherCondition=implode($operator,$args);
+
+ $datagiven=$this->getData($table,null,null,null, $wherCondition,null,null,null);
+    return $datagiven["totalRecord"];
+   }
   public function DecodeToken($jwt,$key){
 
 

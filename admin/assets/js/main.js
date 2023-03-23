@@ -10,7 +10,7 @@
     /**
      * Easy selector helper function
      */
-    const select = (el, all = false) => {
+    var select = (el, all = false) => {
         el = el.trim()
         if (all) {
             return [...document.querySelectorAll(el)]
@@ -22,7 +22,7 @@
     /**
      * Easy event listener function
      */
-    const on = (type, el, listener, all = false) => {
+    var on = (type, el, listener, all = false) => {
         if (all) {
             select(el, all).forEach(e => e.addEventListener(type, listener))
         } else {
@@ -33,7 +33,7 @@
     /**
      * Easy on scroll event listener 
      */
-    const onscroll = (el, listener) => {
+    var onscroll = (el, listener) => {
         el.addEventListener('scroll', listener)
     }
 
@@ -59,7 +59,7 @@
      * Navbar links active state on scroll
      */
     let navbarlinks = select('#navbar .scrollto', true)
-    const navbarlinksActive = () => {
+    var navbarlinksActive = () => {
         let position = window.scrollY + 200
         navbarlinks.forEach(navbarlink => {
             if (!navbarlink.hash) return
@@ -80,7 +80,7 @@
      */
     let selectHeader = select('#header')
     if (selectHeader) {
-        const headerScrolled = () => {
+        var headerScrolled = () => {
             if (window.scrollY > 100) {
                 selectHeader.classList.add('header-scrolled')
             } else {
@@ -96,7 +96,7 @@
      */
     let backtotop = select('.back-to-top')
     if (backtotop) {
-        const toggleBacktotop = () => {
+        var toggleBacktotop = () => {
             if (window.scrollY > 100) {
                 backtotop.classList.add('active')
             } else {
@@ -181,8 +181,8 @@
     /**
      * Initiate TinyMCE Editor
      */
-    const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
+    var useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
 
     tinymce.init({
         selector: 'textarea.tinymce-editor',
@@ -298,7 +298,7 @@
     /**
      * Initiate Datatables
      */
-    const datatables = select('.datatable', true)
+    var datatables = select('.datatable', true)
     datatables.forEach(datatable => {
         new simpleDatatables.DataTable(datatable);
     })
@@ -306,7 +306,7 @@
     /**
      * Autoresize echart charts
      */
-    const mainContainer = select('#main');
+    var mainContainer = select('#main');
     if (mainContainer) {
         setTimeout(() => {
             new ResizeObserver(function() {
@@ -318,12 +318,26 @@
     }
 
 })();
+WebSite = location.href;
+WebSite = WebSite.replace('http://localhost/grocerywebsite/admin/', '');
 
 function logout() {
     localStorage.removeItem("id");
 
     sessionStorage.removeItem("id");
     window.location = "login.php";
+}
+if (WebSite == "index.php") {
+    jwtToken = localStorage.getItem("id");
+    jwtToken = JSON.parse(jwtToken);
+    jwtToken = jwtToken.token;
+    var jwts = jwtToken;
+    var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+    var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    var parsedJwtData = JSON.parse(decodedJwtData);
+    adminId = parsedJwtData.id;
+    adminROLE = parsedJwtData.role;
+    window.location.href = "index.php?t=" + adminROLE + "&i=" + adminId;
 }
 
 function CheckLogin() {
@@ -345,15 +359,19 @@ function CheckLogin() {
         }
 
     } else {
-        window.location = "login.php";
+
+        window.location.href = "login.php";
     }
 }
 
 
 
 
-CheckLogin();
-setInterval(CheckLogin, 1000 * 60);
+if (WebSite != "register.php") {
+    CheckLogin();
+
+    setInterval(CheckLogin, 1000 * 60);
+}
 
 function displayProduct() {
     console.log("helle" + Math.random());
@@ -372,7 +390,13 @@ displayProduct();
 
 str = "03-December-2022";
 console.log(str.length);
-
+jwtToken = localStorage.getItem("id");
+jwtToken = JSON.parse(jwtToken);
+jwtToken = jwtToken.token;
+var jwts = jwtToken;
+var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+var parsedJwtData = JSON.parse(decodedJwtData);
 
 
 

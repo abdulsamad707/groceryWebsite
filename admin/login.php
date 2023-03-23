@@ -91,7 +91,7 @@
                 <input type="button"  class="btn btn-primary w-100" value="Login" onclick="adminLogin()">
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+                      <p class="small mb-0">Don't have account? <a href="register.php">Create an account</a></p>
                     </div>
                   </form>
 
@@ -135,8 +135,18 @@
 function CheckLogin(){
  var LsId=localStorage.getItem("id");
  if(LsId!=null){
+  
+  LsId = JSON.parse(LsId);
+  jwtToken = LsId.token;
+var jwts = jwtToken;
+var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+var parsedJwtData = JSON.parse(decodedJwtData);
+ id=parsedJwtData.id;
+ role=parsedJwtData.role;
+ 
   if(window.location=="http://localhost/grocerywebsite/admin/login.php"){
-       window.location="index.php";
+       window.location="index.php?t="+role+"&i="+id;
   }
 
  }else{
@@ -217,8 +227,13 @@ localStorage.setItem("id",JSON.stringify(item));
 sessionStorage.setItem("id", id);
 
 console.log(finalResponse);
-window.location.href="index.php";
+if(finalResponse.role==2){
 
+  window.location.href="products.php?t="+finalResponse.role;
+}else{
+
+window.location.href="index.php?t="+finalResponse.role+"&i="+finalResponse.id;
+}
 
 }
 

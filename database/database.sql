@@ -13,3 +13,4 @@ DROP TABLE admins;
 DROP TABLE apikey;
 DROP TABLE assignorder;
 DROP TABLE statusorder;
+DROP TABLE address;

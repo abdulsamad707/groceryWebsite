@@ -651,7 +651,7 @@ DisplayCartItem();
 function displayProduct() {
 
     searchItem = "";
-    apiurl = API_PATH + "products.php?key=" + APIKEY;
+    apiurl = API_PATH + "products.php?key=" + APIKEY + "&status";
     fetch(apiurl, {
         method: "GET"
     }).then(function(response) {

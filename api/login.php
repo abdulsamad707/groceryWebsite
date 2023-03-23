@@ -6,6 +6,25 @@
 
 <?php
 include "validkey.php";
+/*
+require "../vendor/autoload.php";
+
+$sid = "ACXXXXXX"; // Your Account SID from https://console.twilio.com
+$token = "YYYYYY"; // Your Auth Token from https://console.twilio.com
+$client = new Twilio\Rest\Client($sid, $token);
+
+// Use the Client to make requests to the Twilio REST API
+$client->messages->create(
+    // The number you'd like to send the message to
+    '+15558675309',
+    [
+        // A Twilio phone number you purchased at https://console.twilio.com
+        'from' => '+15017250604',
+        // The body of the text message you'd like to send
+        'body' => "Hey Jenny! Good luck on the bar exam!"
+    ]
+);
+*/
 header('Access-Control-Allow-Origin:*');
 include("function.php");
 $userdata=file_get_contents("php://input");
@@ -33,7 +52,7 @@ if(isset($useraddressdata["data"][0])){
 $customer_status=$userDataformbase["data"][0]["status"];
 $email=$userDataformbase["data"][0]["email"];
 $username=$userDataformbase["data"][0]["username"];
-$newPassword=strtolower($username)."123";
+
 $userpassword= $userDataformbase["data"][0]["password"];
 $mobile= $userDataformbase["data"][0]["mobile"];
 if(password_verify($password,$userpassword)){

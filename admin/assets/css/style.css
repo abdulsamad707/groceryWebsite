@@ -1316,3 +1316,8 @@ tr .High {
 .productsImage {
     width: 60px;
 }
+
+.error {
+    color: red;
+    font-weight: 900;
+}

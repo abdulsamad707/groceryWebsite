@@ -55,7 +55,7 @@
                                         <div class="row mb-3">
                                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                                                <input name="fullName" type="text" class="form-control" id="fullName" value="">
                                             </div>
                                         </div>
 
@@ -231,9 +231,23 @@
 
         <script>
             async function setting(){
+                var LsId = localStorage.getItem("id");
+        console.log("adminTitle");
+
+        LsId = JSON.parse(LsId);
+        Token=LsId.token;
+
+
+        const jwt = Token;
+        const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+        const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+        const parsedJwtData = JSON.parse(decodedJwtData);
+         role=parsedJwtData.role;
+
                 settingData=await fetch(API_PATH+"setting.php?key=avdfheuw23");
                 settingData=await   settingData.json();
           console.log(   settingData);
+       
           document.getElementById('deliveryChargegst').value=settingData.data[0].deliverygst;
           document.getElementById('gst').value=settingData.data[0].gst;
           document.getElementById("deliveryCharge").value=settingData.data[0].deliveryCharge;
@@ -251,6 +265,10 @@
            if(settingData.data[0].webSiteStatus==0){
             document.getElementById("off").checked=true;
            }
+        
+         
+        
+        document.getElementById("fullName").value=parsedJwtData.username;
             }   
          async  function submitSetting(){
             deliverygst=document.getElementById('deliveryChargegst').value;

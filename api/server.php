@@ -3,10 +3,9 @@
 
 header('Access-Control-Allow-Origin:*');
 
-ini_set('date.timezone', 'Asia/Karachi');
 
 header('Access-Control-Allow-Methods:GET');
-echo date("d H:i a");
+
 $browser = get_browser(null, true);
 
 $user_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -46,13 +45,12 @@ if (strpos($user_agent, 'Windows NT 10.0') !== FALSE) {
 } else {
     $os = 'Unknown';
 }
+echo date_default_timezone_get();
+date_default_timezone_set('Asia/Karachi');
 
-$timezones = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, 'LK');
+// create a new DateTime object with the current date and time
 
-foreach ($timezones as $timezone) {
-    echo $timezone . "<br>";
-}
-echo "Your browser is: " . $browser;
-echo "Your Operating System is: " . $os;
+
+ // output the string
 
 ?>

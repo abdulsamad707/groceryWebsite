@@ -30,6 +30,20 @@ if (!isset($status)) {
          if(isset($_REQUEST["customer_order"])){
 		$customer_id=$_REQUEST["customer_order"];
 		 }
+		   if(isset($_GET["vendorType"])  &&  isset($_GET["rider_id"])  ){
+		$rider_id=$_GET["rider_id"];
+                  if($rider_id > 0){
+					$whereCondition ="orderscustomer.deliveryboyid='$rider_id' AND orderscustomer.orderStatus!='6'";
+					$table = "orderscustomer";
+					$rows = "deliveryboyid,orderscustomer.cartTotal,orderscustomer.orderStatus as order_status, DATE_format(orderscustomer.orderDate,'%h:%i %p') as order_time,orderscustomer.gst,users.mobile as customer_mobile,users.username as customer_name,statusorder.status as OrderStatus,deliveryboy.username as rider_name,deliveryboy.mobile as rider_number,orderscustomer.id as orderID,date_format(orderDate,'%d-%M-%Y') as orderDate , totalAmount,deliveryCharge,deliveryAddress,paymentmethod,discount,couponCode,totalItem";
+					$join = "LEFT JOIN users on orderscustomer.userId=users.id LEFT JOIN  deliveryboy  on orderscustomer.deliveryboyid=deliveryboy.id  LEFT JOIN statusorder ON orderscustomer.orderStatus=statusorder.status_id";
+					$orderBy = "orderscustomer.id DESC";
+					$limit = null;
+					$orderdata = $data->getData($table, $rows, null, $join, $whereCondition, $orderBy, $limit, null);
+					echo json_encode($orderdata);
+					return false;
+				  } 
+		   }
 
 		if (isset($_REQUEST['id'])) {
 			$orderID = $_REQUEST['id'];
@@ -184,7 +198,7 @@ if (!isset($status)) {
 					   $message.="<td>Final Amount</td>";
 					   $message.="<td>".$cartTotal['totalAmount']. " Rs </td>";
 					   $message.="</tr>";
-		   sendMail($message,$email,$username,$subject);
+	/*	   sendMail($message,$email,$username,$subject);*/
 			$userdata["userId"]=$customer_id;
 			unset($cartTotal['minOrder']);
 

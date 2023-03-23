@@ -28,17 +28,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `address` (
-  `id_address` int(11) NOT NULL,
+  `id_address` int(11) NOT NULL AUTO_INCREMENT,
   `address` varchar(255) NOT NULL,
-  `user_id` int(255) NOT NULL
+  `user_id` int(255) NOT NULL,
+  PRIMARY KEY (id_address)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `address`
 --
 
-INSERT INTO `address` (`id_address`, `address`, `user_id`) VALUES
-(1, 'd1 islamic arcade main university road', 2);
+
 
 -- --------------------------------------------------------
 
@@ -46,13 +47,15 @@ INSERT INTO `address` (`id_address`, `address`, `user_id`) VALUES
 -- Table structure for table `admins`
 --
 
-CREATE TABLE `admins` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS`admins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `mobile` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` text DEFAULT NULL,
   `role` int(11) NOT NULL,
-  `added_on` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `added_on` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -68,13 +71,15 @@ INSERT INTO `admins` (`id`, `mobile`, `username`, `password`, `role`, `added_on`
 -- Table structure for table `apikey`
 --
 
-CREATE TABLE `apikey` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `apikey` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `apikey` varchar(255) DEFAULT NULL,
   `hit` varchar(255) DEFAULT NULL,
   `hitlimit` varchar(255) DEFAULT NULL,
   `expirydate` datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  `status` varchar(255) DEFAULT NULL
+  `status` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -90,10 +95,12 @@ INSERT INTO `apikey` (`id`, `apikey`, `hit`, `hitlimit`, `expirydate`, `status`)
 -- Table structure for table `assignorder`
 --
 
-CREATE TABLE `assignorder` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `assignorder` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL,
-  `deliveryboyid` int(11) DEFAULT NULL
+  `deliveryboyid` int(11) DEFAULT NULL,
+    PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -266,14 +273,16 @@ INSERT INTO `assignorder` (`id`, `order_id`, `deliveryboyid`) VALUES
 -- Table structure for table `carts`
 --
 
-CREATE TABLE `carts` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS`carts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) DEFAULT NULL,
   `productID` int(11) DEFAULT NULL,
   `userType` varchar(255) DEFAULT NULL,
   `qty` varchar(255) DEFAULT NULL,
   `price` varchar(255) DEFAULT NULL,
-  `ip_add` varchar(255) NOT NULL
+  `ip_add` varchar(255) NOT NULL,
+    PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -292,30 +301,24 @@ INSERT INTO `carts` (`id`, `userId`, `productID`, `userType`, `qty`, `price`, `i
 -- Table structure for table `couponcodes`
 --
 
-CREATE TABLE `couponcodes` (
-  `coupon_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `couponcodes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `coupon_code` varchar(255) NOT NULL,
   `max_discount` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
   `min_cart_value` int(11) NOT NULL,
   `discount_type` enum('perc','value','deliveryoff') NOT NULL,
   `coupon_status` int(11) NOT NULL,
-  `added_on` datetime NOT NULL DEFAULT current_timestamp()
+  `added_on` datetime NOT NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `couponcodes`
 --
 
-INSERT INTO `couponcodes` (`coupon_id`, `coupon_code`, `max_discount`, `discount`, `min_cart_value`, `discount_type`, `coupon_status`, `added_on`) VALUES
-(1, '50OFF', 220, 50, 200, 'perc', 1, '2023-02-26 18:30:17'),
-(2, '200OFF', 1000, 200, 100, 'value', 1, '2023-02-26 18:30:17'),
-(3, 'FEULSAVE', 220, 220, 200, 'deliveryoff', 1, '2023-02-27 19:19:39'),
-(4, 'NOFEUL', 0, 0, 500, 'deliveryoff', 1, '2023-02-27 22:49:36'),
-(5, 'NOPETROL', 0, 0, 200, 'deliveryoff', 1, '2023-02-27 23:02:45'),
-(6, 'BIGSAVE', 600, 35, 1000, 'perc', 1, '2023-02-27 23:11:42'),
-(7, 'SAVEFEUL', 0, 0, 400, 'perc', 1, '2023-02-27 23:13:24'),
-(8, 'PETROLBACHAT', 0, 0, 0, 'deliveryoff', 1, '2023-02-27 23:18:23');
+
 
 -- --------------------------------------------------------
 
@@ -323,15 +326,17 @@ INSERT INTO `couponcodes` (`coupon_id`, `coupon_code`, `max_discount`, `discount
 -- Table structure for table `deliveryboy`
 --
 
-CREATE TABLE `deliveryboy` (
-  `id` int(11) NOT NULL,
+CREATE TABLE  IF NOT EXISTS`deliveryboy` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `mobile` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `added_on` datetime DEFAULT NULL ON UPDATE current_timestamp(),
   `busy` varchar(255) NOT NULL,
-  `status` int(11) NOT NULL
+  `status` int(11) NOT NULL,
+    PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -349,15 +354,17 @@ INSERT INTO `deliveryboy` (`id`, `mobile`, `username`, `location`, `password`, `
 -- Table structure for table `orderdetail`
 --
 
-CREATE TABLE `orderdetail` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `orderdetail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
   `qtyorder` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
   `orderqty` int(11) NOT NULL,
-  `orderDetailStatus` int(255) NOT NULL DEFAULT 1
+  `orderDetailStatus` int(255) NOT NULL DEFAULT 1,
+    PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -641,8 +648,8 @@ INSERT INTO `orderdetail` (`id`, `product_id`, `qtyorder`, `price`, `user_id`, `
 -- Table structure for table `orderscustomer`
 --
 
-CREATE TABLE `orderscustomer` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS`orderscustomer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) DEFAULT NULL,
   `gst` varchar(255) DEFAULT NULL,
   `totalAmount` varchar(255) DEFAULT NULL,
@@ -660,7 +667,9 @@ CREATE TABLE `orderscustomer` (
   `totalItem` varchar(255) DEFAULT NULL,
   `orderDate` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deliverygst` int(11) NOT NULL,
-  `gstperc` int(11) NOT NULL
+  `gstperc` int(11) NOT NULL,
+      PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -748,13 +757,15 @@ INSERT INTO `orderscustomer` (`id`, `userId`, `gst`, `totalAmount`, `cartTotal`,
 -- Table structure for table `productrating`
 --
 
-CREATE TABLE `productrating` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `productrating` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `rating` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `comment` varchar(255) NOT NULL
+  `comment` varchar(255) NOT NULL,
+      PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -773,15 +784,17 @@ INSERT INTO `productrating` (`id`, `rating`, `order_id`, `product_id`, `user_id`
 -- Table structure for table `products`
 --
 
-CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS`products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `productName` varchar(255) DEFAULT NULL,
   `productqty` varchar(255) DEFAULT NULL,
   `keyword` varchar(255) DEFAULT NULL,
   `price` varchar(255) DEFAULT NULL,
   `status` enum('1','0') DEFAULT NULL,
   `added_on` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `image` varchar(255) NOT NULL
+  `image` varchar(255) NOT NULL,
+      PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -805,12 +818,15 @@ INSERT INTO `products` (`id`, `productName`, `productqty`, `keyword`, `price`, `
 -- Table structure for table `reviews`
 --
 
-CREATE TABLE `reviews` (
+CREATE TABLE IF NOT EXISTS `reviews` (
+      `id` INT AUTO_INCREMENT,
   `deliveryboyid` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `review` varchar(255) DEFAULT NULL,
   `order_id` varchar(255) DEFAULT NULL,
-  `review_date` datetime DEFAULT NULL ON UPDATE current_timestamp()
+  `review_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+      primary key(id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -819,13 +835,15 @@ CREATE TABLE `reviews` (
 -- Table structure for table `riderrating`
 --
 
-CREATE TABLE `riderrating` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `riderrating` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `rating` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
   `rider_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `date_rate` datetime NOT NULL DEFAULT current_timestamp()
+  `date_rate` datetime NOT NULL DEFAULT current_timestamp(),
+      PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -845,8 +863,8 @@ INSERT INTO `riderrating` (`id`, `rating`, `order_id`, `rider_id`, `user_id`, `d
 -- Table structure for table `setting`
 --
 
-CREATE TABLE `setting` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `setting` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `deliveryCharge` varchar(255) DEFAULT NULL,
   `webSiteStatus` enum('1','0','2') DEFAULT NULL,
   `gst` varchar(255) NOT NULL,
@@ -857,7 +875,9 @@ CREATE TABLE `setting` (
   `comapny_twitter` varchar(255) NOT NULL,
   `comapny_facebook` varchar(255) NOT NULL,
   `comapny_instragram` varchar(255) NOT NULL,
-  `company_linkend` varchar(255) NOT NULL
+  `company_linkend` varchar(255) NOT NULL,
+      PRIMARY KEY (id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -873,10 +893,11 @@ INSERT INTO `setting` (`id`, `deliveryCharge`, `webSiteStatus`, `gst`, `minOrder
 -- Table structure for table `statusorder`
 --
 
-CREATE TABLE `statusorder` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `statusorder` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `status_id` int(11) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL
+  `status` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -897,8 +918,8 @@ INSERT INTO `statusorder` (`id`, `status_id`, `status`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `mobile` varchar(255) NOT NULL,
   `password` text DEFAULT NULL,
@@ -906,7 +927,8 @@ CREATE TABLE `users` (
   `status` enum('1','0') DEFAULT NULL,
   `added_on` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `otp` int(11) NOT NULL,
-  `otp_verify` int(11) NOT NULL
+  `otp_verify` int(11) NOT NULL,
+      PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -920,237 +942,5 @@ INSERT INTO `users` (`id`, `username`, `mobile`, `password`, `email`, `status`, 
 (4, 'Samad', '9234321462082', '$2y$12$WE4t32YSZwjzseH1q2LzXe/87gkz/V4.Y16h9YWcH2lLMtN6fngHm', 'abdulsamadahsan@gmail.com', '1', '2023-03-11 18:18:06', 0, 1),
 (5, 'ali', '9234321462092', '$2y$12$66pzbMzpfenwz94otnzLLuFodNccsQvAH30mDlA4RCwBLKFWAyaF6', 'ali@gmail.com', '0', '2023-02-28 22:24:42', 0, 0);
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `address`
---
-ALTER TABLE `address`
-  ADD PRIMARY KEY (`id_address`);
 
---
--- Indexes for table `admins`
---
-ALTER TABLE `admins`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `apikey`
---
-ALTER TABLE `apikey`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `assignorder`
---
-ALTER TABLE `assignorder`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `carts`
---
-ALTER TABLE `carts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `userId` (`userId`),
-  ADD KEY `productID` (`productID`);
-
---
--- Indexes for table `couponcodes`
---
-ALTER TABLE `couponcodes`
-  ADD PRIMARY KEY (`coupon_id`);
-
---
--- Indexes for table `deliveryboy`
---
-ALTER TABLE `deliveryboy`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `orderdetail`
---
-ALTER TABLE `orderdetail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `order_id` (`order_id`);
-
---
--- Indexes for table `orderscustomer`
---
-ALTER TABLE `orderscustomer`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `productrating`
---
-ALTER TABLE `productrating`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `riderrating`
---
-ALTER TABLE `riderrating`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `setting`
---
-ALTER TABLE `setting`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `statusorder`
---
-ALTER TABLE `statusorder`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `address`
---
-ALTER TABLE `address`
-  MODIFY `id_address` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `admins`
---
-ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `apikey`
---
-ALTER TABLE `apikey`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `assignorder`
---
-ALTER TABLE `assignorder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
-
---
--- AUTO_INCREMENT for table `carts`
---
-ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=822;
-
---
--- AUTO_INCREMENT for table `couponcodes`
---
-ALTER TABLE `couponcodes`
-  MODIFY `coupon_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `deliveryboy`
---
-ALTER TABLE `deliveryboy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `orderdetail`
---
-ALTER TABLE `orderdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=729;
-
---
--- AUTO_INCREMENT for table `orderscustomer`
---
-ALTER TABLE `orderscustomer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
-
---
--- AUTO_INCREMENT for table `productrating`
---
-ALTER TABLE `productrating`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `riderrating`
---
-ALTER TABLE `riderrating`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `setting`
---
-ALTER TABLE `setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `statusorder`
---
-ALTER TABLE `statusorder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `carts`
---
-ALTER TABLE `carts`
-  ADD CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `orderdetail`
---
-ALTER TABLE `orderdetail`
-  ADD CONSTRAINT `orderdetail_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_10` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_11` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_12` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_13` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_14` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_15` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_16` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_17` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_18` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_19` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_20` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_21` FOREIGN KEY (`order_id`) REFERENCES `orderscustomer` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_4` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_5` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_6` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_7` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_8` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `orderdetail_ibfk_9` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

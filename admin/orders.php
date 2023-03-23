@@ -152,10 +152,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script src="assets/js/constant.js"></script>
 <script>
- 
-async function displayOrder(){
+ var LsId = localStorage.getItem("id");
+        console.log("adminTitle");
 
-  var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23");
+        LsId = JSON.parse(LsId);
+        Token=LsId.token;
+
+
+        var jwt = Token;
+        var jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+        var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+        var parsedJwtData = JSON.parse(decodedJwtData);
+         role=parsedJwtData.role;  
+if(role==1){
+  adminType="rider";
+
+  id=parsedJwtData.id;
+}else{
+  id=0;
+  adminType="admin";
+}
+
+async function displayOrder(){
+rider_id=0;
+
+
+
+  var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&vendorType="+adminType+"&rider_id="+id);
 var jsonInventory=await inventory.json();
 console.log(jsonInventory);
 
@@ -188,7 +211,7 @@ document.getElementById("orders").innerHTML=orderHTML;
 
 }
 setInterval(() => {
-
+  
 },1000);
 
 displayOrder();
@@ -196,17 +219,35 @@ displayOrder();
 
 
 async  function downloadAllOrderReport(){
-  var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23");
-var jsonInventory=await inventory.json();
-console.log(jsonInventory);
-var headerPdf= [{ text: 'S.No', style: 'tableHeader' },
+  if(role==1){
+  adminType="rider";
+
+  id=parsedJwtData.id;
+
+  var headerPdf= [{ text: 'S.No', style: 'tableHeader' },
+{ text: 'Order Status', style: 'tableHeader' },{ text: 'Order Date', style: 'tableHeader' },
+{ text: 'Order ID', style: 'tableHeader' },{ text: 'Earning', style: 'tableHeader' }
+];
+}else{
+  id=0;
+  adminType="admin";
+  var headerPdf= [{ text: 'S.No', style: 'tableHeader' },
 { text: 'Order Status', style: 'tableHeader' },{ text: 'Order Date', style: 'tableHeader' },
 { text: 'Order ID', style: 'tableHeader' },{ text: 'Order Amount', style: 'tableHeader' }
 ];
+}
+
+alert( adminType);
+var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&vendorType="+adminType+"&rider_id="+id);
+
+var jsonInventory=await inventory.json();
+console.log(jsonInventory);
+
+
 
 currentDate=new Date();
-currentDate=new Date().toLocaleString([],{month:"long",day:"numeric",year:"numeric",hour12:true,hour:"numeric",minute:"numeric"});
-
+currentDate=new Date().toLocaleDateString([],{day:"numeric",month:"long",year:"numeric",hour12:true,hour:"numeric",minute:"numeric"});
+currentDate=new Date().toLocaleDateString();
 var docDefinition = {
 
 content: [
@@ -231,10 +272,14 @@ console.log(index+1);
 
 
           IndexPdf=index+1;
-      orderDate=new Date(item.orderDate).toLocaleDateString([],{day:"numeric",month:"short",year:"numeric"}).replaceAll(" ","-");
-      orderDate=new Date(item.orderDate).toLocaleDateString([],{day:"numeric",month:"short",year:"numeric"}).replaceAll(",","-");
-          return [IndexPdf,item.OrderStatus,orderDate,item.orderID,item.totalAmount];
-      
+      orderDate=new Date(item.orderDate).toLocaleDateString("en-us",{day:"numeric",month:"short",year:"numeric"}).replaceAll(" ","-");
+      orderDate=new Date(item.orderDate).toLocaleString("en-us",{day:"numeric",month:"short",year:"numeric"}).replaceAll(","," ");
+          
+      if(role==1){
+      return [IndexPdf,item.OrderStatus,orderDate,item.orderID,item.deliveryCharge];
+      }else{
+        return [IndexPdf,item.OrderStatus,orderDate,item.orderID,item.totalAmount];
+      }
 
 
         })
@@ -278,8 +323,8 @@ view(orderid);
 
 async function view(id){
  document.getElementById("productNmae").innerHTML="Order Id "+id;
- const inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
-const jsonInventory=await inventory.json();
+ var inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
+var jsonInventory=await inventory.json();
 console.log(jsonInventory);
 let OrderStatus= jsonInventory.data[0].order_status;
 let Order_Status= jsonInventory.data[0].OrderStatus;
@@ -328,8 +373,11 @@ jsonInventory.products.map((orderItems,i)=>{
   ordersproductHTML+="<td>"+orderItems.qty+"</td>";
   ordersproductHTML+="<td>"+orderItems.price+" Rs </td>";
   if(i >= 0  && OrderStatus==1){
+
+    if(role==0){
   ordersproductHTML+="<td><button class='btn btn-danger' onclick=canRemoveItem('"+orderItems.product_id+"','"+id+"','"+orderItems.price+"','"+orderItems.qty+"')>Remove</button></td>";
-  }
+    }
+}
   ordersproductHTML+="</tr>";
 });
 document.getElementById("orderItemdetail").innerHTML=ordersproductHTML;
@@ -346,8 +394,8 @@ document.getElementById("deliveryCharge").innerText=deliveryCharge;
 
 }
 async function downloadInvoice(id){
-  const inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
-const jsonInventory=await inventory.json();
+  var inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
+var jsonInventory=await inventory.json();
 console.log("Download ");
 console.log(jsonInventory);
 var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Product Name', style: 'tableHeader' }, { text: 'Qty', style: 'tableHeader' },{ text: 'Unit Price (Rs)', style: 'tableHeader' },{ text: 'Sub Total (Rs)', style: 'tableHeader' }];
@@ -360,7 +408,7 @@ if(RiderNumber==null){
   RiderNumber="No Rider Assigned";
 }
 currentDate=new Date();
-currentDate=currentDate.toLocaleString([],{month:"long",day:"numeric",year:"numeric",hour12:true,hour:"numeric",minute:"numeric"});
+currentDate=currentDate.toLocaleString("en-us",{day:"numeric",month:"long",year:"numeric",hour12:true,hour:"numeric",minute:"numeric"});
 
 var discount=jsonInventory.data[0].discount;
 
@@ -450,10 +498,10 @@ pdfMake.createPdf(docDefinition).download("order Invoice"+".pdf");
 }
 async function updateOrder(id){
   console.log(id);
-  const inventory=await fetch(API_PATH+"get_ridera_and_order_status.php?key=avdfheuw23");
-const jsonInventorys=await inventory.json();
-const current=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
-const currentOrder=await current.json();
+  var inventory=await fetch(API_PATH+"get_ridera_and_order_status.php?key=avdfheuw23");
+var jsonInventorys=await inventory.json();
+var current=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
+var currentOrder=await current.json();
 console.log("current Order ");
 console.log(currentOrder);
 console.log(jsonInventorys);
@@ -473,9 +521,11 @@ if(OrderStatusRider === item.id){
   RiderHTML+="<option value="+item.id+" selected>"+item.username+"</option>";
 }else{
  if(OrderStatusRider!=item.id){
+  if(role==0){
   if(item.id!=OrderStatusRider){
   RiderHTML+="<option value="+item.id+">"+item.username+"</option>";
   }
+}
  }
 }
  
@@ -492,8 +542,11 @@ jsonInventorys.orderStatus.map((item,key)=>{
   }else{
     if(OrderStatusCurrent!=item.status){
 
-
+          if(role==0){
     orderStatusHTML+="<option value="+item.status_id+">"+item.status+"</option>";
+          }else if(item.status_id==4 || item.status_id==5 && item.status_id!=OrderStatusCurrent) {
+            orderStatusHTML+="<option value="+item.status_id+">"+item.status+"</option>";
+          }
     }
   }
 });

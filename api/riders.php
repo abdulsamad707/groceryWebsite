@@ -20,6 +20,8 @@ extract($_GET);
 
  $reqMetod=$_SERVER["REQUEST_METHOD"];
 if($reqMetod=="GET"){
+
+
 if(isset($rider_id)){
  
 /*
@@ -50,7 +52,7 @@ $groupby=" deliveryboy.id ";
 $orderby="number_of_order_completed";
 $join=" LEFT JOIN assignorder ON assignorder.deliveryboyid=deliveryboy.id  LEFT JOIN orderscustomer ON deliveryboy.id=orderscustomer.deliveryboyid LEFT JOIN riderrating ON riderrating.rider_id=deliveryboy.id";
   $riderData=$data->getData("deliveryboy",$rows,$groupby,$join,$whereCondition,$orderby,null,null); 
-
+  echo json_encode($riderData);  
 }else{
        if(isset($_GET["rider_type"])){
       $rider_type = $_GET["rider_type"];

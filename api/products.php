@@ -47,9 +47,16 @@ if(isset($_GET["id"])){
   if($status==1){
     $whereConduction="products.status='1'";
   }else{
-    $whereConduction=" products.status='0' or products.status='1'";
+   
+    $vendor=$_GET['vendor'];
+     $vendor_id=$_GET['vendor_id'];
+    if($vendor=="admin"){
+      $whereConduction="products.status='1' or products.status='0'";
+    }else{
+      $whereConduction="products.admin_id='$vendor_id'";
+    }
   }
-
+ 
   $groupby =" group by products.id";
 }
  $sql="SELECT products.productqty,format(ifnull(AVG(productrating.rating),0),2) as rating,products.status,products.price,products.productName,products.id,concat('http://localhost/grocerywebsite/api/',products.image) as ProductImage,ifnull(sum(orderdetail.orderqty),0) as qty_sold, ifnull(products.productqty-(ifnull(sum(orderdetail.orderqty),0)),0) as qty_remaining,ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue from products left join orderdetail on orderdetail.product_id=products.id  left join productrating  ON productrating.product_id=products.id where $whereConduction $groupby ";

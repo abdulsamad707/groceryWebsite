@@ -276,11 +276,13 @@ async function PlaceOrder(){
 localStoreAddrees=parsedJwtData.address;
 billingAddrees=document.getElementById("address").value;
 
+console.log(billingAddrees);
 
-
-if(billingAddrees && localStoreAddrees==""){
+if(billingAddrees ==""){
+   if (localStoreAddrees==""){
       swal("Oops","please provide delivery address","error");
     return false;
+   }
 }else{
 if(billingAddrees==localStoreAddrees){
     saveAddrees=0;
@@ -333,6 +335,7 @@ response=await orderResponse.text();
 
 swal("Congrats","Order Placed Succesfully","success");
 console.log(response);
+
    localStorage.removeItem("carts");
    localStorage.removeItem("cartTotal");
    localStorage.removeItem("cartDiscount");

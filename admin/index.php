@@ -1,4 +1,3 @@
-
 <?php include "header.php";?>
   <main id="main" class="main">
 
@@ -23,12 +22,47 @@
 
    /*
      if()
-
      */
 
- $inventory= inventory();
+ 
+   @$role=$_GET['t'];
+   @$rider_id=$_GET['i'];
+   if($role==0){
+    $inventoryType="admin";
+    $rider_id=0;
+   }
+   if($role==1){
+    $inventoryType="rider";
+    $rider_id=$rider_id;
+   }
+ 
+      if($role==1 || $role==0){
+     $inventory=inventory($inventoryType=$inventoryType,$rider_id);
 
- extract($inventory);
+
+if($role==1){
+  $CurrentMonthItemSold=$inventory['CurrentMonthOrderCompleted'];
+
+}
+if($role==0){
+  $CurrentMonthItemSold=$inventory["CurrentMonthItemSold"];
+}
+extract($inventory);
+
+      }
+      if($role==2){
+
+      extract( vendorEarning($rider_id));
+
+      $currentMonthEarning=$Earning;
+      $CurrentMonthItemSold=$QtySold;
+
+      }
+      if($role===2){
+        $totalEarning=0;
+         }
+
+         if($role!=2){
  if($totalEarning>0){
 
  $diff=(floor(($currentMonthEarning/$totalEarning)*100))-(floor(($previousMonthEarning/$totalEarning)*100));
@@ -42,19 +76,8 @@
       $perText="increase";
     }
 
-
+ 
     $previousMonthItemSold;
-    if($totalItemSold > 0){
-   $diffinitem =(floor(($CurrentMonthItemSold/$totalItemSold)*100))-(floor(($previousMonthItemSold/$totalItemSold)*100));
-    }else{
-      $diffinitem=0;
-    }
- $diffinitem;
-    $totalItemSold;
-  if($diffinitem>0){
-    $diffinitemText="increase";
-  }else{
-    $diffinitemText="decrease";
   }
       ?>
             <!-- Sales Card -->
@@ -64,15 +87,29 @@
            
 
                 <div class="card-body">
-                  <h5 class="card-title">Total Product Sald<span>| This Momth</span></h5>
 
+
+
+               <?php  
+               if($role==0 || $role==2){
+               ?>
+                  <h5 class="card-title">Total Product Sald<span>| This Momth</span></h5>
+                  <?php } ?>
+                  <?php  
+               if($role==1){
+               ?>
+                  <h5 class="card-title">Total Completed Order<span>| This Momth</span></h5>
+                  <?php } ?>
+              
+          
+         
                   <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
+                    <div class="  d-flex align-items-center justify-content-center">
+         
                     </div>
                     <div class="ps-3">
                       <h6><?=$CurrentMonthItemSold?></h6>
-                      <span class="text-success small pt-1 fw-bold"><?=abs($diffinitem);?>%</span> <span class="text-muted small pt-2 ps-1"><?= $diffinitemText;?></span>
+                 
 
                     </div>
                   </div>
@@ -80,29 +117,40 @@
 
               </div>
             </div><!-- End Sales Card -->
-
+          
             <!-- Revenue Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
-
+              <?php
+            if($role==0 || $role==1 || $role==2){
+            ?>
    
                 <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
 
+                <?php if($role==0){ ?>
+                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                  <?php } ?>
+                  <?php if($role==1 || $role==2){ ?>
+                  <h5 class="card-title">Earning <span>| This Month</span></h5>
+                  <?php } ?>
                   <div class="d-flex align-items-center">
                  
                     <div class="ps-3">
                       <h6><?= $currentMonthEarning; ?> PKR</h6>
-                      <span class="text-success small pt-1 fw-bold"><?=$prec; ?>%</span> <span class="text-muted small pt-2 ps-1">    <?=$perText?></span>
+                    
 
                     </div>
                   </div>
                 </div>
-
+                <?php } ?>
               </div>
-            </div><!-- End Revenue Card -->
-
+            </div><!-- End Revenue Card --> 
+    
             <!-- Customers Card -->
+
+            <?php
+            if($role==0){
+            ?>
             <div class="col-xxl-4 col-xl-6">
 
               <div class="card info-card customers-card">
@@ -111,8 +159,8 @@
                   <h5 class="card-title">Active Customers <span>| This Month</span></h5>
 
                   <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-people"></i>
+                    <div class=" d-flex align-items-center justify-content-center">
+                  
                     </div>
                     <div class="ps-3">
                       <h6><?=  NumberOfActiveUser("current_month")["data"][0]["number_of_customer_this_month"];?></h6>
@@ -125,16 +173,18 @@
               </div>
 
             </div><!-- End Customers Card -->
+            <?php } ?>
+            <?php if($role==0){ ?>
             <div class="col-xxl-4 col-xl-6">
-  
+ 
 <div class="card info-card customers-card">
 
   <div class="card-body">
     <h5 class="card-title">Active Riders <span>| This Month</span></h5>
 
     <div class="d-flex align-items-center">
-      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-        <i class="bi bi-people"></i>
+      <div class="d-flex align-items-center justify-content-center">
+  
       </div>
       <div class="ps-3">
         <h6><?=  NumberOfActiveRider("active_riders")["data"][0]["numberofriders"];?></h6>
@@ -146,8 +196,16 @@
   </div>
 </div>
 
-</div><!-- End Customers Card -->
+</div>
+ <?php } ?>
+<!-- End Customers Card -->
             <!-- Reports -->
+            <?php
+
+
+if($role==0)
+{
+  ?>
             <div class="col-12">
               <div class="card">
 
@@ -159,13 +217,29 @@
                 <div class="card-body">
                   <h5 class="card-title">Reports <span>Monthly</span></h5>
 
+
                   <!-- Line Chart -->
                   <div id="reportsChart"></div>
 
                   <script>
                   async  function loadChart(){
+                    jwtToken = localStorage.getItem("id");
+    jwtToken = JSON.parse(jwtToken);
+    jwtToken = jwtToken.token;
 
-const inventory=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype=monthly");
+        var jwts = jwtToken;
+    var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+    var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    var parsedJwtData = JSON.parse(decodedJwtData);
+    if(parsedJwtData.role==0){
+     adminID=0;
+     adminType="admin";
+
+    }else{
+      adminID=parsedJwtData.id;
+      adminType="ride";
+    }
+const inventory=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype=monthly&vendorType="+adminType+"&id="+adminID);
 const jsonInventory=await inventory.json();
 console.log(inventory);
 console.log(jsonInventory);
@@ -213,6 +287,7 @@ console.log(inventoryMonth);
                   loadChart();
                   </script>
                   <!-- End Line Chart -->
+
                   <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
@@ -223,8 +298,23 @@ console.log(inventoryMonth);
           <script src="assets/js/constant.js"></script>
               <script>
                 async   function showChart(){
-              
-    const inventorydaily=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype=daily");
+                  jwtToken = localStorage.getItem("id");
+    jwtToken = JSON.parse(jwtToken);
+    jwtToken = jwtToken.token;
+
+        var jwts = jwtToken;
+    var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+    var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    var parsedJwtData = JSON.parse(decodedJwtData);
+    if(parsedJwtData.role==0){
+     adminID=0;
+     adminType="admin";
+
+    }else{
+      adminID=parsedJwtData.id;
+      adminType="ride";
+    }
+    const inventorydaily=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype=daily&vendorType="+adminType+"&adminID="+adminID);
 
 const jsonInventorydaily=await inventorydaily.json();
 console.log(inventorydaily);
@@ -283,7 +373,10 @@ inventoryEarningDaily.push(value.Earning);
               </div>
             </div><!-- End Reports -->
 
+            <?php } ?>
             <!-- Recent Sales -->
+
+        
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
 
@@ -306,7 +399,11 @@ inventoryEarningDaily.push(value.Earning);
              
              
                 <?php
-   $dataUrlinventorydaily=inveentoryDetail("daily");
+
+
+
+
+   $dataUrlinventorydaily=inveentoryDetail("daily",$inventoryType="",$rider_id);
 
 
       ?>
@@ -386,7 +483,7 @@ $earning=$value["Earning"];
 
  
 
-   $dataUrlinventorymontly=inveentoryDetail("monthly");
+   $dataUrlinventorymontly=inveentoryDetail("monthly",$inventoryType,$rider_id);
 
 
 
@@ -407,9 +504,14 @@ $earning=$value["Earning"];
                       <th scope="col">S.No </th>
                         <th scope="col">Month Year </th>
                         <th scope="col">Earning</th>
+                        <?php
+                           if($role==0){
+                           ?>
                         <th scope="col">Tax Expense</th>
                         <th scope="col">Discount  Expense</th>
                         <th scope="col">Delivery Expense</th>
+
+                        <?php } ?>
                     </thead>
                     <tbody>
                   
@@ -424,10 +526,14 @@ $earning=$value["Earning"];
                           <td><?=$key+1 ?></td>
                         <td><?= $value["monthyear"]; ?></td>
                         <td><?= $value["Earning"] ?> Rs</td>
+
+                           <?php
+                           if($role==0){
+                           ?>
                         <td><?= $value["tax_expense"];?>Rs</td>
                        <td><?= $value["discount_expense"] ?> Rs </td>
                       <td> <?= $value["deliveryExpense"]; ?> Rs <td>
-
+             <?php      }  ?>
 
 
                       </tr>
@@ -450,11 +556,13 @@ $earning=$value["Earning"];
 
               </div>
             </div><!-- End Recent Sales -->
+
+
             <?php
 
 $urlinventorycurrentapi="product_inventory.php";
  $dataUrlinventorycurrent=  getDataFromApi($urlinventorycurrentapi,1);
-
+   if($role==0){
  ?>
 
 
@@ -503,14 +611,14 @@ $urlinventorycurrentapi="product_inventory.php";
 
               </div>
             </div><!-- End Top Selling -->
- 
+           <?php } ?>
             <div class="col-12">
               <div class="card top-selling overflow-auto">
 <?php
               $totalEarningapi="orders.php?orderType=topfive";
  $totalEarningapi=getDataFromApi($totalEarningapi,2);
 
-
+if($role==0){
 
 ?>
                 <div class="card-body pb-0">
@@ -534,12 +642,16 @@ $urlinventorycurrentapi="product_inventory.php";
                          <?php
         
                        foreach($totalEarningapi["data"] as $key => $value){
+                      $rider_name=$value['rider_name'];
+                      if($rider_name==""){
+                        $rider_name="No Rider Assigned";
+                      }
                          ?>
                                 <tr>
 
                                 <td><?= $key+1 ?></td>
                         <td scope="row"><?= $value["customer_name"] ;?></td>
-                        <td><?=$value['rider_name'];?></td>
+                        <td><?=$rider_name;?></td>
                         <td><?=$value['totalAmount'];?> Rs </td>
                         <td class="fw-bold"><?=$value["orderDate"]?></td>
                         <td><?=$value["totalItem"]?></td>
@@ -560,7 +672,7 @@ $urlinventorycurrentapi="product_inventory.php";
 
 
 
-
+<?php } ?>
 
 
 
@@ -635,8 +747,24 @@ return TotalEarningInv;
 }
 // data to be exported
 async   function downloadReport(urlData,type){
-        
-  const inventory=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype="+urlData);
+
+  jwtToken = localStorage.getItem("id");
+    jwtToken = JSON.parse(jwtToken);
+    jwtToken = jwtToken.token;
+
+        var jwts = jwtToken;
+    var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+    var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    var parsedJwtData = JSON.parse(decodedJwtData);
+    if(parsedJwtData.role==0){
+     adminID=0;
+     adminType="admin";
+
+    }else{
+      adminID=parsedJwtData.id;
+      adminType="ride";
+    }
+  const inventory=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype="+urlData+"&vendorType="+adminType+"&id="+adminID);
 const jsonInventory=await inventory.json();
 console.log(inventory);
 console.log(jsonInventory);
@@ -792,4 +920,3 @@ link.click();
 </body>
 
 </html>
-

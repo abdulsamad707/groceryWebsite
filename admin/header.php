@@ -57,7 +57,7 @@
 
         <li class="nav-item d-block d-lg-none">
           <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
+         
           </a>
         </li><!-- End Search Icon-->
 
@@ -85,7 +85,7 @@
         
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="web_setting.php">
+              <a id="setting" class="dropdown-item d-flex align-items-center" href="web_setting.php">
                 <i class="bi bi-gear"></i>
                 <span>Web Settings</span>
               </a>
@@ -421,21 +421,52 @@
 
 
 jwtToken = localStorage.getItem("id");
-    const jwt = jwtToken;
+jwtToken = localStorage.getItem("id");
+jwtToken = JSON.parse(jwtToken);
+jwtToken = jwtToken.token;
+var jwts = jwtToken;
+var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+var parsedJwtData = JSON.parse(decodedJwtData);
 
-    const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
-    const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
-    const parsedJwtData = JSON.parse(decodedJwtData);
-console.log(parsedJwtData);
+
+
+
+
+console.log( parsedJwtData );
+
     role=parsedJwtData.role;
 
+    if(role!=0){
+   document.getElementById("setting").href="profile.php";
+
+    }
+    username=parsedJwtData.username;
+    id=parsedJwtData.id;
     if(role==0){
     LINK="<li class='nav-item'><a class='nav-link collapsed' href='users.php'><span>Users</span></a></li>"; 
     LINK+="<li class='nav-item'><a class='nav-link collapsed' href='riders.php'><span>Ride</span></a></li>";
     LINK+="<li class='nav-item'><a class='nav-link collapsed' href='orders.php'><span>Order</span></a></li>";
     LINK+="<li class='nav-item'><a class='nav-link collapsed' href='products.php'><span>Products</span></a></li>";
-    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='index.php'><span>Dashboard</span></a></li>";
-    } 
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='index.php?t="+role+"'><span>Dashboard</span></a></li>";
+
+  } 
+
+    if(role==2){
+
+  
+    LINK="<li class='nav-item'><a class='nav-link collapsed' href='products.php'><span>Product</span></a></li>";
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='myearning.php'><span>My Earning</span></a></li>";
+    document.getElementById("adminTitle").innerText="Vendor";
+   
+    }
+    if(role==1){
+      LINK="<li class='nav-item'><a class='nav-link collapsed' href='orders.php'><span>Order</span></a></li>";
+      LINK+="<li class='nav-item'><a class='nav-link collapsed' href='index.php?t="+role+"&i="+id+"'><span>Dashboard</span></a></li>";
+    
+      document.getElementById("adminTitle").innerText="Rider";
+    }
+    document.getElementById("adminTitle").innerText=  username;
     document.getElementById("sidebar-nav").innerHTML=   LINK;
 
     console.log(LINK);        
