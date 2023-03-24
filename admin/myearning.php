@@ -104,7 +104,7 @@ extract($inventory);
          
                     </div>
                     <div class="ps-3">
-                      <h6><?=$CurrentMonthItemSold?></h6>
+                      <h6><span id="itemSold"><?=$CurrentMonthItemSold?></span></h6>
                  
 
                     </div>
@@ -129,7 +129,7 @@ extract($inventory);
                   <div class="d-flex align-items-center">
                  
                     <div class="ps-3">
-                      <h6><?= $currentMonthEarning; ?> PKR</h6>
+                      <h6><span id="earning"></span></h6>
                     
 
                     </div>
@@ -151,186 +151,7 @@ extract($inventory);
             <!-- Recent Sales -->
 
         
-            <div class="col-12">
-              <div class="card recent-sales overflow-auto">
-
-
-                <div class="card-body">
-                  <h5 class="card-title">Earning</h5>
-
-               
-                  <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
-                <li class="nav-item flex-fill" role="presentation">
-                  <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="true">Daily</button>
-                </li>
-                <li class="nav-item flex-fill" role="presentation">
-                  <button class="nav-link w-100 " id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Monthly</button>
-                </li>
-                
-              </ul>
-              <div class="tab-content pt-2" id="borderedTabJustifiedContent">
-                <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
-             
-             
-                <?php
-
-
-
-
-   $dataUrlinventorydaily=inveentoryDetail("daily",$inventoryType="",$rider_id);
-
-
-      ?>
-             
-             
-             
-             
-             
-             
-             
-                <table class="table table-borderless ">
-
-
-                <button type="button"  onclick="downloadReport('daily','pdf')" class="btn btn-primary" fdprocessedid="cxczp">Download Daily Earning Report PDF</button>
-                
-                <thead>
-                      <tr>
-                        <th>S.No</th>
-                        <th scope="col">Order Date </th>
-                        <th scope="col">Earning</th>
-                    </thead>
-                    <tbody id="earning">
-                   <?php
-                     $arrayEarning=[];
-                   $totalRecord=  $dataUrlinventorydaily["totalRecord"];
-                 foreach ($dataUrlinventorydaily["data"] as $key => $value){
-
-
-         
-      array_push($arrayEarning,$value["Earning"]);
     
-
-          $classEarning="";
-      
-$earning=$value["Earning"];
-
-
-            ?>
-
-
-
-
-                      <tr>
-
-
-                    
-                        <td class="<?=    $classEarning; ?>"><?=$key+1 ?></td>
-                        <td class="<?=    $classEarning; ?>"><?= date("d-F-Y",strtotime($value["OrderDate"])) ?></td>
-                        <td class="<?=    $classEarning; ?>"><?=$earning;  ?> Rs</td>
-                    
-                      </tr>
-               
-                  <?php }
-                 
-                  ?>
-
-                  <tr>
-                      <td>Earning</td>
-                     <td> <?= array_sum($arrayEarning); ?> Rs  </TD>
-                 </tr>
-                    </tbody>
-                  </table>
-
-
-
-
-
-
-
-
-                </div>
-                <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
-               
-                <?php
-
-       
-
- 
-
-   $dataUrlinventorymontly=inveentoryDetail("monthly",$inventoryType,$rider_id);
-
-
-
-
-
-      ?>
-             
-               
-               
-               
-               
-               
-                <table class="table table-borderless ">
-                <button type="button"  onclick="downloadReport('monthly','pdf')" class="btn btn-primary" fdprocessedid="cxczp">Download PDF</button>
-          
-                    <thead>
-                      <tr>
-                      <th scope="col">S.No </th>
-                        <th scope="col">Month Year </th>
-                        <th scope="col">Earning</th>
-                        <?php
-                           if($role==0){
-                           ?>
-                        <th scope="col">Tax Expense</th>
-                        <th scope="col">Discount  Expense</th>
-                        <th scope="col">Delivery Expense</th>
-
-                        <?php } ?>
-                    </thead>
-                    <tbody>
-                  
-                   
-             
-                    <?php
-                         $arrayEarning=[];
-                        foreach($dataUrlinventorymontly['data'] as $key =>$value){
-                          array_push($arrayEarning,$value["Earning"]);
-                          ?>
-                          <tr>
-                          <td><?=$key+1 ?></td>
-                        <td><?= $value["monthyear"]; ?></td>
-                        <td><?= $value["Earning"] ?> Rs</td>
-
-                           <?php
-                           if($role==0){
-                           ?>
-                        <td><?= $value["tax_expense"];?>Rs</td>
-                       <td><?= $value["discount_expense"] ?> Rs </td>
-                      <td> <?= $value["deliveryExpense"]; ?> Rs <td>
-             <?php      }  ?>
-
-
-                      </tr>
-                      <?php
-                       }
-                    
-                      ?>
-                    <tr>
-                      <td>Earning</td>
-                     <td> <?= array_sum($arrayEarning); ?> Rs  </TD>
-                 </tr>
-                    </tbody>
-                  </table>
-                </div>
-              
-              </div>
-
-
-                </div>
-
-              </div>
-            </div><!-- End Recent Sales -->
-
 
             <?php
 
@@ -359,7 +180,7 @@ $urlinventorycurrentapi="product_inventory.php";
                         <th scope="col">Revenue</th>
                       </tr>
                     </thead>
-                    <tbody id="er">
+                    <tbody id="earningDetail">
                
 
 
@@ -392,61 +213,15 @@ $urlinventorycurrentapi="product_inventory.php";
               $totalEarningapi="orders.php?orderType=topfive";
  $totalEarningapi=getDataFromApi($totalEarningapi,2);
 
-if($role==0){
+
 
 ?>
-                <div class="card-body pb-0">
-                  <h5 class="card-title">Top 5 Compvared  Order  </h5>
-
-                  <table class="table table-borderless">
-                    <thead>
-                      <tr>
-                        <th>S.No</th>
-                        <th scope="col">Customer Nmae</th>
-                        <th scope="col">  Rider Name</th>
-                        <th scope="col">Order Amount</th>
-                        <th scope="col">Order Date</th>
-                        <th scope="col">Total Item</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-               
-
-
-                         <?php
-        
-                       foreach($totalEarningapi["data"] as $key => $value){
-                      $rider_name=$value['rider_name'];
-                      if($rider_name==""){
-                        $rider_name="No Rider Assigned";
-                      }
-                         ?>
-                                <tr>
-
-                                <td><?= $key+1 ?></td>
-                        <td scope="row"><?= $value["customer_name"] ;?></td>
-                        <td><?=$rider_name;?></td>
-                        <td><?=$value['totalAmount'];?> Rs </td>
-                        <td class="fw-bold"><?=$value["orderDate"]?></td>
-                        <td><?=$value["totalItem"]?></td>
-                      </tr>
-                         <?php
-                       }
-                         ?>
-                 
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-            </div><!-- End Top Selling -->
 
 
 
 
 
-<?php } ?>
+
 
 
 
@@ -520,6 +295,41 @@ return TotalEarningInv;
 
 }
 // data to be exported
+
+async function Earning(){
+  jwtToken = localStorage.getItem("id");
+    jwtToken = JSON.parse(jwtToken);
+    jwtToken = jwtToken.token;
+
+    var jwts = jwtToken;
+    var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+    var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    var parsedJwtData = JSON.parse(decodedJwtData);
+    adminId=parsedJwtData.id;
+const inventory=await fetch(API_PATH+"myearning.php?vendor="+adminId+"&key=avdfheuw23");
+const jsonInventory=await inventory.json();
+const inventorysecond=await fetch(API_PATH+"myearning.php?vendor="+adminId+"&key=avdfheuw23&last_two");
+const jsonInventorysecond=await inventorysecond.json();
+
+document.getElementById("earning").innerText=jsonInventory.earning+" PKR";
+  
+document.getElementById("itemSold").innerText=jsonInventory.qtysold;
+console.log(jsonInventory);
+console.log(jsonInventorysecond);
+earningItem="";
+jsonInventorysecond.data.forEach((item)=>{
+    earningItem+="<tr>";
+    earningItem+="<th scope='row'><a href='#'><img src='"+item.productImage+"' alt=''></a></th>";
+    earningItem+="<td><a href='#' class='text-primary fw-bold'>"+item.productName+"</a></td>";
+    earningItem+="<td>"+item.price+"</td>";
+    earningItem+="<td class='fw-bold'>"+item.qtysold+"</td>";
+    earningItem+="<td>"+item.revenue+"</td>";
+    earningItem+="</tr>";
+   document.getElementById("earningDetail").innerHTML="";
+   document.getElementById("earningDetail").innerHTML=earningItem;
+});
+}
+Earning();
 async   function downloadReport(urlData,type){
 
   jwtToken = localStorage.getItem("id");
