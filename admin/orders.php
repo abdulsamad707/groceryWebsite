@@ -36,7 +36,20 @@
               </div><!-- End Small Modal-->
 
 <button type='button'  class='btn btn-primary' onclick="downloadAllOrderReport()">Print All Orders Detail</button>
-   <div class="modal fade" id="ExtralargeModal" tabindex="-1">
+<div class="row">
+  <div class="col-sm-4">
+
+<input type="text" id="datepicker" class="form-control mt-3"  min="-1day" max="+1day">
+</div>
+
+<div class="col-sm-4">
+<input type="text" id="orderID" class="form-control mt-3" placeholder="Order Id "/>
+</div>
+<div class="col-sm-4" id="submitBTN">
+<button class="btn btn-primary mt-3" >Submit</button>
+</div>
+</div>
+<div class="modal fade" id="ExtralargeModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -73,6 +86,7 @@
               <td>Product Name</td>
               <td> Qty </td>
               <td> Price </td>
+              <td> Owner </td>
                 </tr>
 </thead>
 <tbody  id='orderItemdetail'>
@@ -91,7 +105,7 @@
       <h1>Order</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
           <li class="breadcrumb-item active">order </li>
         </ol>
       </nav>
@@ -145,13 +159,22 @@
 
                 </div>
 </div>
-
+<?php include "footer.php"?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="assets/js/constant.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
+  $("#datepicker").datepicker({
+    dateFormat: "yy-mm-dd",
+    minDate:"-2M", // January 1, 2022
+    maxDate:"+1M" // December 31, 2022
+  });
  var LsId = localStorage.getItem("id");
         console.log("adminTitle");
 
@@ -173,12 +196,12 @@ if(role==1){
   adminType="admin";
 }
 
-async function displayOrder(){
+async function displayOrder(orderDate="",orderId=""){
 rider_id=0;
 
-
-
-  var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&vendorType="+adminType+"&rider_id="+id);
+console.log("Order Date"+orderDate);
+console.log("Order id "+orderId);
+  var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&vendorType="+adminType+"&rider_id="+id+"&orderDate="+orderDate+"&orderId="+orderId);
 var jsonInventory=await inventory.json();
 console.log(jsonInventory);
 
@@ -216,6 +239,23 @@ setInterval(() => {
 
 displayOrder();
 
+var button = document.querySelector('#submitBTN');
+
+button.addEventListener('click', function() {
+  // code to be executed when the button is clicked
+  let OrderDate=document.getElementById("datepicker").value;
+  let OrderId= document.getElementById("orderID").value;
+  if(OrderDate!="" && OrderId!=""){
+  displayOrder(OrderDate,OrderId);
+  } 
+  if(OrderId!='' && OrderDate==""){
+    displayOrder("",OrderId);
+  }
+  if(OrderId=='' && OrderDate!=""){
+    displayOrder(OrderDate,'');
+  }
+
+});
 
 
 async  function downloadAllOrderReport(){
@@ -237,7 +277,7 @@ async  function downloadAllOrderReport(){
 ];
 }
 
-alert( adminType);
+
 var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&vendorType="+adminType+"&rider_id="+id);
 
 var jsonInventory=await inventory.json();
@@ -372,6 +412,7 @@ jsonInventory.products.map((orderItems,i)=>{
   ordersproductHTML+="<td>"+orderItems.productName+"</td>";
   ordersproductHTML+="<td>"+orderItems.qty+"</td>";
   ordersproductHTML+="<td>"+orderItems.price+" Rs </td>";
+  ordersproductHTML+="<td>"+orderItems.username+"  </td>";
   if(i >= 0  && OrderStatus==1){
 
     if(role==0){
@@ -619,4 +660,4 @@ console.log(      sendRequestText);
 
 </script>
 
-<?php include "footer.php"?>
+

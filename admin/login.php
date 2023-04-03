@@ -64,6 +64,7 @@
                     <p class="text-center small">Enter your correct username & password to login</p>
                   </div>
 
+                  <div id="displayMsg"></div>
                   <form class="row" id="loginForm">
 
                     <div class="col-12">
@@ -76,9 +77,14 @@
                     </div>
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword">
-                      <div class="invalid-feedback" id="feedback_password">Please enter your password!</div>
+                    <label for="yourUsername" class="form-label">Password</label>
+                    <div class="input-group has-validation">
+    <input type="password" name="password" class="form-control" id="yourPassword">
+    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+      <i class="bi bi-eye"id="togglePasswordIcon" ></i>
+    </button>
+    <div class="invalid-feedback" id="feedback_password">Please enter your password!</div>
+  </div>
                     </div>
 
                     <div class="col-12">
@@ -90,6 +96,7 @@
                     <div class="col-12">
                 <input type="button"  class="btn btn-primary w-100" value="Login" onclick="adminLogin()">
                     </div>
+
                     <div class="col-12">
                       <p class="small mb-0">Don't have account? <a href="register.php">Create an account</a></p>
                     </div>
@@ -103,7 +110,7 @@
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                Designed by <a href="https://bootstrapmade.com/">Salman Developers & Designer</a>
               </div>
 
             </div>
@@ -158,7 +165,21 @@ var parsedJwtData = JSON.parse(decodedJwtData);
  }
 }
 CheckLogin();
-
+togglePasswordBTN=document.getElementById("togglePassword");
+togglePasswordBTN.addEventListener("click", function() {
+  password=document.getElementById("yourPassword");
+ pass_type=password.type;
+ console.log(pass_type);
+ if(pass_type=="text"){
+ document.getElementById("togglePasswordIcon").classList.remove("bi-eye");
+ document.getElementById("togglePasswordIcon").classList.add("bi-eye-slash");
+ password.type="password";
+ }if(pass_type=="password"){
+  document.getElementById("togglePasswordIcon").classList.remove("bi-eye-slah");
+ document.getElementById("togglePasswordIcon").classList.add("bi-eye");
+ password.type="text";
+ }
+});
 function adminLogin(e){
   const APIKEY="avdfheuw23";
 var username= document.getElementById("yourUsername").value;
@@ -208,7 +229,7 @@ console.log(response);
    return response.json();
     
 }).then((finalResponse)=>{
-console.log(finalResponse);
+
 let id=finalResponse.id;
 
 if(id!=undefined && id!=""){
@@ -235,6 +256,10 @@ if(finalResponse.role==2){
 window.location.href="index.php?t="+finalResponse.role+"&i="+finalResponse.id;
 }
 
+}else{
+  console.log(finalResponse);
+  html="<div class='alert alert-danger alert-dismissible fade show' role='alert'><i class='bi alert-danger me-1'></i>"+ finalResponse.error+  "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close' fdprocessedid='80bdwc'></button></div>";
+  document.getElementById("displayMsg").innerHTML=html;
 }
 
 });

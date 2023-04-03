@@ -25,7 +25,7 @@
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css?v=<?= time();?>" rel="stylesheet">
   
@@ -75,36 +75,10 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
          
-            <span class="d-none d-md-block dropdown-toggle ps-2" id="adminTitle">Admin</span>
+            <span class="d-none d-md-block  ps-2" id="adminTitle">Admin</span>
           </a><!-- End Profile Iamge Icon -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-          
- 
          
-        
-
-            <li>
-              <a id="setting" class="dropdown-item d-flex align-items-center" href="web_setting.php">
-                <i class="bi bi-gear"></i>
-                <span>Web Settings</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#" onclick="logout()">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
-            </li>
-
-          </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
 
       </ul>
@@ -437,19 +411,19 @@ console.log( parsedJwtData );
 
     role=parsedJwtData.role;
 
-    if(role!=0){
-   document.getElementById("setting").href="profile.php";
-
-    }
     username=parsedJwtData.username;
     id=parsedJwtData.id;
     if(role==0){
-    LINK="<li class='nav-item'><a class='nav-link collapsed' href='users.php'><span>Users</span></a></li>"; 
-    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='riders.php'><span>Ride</span></a></li>";
+     
+    LINK="<li class='nav-item'><a class='nav-link collapsed' href='vendors.php'><span>Vendor</span></a></li>";
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='riders.php'><span>Rider</span></a></li>";
     LINK+="<li class='nav-item'><a class='nav-link collapsed' href='orders.php'><span>Order</span></a></li>";
     LINK+="<li class='nav-item'><a class='nav-link collapsed' href='products.php'><span>Products</span></a></li>";
     LINK+="<li class='nav-item'><a class='nav-link collapsed' href='index.php?t="+role+"'><span>Dashboard</span></a></li>";
-
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='users.php'><span>Users</span></a></li>";
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='profile.php'><i class='bi bi-gear'></i><span>Profile Setting</span></a></li>";
+  
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='web_setting.php'><i class='bi bi-gear'></i><span>WebSite Setting</span></a></li>";
   } 
 
     if(role==2){
@@ -457,15 +431,17 @@ console.log( parsedJwtData );
   
     LINK="<li class='nav-item'><a class='nav-link collapsed' href='products.php'><span>Product</span></a></li>";
     LINK+="<li class='nav-item'><a class='nav-link collapsed' href='myearning.php'><span>My Earning</span></a></li>";
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='profile.php'><i class='bi bi-gear'></i><span>Setting</span></a></li>";
     document.getElementById("adminTitle").innerText="Vendor";
    
     }
     if(role==1){
       LINK="<li class='nav-item'><a class='nav-link collapsed' href='orders.php'><span>Order</span></a></li>";
       LINK+="<li class='nav-item'><a class='nav-link collapsed' href='index.php?t="+role+"&i="+id+"'><span>Dashboard</span></a></li>";
-    
+      LINK+="<li class='nav-item'><a class='nav-link collapsed' href='profile.php'><i class='bi bi-gear'></i><span>Setting</span></a></li>";
       document.getElementById("adminTitle").innerText="Rider";
     }
+    LINK+="<li class='nav-item'><a class='nav-link collapsed' href='javascript:void(0)' onclick='logout()'><i class='bi bi-box-arrow-right'></i><span>Logout</span></a></li>"; 
     document.getElementById("adminTitle").innerText=  username;
     document.getElementById("sidebar-nav").innerHTML=   LINK;
 

@@ -79,11 +79,18 @@
                         <div class="error" id="mobile" ></div>
                    
                     </div>
+
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
-                      <div class="error" id="password"></div>
+                    <label for="yourUsername" class="form-label">Password</label>
+                    <div class="input-group has-validation">
+    <input type="password" name="password" class="form-control" id="yourPassword">
+    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+      <i class="bi bi-eye"id="togglePasswordIcon" ></i>
+    </button>
+    <div class="invalid-feedback" id="feedback_password">Please enter your password!</div>
+  </div>
                     </div>
+       
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Admin Type</label>
                       <input type="radio" name="adminType" id="adminType1" class="form-control-check admin" value="1" required> Rider 
@@ -143,6 +150,21 @@
   <script src="assets/js/constant.js"></script>
 </body>
 <script>
+  togglePasswordBTN=document.getElementById("togglePassword");
+togglePasswordBTN.addEventListener("click", function() {
+  password=document.getElementById("yourPassword");
+ pass_type=password.type;
+ console.log(pass_type);
+ if(pass_type=="text"){
+ document.getElementById("togglePasswordIcon").classList.remove("bi-eye");
+ document.getElementById("togglePasswordIcon").classList.add("bi-eye-slash");
+ password.type="password";
+ }if(pass_type=="password"){
+  document.getElementById("togglePasswordIcon").classList.remove("bi-eye-slah");
+ document.getElementById("togglePasswordIcon").classList.add("bi-eye");
+ password.type="text";
+ }
+});
  async function  registerUser(){
     let username=document.getElementById("yourName").value;
    

@@ -1,25 +1,26 @@
 
-
 <?php
-
-
 header('Access-Control-Allow-Origin:*');
 header('Access-Control-Allow-Methods:POST');
 /*header('Content-Type:appliction/json');*/
 $userdata=file_get_contents("php://input");
 
 $userdata=json_decode($userdata,true);
-print_r($userdata);
-?>                                                                 
 
 
+include("validkey.php");
 
 
+extract($userdata);
 
+$pass=password_hash($password,PASSWORD_BCRYPT,['cost'=>12]);
 
-
-
-
+if($admin_role==1){
+$data->updateData("deliveryboy",["password"=>$pass],["id"=>"'$admin_id'"]);
+}else{
+ $data->updateData("admins",["password"=>$pass],["id"=>"'$admin_id'"]);
+}
+?>
 
 
 

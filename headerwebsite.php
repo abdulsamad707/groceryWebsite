@@ -57,7 +57,7 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
     </div>
 
     <form action='' class='search-form'>
-        <input type='search' id='search-box' placeholder='search here...'>
+        <input type='search' id='searchBox' placeholder='search here...'>
         <label for='search-box' class='fas fa-search' onclick='searchproduct()' ></label>
     </form>
 
@@ -130,5 +130,16 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
     </form>
 </header>
 <script>
- 
+ function searchproduct(){
+    let min = 1;
+let max = 10;
+let randomInt = Math.floor(Math.random() * (max - min + 1) + min);
+console.log(randomInt);
+console.log(Math.random());
+ productName=document.getElementById('searchBox').value;
+ setTimeout(async () => {
+    
+ }, 3000);
+
+ }
     </script>

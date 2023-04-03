@@ -1,4 +1,7 @@
-<?php include "header.php";?>
+<?php include "header.php";
+
+error_reporting(0);
+?>
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -24,12 +27,20 @@
      if()
      */
 
- 
+
    @$role=$_GET['t'];
    @$rider_id=$_GET['i'];
    if($role==0){
     $inventoryType="admin";
     $rider_id=0;
+$total_vendor=0;
+$vendorEarningsTotal=vendorEarningsTotal();
+
+$vendorEarning= vendorEarnings();
+
+
+
+extract($vendorEarning);
    }
    if($role==1){
     $inventoryType="rider";
@@ -45,14 +56,28 @@ if($role==1){
 
 }
 if($role==0){
-  $CurrentMonthItemSold=$inventory["CurrentMonthItemSold"];
+ 
+
+@ $totalEarningVendor=$vendorEarningsTotal["totalEarn"];
+  $totalEarningVendor;
+  numberofproducts();
+ $numberofproducts=numberofproducts();
+
+  @$CurrentMonthItemSold=$inventory["CurrentMonthItemSold"];
+
 }
+
 extract($inventory);
 
+
+ 
+ $totalEarn=0;
+
+ $totalEarn;
       }
       if($role==2){
 
-      extract( vendorEarning($rider_id));
+      extract(vendorEarning($rider_id));
 
       $currentMonthEarning=$Earning;
       $CurrentMonthItemSold=$QtySold;
@@ -123,20 +148,21 @@ extract($inventory);
               <div class="card info-card revenue-card">
               <?php
             if($role==0 || $role==1 || $role==2){
+           
             ?>
    
                 <div class="card-body">
 
                 <?php if($role==0){ ?>
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                  <h5 class="card-title">Total Revenue <span>| This Month</span></h5>
                   <?php } ?>
                   <?php if($role==1 || $role==2){ ?>
-                  <h5 class="card-title">Earning <span>| This Month</span></h5>
+                  <h5 class="card-title">My Earning <span>| This Month</span></h5>
                   <?php } ?>
                   <div class="d-flex align-items-center">
                  
                     <div class="ps-3">
-                      <h6><?= $currentMonthEarning; ?> PKR</h6>
+                      <h6><?= $currentMonthEarning-0; ?> PKR</h6>
                     
 
                     </div>
@@ -173,21 +199,19 @@ extract($inventory);
               </div>
 
             </div><!-- End Customers Card -->
-            <?php } ?>
-            <?php if($role==0){ ?>
             <div class="col-xxl-4 col-xl-6">
- 
+
 <div class="card info-card customers-card">
 
   <div class="card-body">
-    <h5 class="card-title">Active Riders <span>| This Month</span></h5>
+    <h5 class="card-title">Total Order Completed <span>| This Month</span></h5>
 
     <div class="d-flex align-items-center">
-      <div class="d-flex align-items-center justify-content-center">
-  
+      <div class=" d-flex align-items-center justify-content-center">
+    
       </div>
       <div class="ps-3">
-        <h6><?=  NumberOfActiveRider("active_riders")["data"][0]["numberofriders"];?></h6>
+        <h6><?=$currentOrderCompleted;?></h6>
         <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
 
       </div>
@@ -197,6 +221,141 @@ extract($inventory);
 </div>
 
 </div>
+<div class="col-xxl-4 col-xl-6">
+
+<div class="card info-card customers-card">
+
+  <div class="card-body">
+    <h5 class="card-title">My Earning <span>| This month </span></h5>
+
+    <div class="d-flex align-items-center">
+      <div class=" d-flex align-items-center justify-content-center">
+    
+      </div>
+      <div class="ps-3">
+        <h6><?= $currentMonthEarning-$vendorEarning["totalEarn"];?> Rs </h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+<div class="col-xxl-4 col-xl-6">
+
+<div class="card info-card customers-card">
+
+  <div class="card-body">
+    <h5 class="card-title">My Earning <span> | Total </span></h5>
+
+    <div class="d-flex align-items-center">
+      <div class=" d-flex align-items-center justify-content-center">
+    
+      </div>
+      <div class="ps-3">
+        <h6><?php echo $totalEarning-$vendorEarningsTotal["totalEarns"];?> Rs</h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+<div class="col-xxl-4 col-xl-6">
+
+<div class="card info-card customers-card">
+
+  <div class="card-body">
+    <h5 class="card-title">Vendors Active <span> </span></h5>
+
+    <div class="d-flex align-items-center">
+      <div class=" d-flex align-items-center justify-content-center">
+    
+      </div>
+      <div class="ps-3">
+        <h6><?php echo  $totalvendor;?></h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+<div class="col-xxl-4 col-xl-6">
+ 
+ <div class="card info-card customers-card">
+ 
+   <div class="card-body">
+     <h5 class="card-title">Active Riders <span>| This Month</span></h5>
+ 
+     <div class="d-flex align-items-center">
+       <div class="d-flex align-items-center justify-content-center">
+   
+       </div>
+       <div class="ps-3">
+         <h6><?=  NumberOfActiveRider("active_riders")["data"][0]["numberofriders"];?></h6>
+         <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
+ 
+       </div>
+     </div>
+ 
+   </div>
+ </div>
+ 
+ </div>
+<div class="col-xxl-6 col-xl-6">
+
+<div class="card info-card customers-card">
+
+  <div class="card-body">
+    <h5 class="card-title">Total Orders Completed <span> </span></h5>
+
+    <div class="d-flex align-items-center">
+      <div class=" d-flex align-items-center justify-content-center">
+    
+      </div>
+      <div class="ps-3">
+        <h6><?= $inventory["totalOrder"];?></h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+<div class="col-xxl-6 col-xl-6">
+
+<div class="card info-card customers-card">
+
+  <div class="card-body">
+    <h5 class="card-title">Total Revenue <span> </span></h5>
+
+    <div class="d-flex align-items-center">
+      <div class=" d-flex align-items-center justify-content-center">
+    
+      </div>
+      <div class="ps-3">
+        <h6><?= $totalEarning;?> Rs</h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+            <?php } ?>
+            <?php if($role==0){ ?>
+
  <?php } ?>
 <!-- End Customers Card -->
             <!-- Reports -->
@@ -403,7 +562,7 @@ inventoryEarningDaily.push(value.Earning);
 
 
 
-   $dataUrlinventorydaily=inveentoryDetail("daily",$inventoryType="",$rider_id);
+   $dataUrlinventorydaily=inveentoryDetail("daily",$inventoryType,$rider_id);
 
 
       ?>
@@ -694,14 +853,14 @@ if($role==0){
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved &reg;
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
       <!-- You can devare the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->
       <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> 
     </div>
   </footer><!-- End Footer -->
 
@@ -729,7 +888,32 @@ if($role==0){
 
 <script src="assets/js/constant.js"></script>
 <script>
+  console.log("HT");
+function CheckLogin() {
+    var LsId = localStorage.getItem("id");
 
+
+    if (LsId != null) {
+        currentTime = new Date().getTime();
+        var LsId = localStorage.getItem("id");
+        console.log("adminTitle");
+
+        LsId = JSON.parse(LsId);
+        console.log(LsId);
+        expirydate = new Date(LsId.expiry);
+        console.log(expirydate + LsId.expiry);
+        console.log(Math.floor((LsId.expiry - currentTime) / (1000 * 60)));
+        if (currentTime > LsId.expiry) {
+
+        }
+        
+    } else {
+
+        window.location.href = "login.php";
+        return false;
+    }
+}
+CheckLogin();
  function  capitalize(stri){
   var str = stri;
 var capitalized = str.charAt(0).toUpperCase() + str.slice(1);
@@ -782,9 +966,9 @@ data=jsonInventory.data;
 
 if(type==="pdf"){
 if(urlData=="monthly"){
- var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Month Year', style: 'tableHeader' }, { text: 'Earning (Rs)', style: 'tableHeader' }];
+ var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Month Year', style: 'tableHeader' }, { text: 'Earning (Rs)', style: 'tableHeader' },{ text: 'Number Of Order', style: 'tableHeader' }];
 }else{
-  var headerPdf=  [{ text: 'S.No', style: 'tableHeader' },{ text: 'Date', style: 'tableHeader' }, { text: 'Earning (Rs)', style: 'tableHeader' }]
+  var headerPdf=  [{ text: 'S.No', style: 'tableHeader' },{ text: 'Date', style: 'tableHeader' }, { text: 'Earning (Rs)', style: 'tableHeader' },{ text: 'Number Of Order', style: 'tableHeader' }]
 }
 TotalEarning=[];
 currDate=new Date().toLocaleString("en-US",{month:"long",day:"numeric",year:"numeric",minute:"numeric",hour:"numeric"}).replace("at"," ");
@@ -797,7 +981,7 @@ var docDefinition = {
     {
       table: {
         headerRows:2,
-        widths: ['*', '*','*'],
+        widths: ['*', '*','*','*'],
         body: [
 
 
@@ -815,9 +999,9 @@ TotalEarning.push(item.Earning);
 
             IndexPdf=index+1;
           if(urlData=="monthly"){
-            return [IndexPdf,item.monthyear,item.Earning];
+            return [IndexPdf,item.monthyear,item.Earning,item.orderCompleted];
           }else{
-            return [IndexPdf,item.OrderDate,item.Earning];
+            return [IndexPdf,item.OrderDate,item.Earning,item.orderCompleted];
           }
 
 
@@ -913,7 +1097,7 @@ link.click();
 </script>
   <!-- Template Main JS File -->
  
-  <script src="assets/js/main.js?v=<?= time();?>"></script>
+  <script src="assets/js/main.js"></script>
   <script>
 
  </script>

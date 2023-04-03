@@ -52,8 +52,8 @@
                                     <form>
 
 
-                                        <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                            <div class="row mb-3">
+                     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="fullName" type="text" class="form-control" id="fullName" value="">
                                             </div>
@@ -61,39 +61,39 @@
 
 
 
+                                        <div class="row mb-3">
+    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Password</label>
+    <div class="col-md-8 col-lg-9">
+        <div class="input-group">
+            <input name="phone" type="password" class="form-control" id="password" value="">
+            <button class="btn btn-outline-primary bi bi-eye " id="showPassword" type="button"></button>
+        </div>
+    </div>
+</div>
 
 
 
+                                  
 
                                       
 
-                                    
+
+
 
                                         
-
-                                   
-                                
                                     
-                                        <div class="row mb-3">
-                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control" id="currentPassword">
-                                            </div>
-                                        </div>
 
-                                        <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                            </div>
-                                        </div>
+   
 
-                                        <div class="row mb-3">
-                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                       <div class="row mb-3">
+                        <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+         <input name="twitter" type="text" class="form-control" id="phone_number" value="">
                                             </div>
                                         </div>
+                                
+
+                                    
 
                                         <div class="text-center">
                                             <button type="button" class="btn btn-primary" onclick="submitSetting()">Save Changes</button>
@@ -170,47 +170,60 @@
     <script src="assets/js/constant.js"></script>
 
         <script>
-            async function setting(){
-                var LsId = localStorage.getItem("id");
-        console.log("adminTitle");
-
-        LsId = JSON.parse(LsId);
-        Token=LsId.token;
-
-
-        const jwt = Token;
-        const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
-        const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
-        const parsedJwtData = JSON.parse(decodedJwtData);
+         /* bi bi-eye-slash*/
          role=parsedJwtData.role;
 
-                settingData=await fetch(API_PATH+"setting.php?key=avdfheuw23");
-                settingData=await   settingData.json();
-          console.log(   settingData);
-       
-        
-          
-        
-        
-         
-        
-        document.getElementById("fullName").value=parsedJwtData.username;
-            }   
+
+
+      document.getElementById("fullName").value=parsedJwtData.username;
+      const myButton = document.getElementById("showPassword");
+
+myButton.addEventListener("click", function() {
+ passwordHidden =  document.getElementById("showPassword");
+    let change_password=document.getElementById("password").value;
+               input_type=document.getElementById("password").type;
+      
+              if(input_type=="text"){
+                passwordHidden.classList.add("bi-eye-slash");
+passwordHidden.classList.remove("bi-eye");
+               document.getElementById("password").type="password";
+              }
+              if(input_type=="password"){
+
+document.getElementById("password").type="text";
+console.log( passwordHidden.classList.contains("bi-eye-slash"));
+passwordHidden.classList.remove("bi-eye-slash");
+passwordHidden.classList.add("bi-eye");
+}
+  console.log("Button clicked!");
+});
          async  function submitSetting(){
-     
-        newPassword =  document.getElementById("newPassword").value;
-        renewPassword =document.getElementById("renewPassword").value;
-        currentPassword=document.getElementById("currentPassword").value;
-        console.log(newPassword);
-
-       alert("");
-        
-
- console.log(API_PATH);
-
+const currentDate = new Date();
+let username=document.getElementById("fullName").value;
+let mobile=document.getElementById("phone_number").value;
+let pass=document.getElementById("password").value;
+            let randomNumber = Math.floor(Math.random() * 11);
+            console.log(parsedJwtData);
+       adminRole=parsedJwtData.role;
+       adminId=parsedJwtData.id;
+let ChangeProfile={
+    username:username,
+    mobile:mobile,
+    password:pass,
+    admin_id:adminId,
+    admin_role:adminRole
+};
+ChangeProfile=JSON.stringify(ChangeProfile);
+console.log(ChangeProfile);
+ responseFromapi=   await fetch(API_PATH+"admin.php?key=avdfheuw23",{method:"POST",body:ChangeProfile});
+ responseFromdata=await  responseFromapi.text();
+ console.log( responseFromdata);
 
            }
-            setting();
+     
+
+
+   
             </script>
 </body>
 

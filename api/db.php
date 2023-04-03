@@ -76,10 +76,7 @@ $db=$this->pdo;
               
                    
               
-                  
-            
-     
-              
+   
 
                   
                  $result=$this->sql($sql,"read"); 
@@ -130,8 +127,10 @@ function updateData ($table,$params=array(),$whereCod=null){
        }
        $db=$this->pdo;
        $sql.=implode(',',$args);
+
+       if($whereConditions!=null){
       $sql.=" WHERE  $whereConditions";
-        
+       }
      return  $this->sql($sql,'update');
        
 

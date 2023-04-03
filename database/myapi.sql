@@ -942,5 +942,4 @@ INSERT INTO `users` (`id`, `username`, `mobile`, `password`, `email`, `status`, 
 (4, 'Samad', '9234321462082', '$2y$12$WE4t32YSZwjzseH1q2LzXe/87gkz/V4.Y16h9YWcH2lLMtN6fngHm', 'abdulsamadahsan@gmail.com', '1', '2023-03-11 18:18:06', 0, 1),
 (5, 'ali', '9234321462092', '$2y$12$66pzbMzpfenwz94otnzLLuFodNccsQvAH30mDlA4RCwBLKFWAyaF6', 'ali@gmail.com', '0', '2023-02-28 22:24:42', 0, 0);
 
-
-
+CREATE TABLE `vendor_earning` (`vendor_id` INT NOT NULL ,  `amount` INT NOT NULL , `order_data` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ) ENGINE = InnoDB;

@@ -150,8 +150,8 @@ CURLOPT_URL =>API_FULL_PATH."users.php?key=avdfheuw23&id=".$userId,
              $totalprice;    
              if($number_of_order==0){
                 if($discount===0){
-                    $discount=floor((25/100)*$totalprice);
-                    $couponCode="FIRST ORDER";
+                    $discount=0;
+                    $couponCode="No Coupon ";
                 }else{
 
                     $discount=$discount;

@@ -29,10 +29,14 @@ function inventoryItemEarning($type,$subType){
 
  $arrayEarningTotal=[];
  $arrayTotalItem=[];
+
+
  foreach ($totalEarningapi["data"] as $key => $value){
         array_push($arrayEarningTotal,$value["Earning"]);
         array_push($arrayTotalItem,$value["itemSold"]);
          }
+
+       
          if($subType==="Earning"){
        return  $arrayEarningTotal=array_sum($arrayEarningTotal);
          }else{
@@ -40,27 +44,31 @@ function inventoryItemEarning($type,$subType){
          }
         
 }
-function inventory($inventoryType="admin",$rider_id=0){
+function inventory($inventoryType,$rider_id=0){
 
 if($inventoryType=="admin"){
    $totalEarningapi="inventory.php?invtype=monthly&vendorType=admin&id=0";
  $totalEarningapi=getDataFromApi($totalEarningapi,3);
-
+   
     $arrayEarningTotal=[];
     $arrayTotalItem=[];
      foreach ($totalEarningapi["data"] as $key => $value){
     array_push($arrayEarningTotal,$value["Earning"]);
     array_push($arrayTotalItem,$value["itemSold"]);
+    $currentCompleted=$value["orderCompleted"];
      }
+
      $arrayEarningTotal=array_sum($arrayEarningTotal);
      $totalItemSold=array_sum($arrayTotalItem);
      $currentEarningapi="inventory.php?invtype=current&vendorType=admin&id=0";
  $totalEarningCurrent=getDataFromApi($currentEarningapi,2);
     $arrayEarningCurrent=[];
     $arrayTotalItemCurrent=[];
+    $currentCompleted=0;
      foreach ($totalEarningCurrent["data"] as $key => $value){
     array_push($arrayEarningCurrent,$value["Earning"]);
     array_push($arrayTotalItemCurrent,$value["itemSold"]);
+    $currentCompleted=$value["orderCompleted"];
      }
 
      $arrayEarningCurrent=array_sum($arrayEarningCurrent);
@@ -72,19 +80,25 @@ if($inventoryType=="admin"){
 
     $arrayEarningPrevious=[];
     $previousItemSoldItem=[];
+    $previousCompleted=0;
      foreach ($totalEarningprevious["data"] as $key => $value){
     array_push($arrayEarningPrevious,$value["Earning"]);
     array_push($previousItemSoldItem,$value["itemSold"]);
+    $previousCompleted=$value["orderCompleted"];
      }
 
      $arrayEarningPrevious=array_sum($arrayEarningPrevious);
      $previousItemSold=array_sum($previousItemSoldItem);
+     $inventory["currentOrderCompleted"]=$currentCompleted;
+     $inventory["previousOrderCompleted"]=$previousCompleted;
+     $inventory["totalOrder"]=$previousCompleted+$currentCompleted;
      $inventory["previousMonthItemSold"]=$previousItemSold;
      $inventory["CurrentMonthItemSold"]=$CurrentItemSold;
      $inventory["previousMonthEarning"]=$arrayEarningPrevious;
      $inventory["totalEarning"]=inventoryItemEarning("monthly","Earning");
      $inventory["currentMonthEarning"]=$arrayEarningCurrent;
      $inventory["totalItemSold"]=      $totalItemSold;
+     $inventory["totalOrder"]=$totalEarningprevious["data"][0]["totalOrder"];
      return $inventory;
    }else{
  
@@ -116,15 +130,45 @@ if($inventoryType=="admin"){
       $inventory["previousMonthEarning"]=$arrayEarningPrevious;
       $inventory["totalEarning"]=$arrayEarningPrevious +$arrayEarningCurrent;
       $inventory["currentMonthEarning"]=$arrayEarningCurrent;
+
       $inventory["totalItemOrderCompleted"]=  $previousItemSold+$CurrentItemSold;
       return $inventory;
    }
 }
-function inveentoryDetail($inventoryType,$adminType="admin",$admin_ride=0){
+
+function inveentoryDetail($inventoryType,$adminType,$admin_ride){
  $totalEarningapi="inventory.php?invtype=".$inventoryType."&vendorType=$adminType&id=$admin_ride";
 $totalEarningapi=getDataFromApi($totalEarningapi,3);
   return $totalEarningapi;
 }       
+function vendorEarnings(){
+
+   $totalEarningapi="vendor_earning.php?earntype=&admin&id=0";
+ $totalEarningapi=getDataFromApi($totalEarningapi,3);
+
+ return $totalEarningapi;
+}
+function vendorEarningsTotal(){
+
+   $totalEarningapi="vendor_earning.php?id=0";
+ $totalEarningapi=getDataFromApi($totalEarningapi,2);
+
+ return $totalEarningapi;
+}
+function numberofvendor(){
+   $totalEarningapi="vendors.php?admin_all";
+   $totalEarningapi=getDataFromApi($totalEarningapi,2);
+
+   
+   return $totalEarningapi;
+}
+function numberofproducts(){
+   $totalEarningapi="products.php?vendor=admin";
+   $totalEarningapi=getDataFromApi($totalEarningapi,2);
+print_r(   $totalEarningapi);
+ 
+   return $totalEarningapi;
+}
 function NumberOfActiveUser($userType){
   /* getDataFromApi;*/
   /*?user_type=active_user_current_month
@@ -134,12 +178,18 @@ function NumberOfActiveUser($userType){
   
   */;
 
- $link="users.php?user_type=active_user_".$userType;
+  $link="users.php?user_type=active_user_".$userType;
  return getDataFromApi($link,2);
 
 }
+function numberOfOrder() {
+$currentEarningapi="inventory.php?invtype=current&vendorType=admin&id=0";
+$totalEarningCurrent=getDataFromApi($currentEarningapi,2);
+$previousEarningapi="inventory.php?invtype=current&vendorType=admin&id=0";
+$totalEarningPrevious=getDataFromApi($previousEarningapi,2);
 
-
+return $totalEarningCurrent;
+}
 function NumberOfActiveRider($userType){
    /* getDataFromApi;*/
    /*?user_type=active_user_current_month
@@ -149,7 +199,7 @@ function NumberOfActiveRider($userType){
    
    */;
  
-  $link="riders.php?rider_type=".$userType;
+ $link="riders.php?rider_type=".$userType;
   return getDataFromApi($link,2);
  
  }
@@ -173,7 +223,7 @@ $data=new CRUDOPERATION($hostname,$dbname,$username,$password);
 $sql="SELECT orderqty,orderdetail.price FROM orderdetail INNER JOIN products ON products.id=orderdetail.product_id WHERE products.admin_id='$id' AND orderdetail.orderqty > 0 ";
 $adminData=$data->sql($sql,"read");
 
-echO"<pre>";
+
 
 $earning=0;
 $qtysell=0;

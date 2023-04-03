@@ -10,6 +10,10 @@
 # General
 --------------------------------------------------------------*/
 
+* {
+    box-sizing: border-box;
+}
+
 :root {
     scroll-behavior: smooth;
 }
@@ -1320,4 +1324,31 @@ tr .High {
 .error {
     color: red;
     font-weight: 900;
+}
+
+#passwordHidden {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.wraper {
+    width: 60%;
+    margin: 50px 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #fff;
+    border-radius: 3px;
+}
+
+.wraper #password {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border: 0;
+    outline: none;
+    color: #333;
+}
+
+.passwordicon {
+    font-size: 59px;
 }

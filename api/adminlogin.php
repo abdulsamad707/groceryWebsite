@@ -23,6 +23,7 @@ $productData=$data->getData('admins',null,null,null,$whereCondition,null,null,nu
 
   $username=$productData['data'][0]["username"];
     $dbpassword=$productData['data'][0]["password"];
+
     $id=$productData['data'][0]["id"];
     $role=$productData['data'][0]["role"];
      if(isset($remember)){
@@ -71,8 +72,13 @@ $productData=$data->getData('admins',null,null,null,$whereCondition,null,null,nu
       $dbpassword=$productData['data'][0]["password"];
       $id=$productData['data'][0]["id"];
       $username=$productData['data'][0]["username"];
+      $status=$productData['data'][0]["status"];
       $role=1;
-       
+
+
+      if($status==1){
+
+     
       if(password_verify($password,$dbpassword)){
          setcookie("userid",$id,time() + (86400 * 30));
          setcookie("user_role",$role,time() + (86400 * 30));
@@ -104,7 +110,11 @@ $productData=$data->getData('admins',null,null,null,$whereCondition,null,null,nu
       $adminStatus["error_type"]="Password";
       $adminStatus["id"]="";
      }
-
+    }else{
+      $adminStatus["error"]="Your Account Has Been Blocked By Admin";
+      $adminStatus["error_type"]="Password";
+      $adminStatus["id"]="";
+    }
 
 
 

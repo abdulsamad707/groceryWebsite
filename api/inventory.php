@@ -47,15 +47,15 @@ if(isset($inventoryType)){
 
  
    
-    $rows=" $orderdateFormat,sum(discount) as discount_expense,sum(deliveryCharge) as deliveryExpense,sum(gst) as tax_expense, count(*) as orderCompleted  ,sum(totalAmount)-(sum(gst)+sum(deliveryCharge)) as Earning ,sum(totalItem) as itemSold";
+    $rows=" $orderdateFormat,sum(discount) as discount_expense,sum(deliveryCharge) as deliveryExpense,sum(gst) as tax_expense, count(*) as orderCompleted  ,sum(cartTotal) as Earning ,sum(totalItem) as itemSold,(select count(*) from orderscustomer WHERE orderStatus='5') as totalOrder";
     $inventorydata = $data->getData("orderscustomer",$rows,$groupBy,null,$where,$orderBy,null,null);
     $date_current=date("Y-m-d");
 
     
-    
+
  
       $prevDate = date('Y-m-d',strtotime("-1 month"));
- 
+   
       echo json_encode($inventorydata);
 
 

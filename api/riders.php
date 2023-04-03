@@ -58,7 +58,7 @@ $join=" LEFT JOIN assignorder ON assignorder.deliveryboyid=deliveryboy.id  LEFT 
       $rider_type = $_GET["rider_type"];
 
        if($rider_type=="active_riders"){
-       $sql="SELECT count(DISTINCT orderscustomer.deliveryboyid) as numberofriders FROM `orderscustomer` WHERE DATE_format(orderDate,'%Y-%m')=Date_FORMAT(CURRENT_DATE,'%Y-%m')";
+       $sql="SELECT count(DISTINCT orderscustomer.deliveryboyid) as numberofriders FROM `orderscustomer` WHERE DATE_format(orderDate,'%Y-%m')=Date_FORMAT(CURRENT_DATE,'%Y-%m') AND orderStatus='5'";
        }if($rider_type=="total_riders"){
         $sql="SELECT count(DISTINCT deliveryboy.id) as numberofriders FROM `deliveryboy`";  
        }

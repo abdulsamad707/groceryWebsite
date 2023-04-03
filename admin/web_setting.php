@@ -134,26 +134,9 @@
                                                 <input name="linkedin" type="radio"  id="on"   value=""> ON
                                                 <input name="linkedin" type="radio" id="off"   value=""> Off
                                     
-                                        <div class="row mb-3">
-                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control" id="currentPassword">
-                                            </div>
-                                        </div>
+                                
 
-                                        <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                            </div>
-                                        </div>
+                                    
 
                                         <div class="text-center">
                                             <button type="button" class="btn btn-primary" onclick="submitSetting()">Save Changes</button>
@@ -245,7 +228,7 @@
          role=parsedJwtData.role;
 
                 settingData=await fetch(API_PATH+"setting.php?key=avdfheuw23");
-                settingData=await   settingData.json();
+                settingData=await   settingData.json();   
           console.log(   settingData);
        
           document.getElementById('deliveryChargegst').value=settingData.data[0].deliverygst;
@@ -271,73 +254,47 @@
         document.getElementById("fullName").value=parsedJwtData.username;
             }   
          async  function submitSetting(){
-            deliverygst=document.getElementById('deliveryChargegst').value;
-            gst=document.getElementById('gst').value;
-            deliveryCharge=document.getElementById("deliveryCharge").value;
-            company_linkend=  document.getElementById("Linkedin").value
-            comapny_facebook=   document.getElementById("Facebook").value;
-            comapny_twitter=  document.getElementById("Twitter").value;
-          comapny_instragram	=  document.getElementById("Instagram").value;
-          company_mobile= document.getElementById("Phone").value;
-           company_email= document.getElementById("Email").value;
-        minOrder =  document.getElementById("minOrder").value;
-        newPassword =  document.getElementById("newPassword").value;
-        renewPassword =document.getElementById("renewPassword").value;
-        currentPassword=document.getElementById("currentPassword").value;
-        if(newPassword!=""){
-          id=localStorage.getItem("id");
 
-          if(renewPassword===newPassword){
-          id=JSON.parse(id);
-          token=id.token;
-          settingObject={
-            password:newPassword,
-            currentPassword:currentPassword,
-            token:token
-          }
-          settingObject=JSON.stringify(settingObject);
-          sendRequest=await fetch(API_PATH+"admin.php?key=avdfheuw23",{
-    method:"POST",
-    headers: {
-            'Authorization': `Bearer ${token}`
+  
+    gst=document.getElementById('gst').value;
+         deliveryCharge=document.getElementById("deliveryCharge").value;
+       linkedIn=document.getElementById("Linkedin").value;
+        facebook = document.getElementById("Facebook").value;
+    twitter=document.getElementById("Twitter").value;
+     instrgam =    document.getElementById("Instagram").value;
+         phone = document.getElementById("Phone").value;
+      email =    document.getElementById("Email").value;
+       minOrder   = document.getElementById("minOrder").value;
 
-        },
-    body:settingObject
-});
-     console.log( await sendRequest.text());
-}else{
-    console.warn("Re-Enter Password MUst Be Same");
-}
-        }
-           if(document.getElementById("on").checked==true){
-            webSiteStatus=1;
-           }else{
-            webSiteStatus=0;
-           }
-           var LsId = localStorage.getItem("id");
-
-           settingObject={
-            deliverygst:deliverygst,
-            gst:gst,
+      if(document.getElementById("on").checked==true){
+        webSiteStatus=1;
+      }else{
+        webSiteStatus=0;
+      }
+        let settingObject={
             deliveryCharge:deliveryCharge,
-            company_linkend:company_linkend,
-            comapny_facebook:comapny_facebook,
-            comapny_twitter:comapny_twitter,
-            comapny_instragram:comapny_instragram,
-            company_mobile:company_mobile,
-            company_email:company_email,
+            gst:gst,
             minOrder:minOrder,
-            webSiteStatus:webSiteStatus
-           }
-           settingObject=JSON.stringify(settingObject);
+            webSiteStatus:webSiteStatus,
+            company_mobile:phone,
+            company_email:email,
+            comapny_instragram:instrgam,
+            comapny_twitter:twitter,
+            comapny_facebook:facebook,
+            company_linkend:linkedIn
+        }
+        settingObject=JSON.stringify(settingObject);
+        console.log(settingObject);
+        settingData=await fetch(API_PATH+"setting.php?key=avdfheuw23",{method:"POST",body:settingObject});
+                settingData=await   settingData.text();
 
- 
-sendRequest=await fetch(API_PATH+"setting.php?key=avdfheuw23",{
-    method:"POST",
-    body:settingObject
-});
+        console.log(settingData);
+
 
            }
+     
+
+
             setting();
             </script>
 </body>

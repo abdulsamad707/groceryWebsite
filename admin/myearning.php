@@ -25,60 +25,10 @@
      */
 
  
-   @$role=$_GET['t'];
-   @$rider_id=$_GET['i'];
-   if($role==0){
-    $inventoryType="admin";
-    $rider_id=0;
-   }
-   if($role==1){
-    $inventoryType="rider";
-    $rider_id=$rider_id;
-   }
- 
-      if($role==1 || $role==0){
-     $inventory=inventory($inventoryType=$inventoryType,$rider_id);
 
 
-if($role==1){
-  $CurrentMonthItemSold=$inventory['CurrentMonthOrderCompleted'];
 
-}
-if($role==0){
-  $CurrentMonthItemSold=$inventory["CurrentMonthItemSold"];
-}
-extract($inventory);
 
-      }
-      if($role==2){
-
-      extract( vendorEarning($rider_id));
-
-      $currentMonthEarning=$Earning;
-      $CurrentMonthItemSold=$QtySold;
-
-      }
-      if($role===2){
-        $totalEarning=0;
-         }
-
-         if($role!=2){
- if($totalEarning>0){
-
- $diff=(floor(($currentMonthEarning/$totalEarning)*100))-(floor(($previousMonthEarning/$totalEarning)*100));
- }else{
-  $diff=0;
- }
- $prec=abs($diff);
- if($diff<0){
-       $perText="decrease";
-    }else{
-      $perText="increase";
-    }
-
- 
-    $previousMonthItemSold;
-  }
       ?>
             <!-- Sales Card -->
             <div class="col-xxl-4 col-md-6">
@@ -104,7 +54,7 @@ extract($inventory);
          
                     </div>
                     <div class="ps-3">
-                      <h6><span id="itemSold"><?=$CurrentMonthItemSold?></span></h6>
+                      <h6><span id="itemSold"></span></h6>
                  
 
                     </div>
@@ -153,60 +103,7 @@ extract($inventory);
         
     
 
-            <?php
-
-$urlinventorycurrentapi="product_inventory.php";
- $dataUrlinventorycurrent=  getDataFromApi($urlinventorycurrentapi,1);
-   if($role==0){
- ?>
-
-
-            <!-- Top Selling -->
-            <div class="col-12">
-              <div class="card top-selling overflow-auto">
-
-             
-
-                <div class="card-body pb-0">
-                  <h5 class="card-title">Top 2  Sell Product  </h5>
-
-                  <table class="table table-borderless">
-                    <thead>
-                      <tr>
-                        <th scope="col">Preview</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Sold</th>
-                        <th scope="col">Revenue</th>
-                      </tr>
-                    </thead>
-                    <tbody id="earningDetail">
-               
-
-
-                         <?php
-        
-                       foreach($dataUrlinventorycurrent["data"] as $key => $value){
-                         ?>
-                                <tr>
-                        <th scope="row"><a href="#"><img src="<?php echo API_PATH.$value["image"];?>" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold"><?=$value['productName'];?></a></td>
-                        <td><?=$value['price'];?></td>
-                        <td class="fw-bold"><?=$value["sold"]?></td>
-                        <td><?=$value["revenue"]?></td>
-                      </tr>
-                         <?php
-                       }
-                         ?>
-                 
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-            </div><!-- End Top Selling -->
-           <?php } ?>
+    
             <div class="col-12">
               <div class="card top-selling overflow-auto">
 <?php

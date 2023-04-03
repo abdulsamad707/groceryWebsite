@@ -453,11 +453,26 @@ var swiper = new Swiper(".review-slider", {
        
        */
 
-
+const screenWidth = window.innerWidth;
+console.log(`The width of the screen is ${screenWidth}px`);
 var swiper = new Swiper(".product-slider", {
 
     autoplay: {
         delay: 5000,
+    },
+    breakpoints: {
+        0: {
+            slidesPerView: 1,
+        },
+        768: {
+            slidesPerView: 3,
+        },
+        1020: {
+            slidesPerView: 3,
+        },
+        1366: {
+            slidesPerView: 3,
+        },
     },
 });
 
@@ -725,7 +740,7 @@ function displayProduct() {
 }
 displayProduct();
 
-displayProduct();
+
 
 async function cartCheckout() {
     /*
@@ -1039,3 +1054,12 @@ function increase(de) {
 function deleteitemifnotavailavailbe(productId) {
 
 }
+
+function websiteLink() {
+    jwtToken = localStorage.getItem("key");
+    const jwt = jwtToken;
+    const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+    const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    const parsedJwtData = JSON.parse(decodedJwtData);
+}
+websiteLink();

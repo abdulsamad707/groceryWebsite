@@ -61,7 +61,13 @@ curl_setopt_array($curl, array(
 // API endpoint URL
 $url = "";
 */
+function getMacAddress() {
+    $output = shell_exec('ifconfig eth0 | grep "ether"');
+    $mac_address = substr($output, strpos($output, " ") + 1, 17);
+    return $mac_address;
+}
 
+echo getMacAddress();
 $ch = curl_init();
     $keyApi=API_KEY;
     $token=$_GET['token'];
@@ -339,11 +345,10 @@ console.log(response);
    localStorage.removeItem("carts");
    localStorage.removeItem("cartTotal");
    localStorage.removeItem("cartDiscount");
-   setTimeout(() => {
-window.location.href="index.php";
-   },1000);
-   
-
+ 
+setTimeout(() => {
+    window.location.href="index.php";
+},3000);
 }
 
 function backtoHome(){

@@ -361,6 +361,7 @@ function CheckLogin() {
     } else {
 
         window.location.href = "login.php";
+        return false;
     }
 }
 
@@ -372,6 +373,7 @@ if (WebSite != "register.php") {
 
     setInterval(CheckLogin, 1000 * 60);
 }
+
 
 function displayProduct() {
     console.log("helle" + Math.random());

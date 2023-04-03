@@ -26,14 +26,58 @@ if (!isset($status)) {
 															$reqMetod = $_SERVER["REQUEST_METHOD"];
 	if ($reqMetod == "GET") {
 
-
+		if(isset($_GET["orderDate"]) && $_GET["orderDate"]!="" && $_GET["rider_id"] ==0 ){
+		$orderDate=	$_GET["orderDate"];
+	     if(isset($_GET["orderId"]) &&  $_GET["orderId"]!=''){
+			$order_id=$_GET["orderId"];
+			$order_id= preg_replace("/[a-zA-Z]+/", "", $order_id);
+			$whereCondition =" Date_format(orderscustomer.orderDate,'%Y-%m-%d')='$orderDate' AND orderscustomer.id='$order_id'";
+		 }else{
+			$whereCondition =" Date_format(orderscustomer.orderDate,'%Y-%m-%d')='$orderDate'" ;
+		 }
+	
+                     
+			 
+					$table = "orderscustomer";
+					$rows = "deliveryboyid,orderscustomer.cartTotal,orderscustomer.orderStatus as order_status, DATE_format(orderscustomer.orderDate,'%h:%i %p') as order_time,orderscustomer.gst,users.mobile as customer_mobile,users.username as customer_name,statusorder.status as OrderStatus,deliveryboy.username as rider_name,deliveryboy.mobile as rider_number,orderscustomer.id as orderID,date_format(orderDate,'%d-%M-%Y') as orderDate , totalAmount,deliveryCharge,deliveryAddress,paymentmethod,discount,couponCode,totalItem";
+					$join = "LEFT JOIN users on orderscustomer.userId=users.id LEFT JOIN  deliveryboy  on orderscustomer.deliveryboyid=deliveryboy.id  LEFT JOIN statusorder ON orderscustomer.orderStatus=statusorder.status_id";
+					$orderBy = "orderscustomer.id DESC";
+					$limit = null;
+					$orderdata = $data->getData($table, $rows, null, $join, $whereCondition, $orderBy, $limit, null);
+					echo json_encode($orderdata);
+					return false;
+		}
          if(isset($_REQUEST["customer_order"])){
 		$customer_id=$_REQUEST["customer_order"];
 		 }
 		   if(isset($_GET["vendorType"])  &&  isset($_GET["rider_id"])  ){
 		$rider_id=$_GET["rider_id"];
                   if($rider_id > 0){
-					$whereCondition ="orderscustomer.deliveryboyid='$rider_id' AND orderscustomer.orderStatus!='6'";
+	if(isset($_GET["orderDate"]) && $_GET["orderDate"]!="" ){
+		$orderDate=	$_GET["orderDate"];
+
+		if(isset($_GET["orderId"]) && $_GET["orderId"]!="" ){
+           $order_id=$_GET["orderId"];
+		   $order_id= preg_replace("/[a-zA-Z]+/", "", $order_id);
+		   $whereCondition ="orderscustomer.deliveryboyid='$rider_id' AND orderscustomer.orderStatus!='6' AND Date_format(orderscustomer.orderDate,'%Y-%m-%d')='$orderDate' AND orderscustomer.id='$order_id'";
+		}else{
+			$whereCondition ="orderscustomer.deliveryboyid='$rider_id' AND orderscustomer.orderStatus!='6' AND Date_format(orderscustomer.orderDate,'%Y-%m-%d')='$orderDate'";
+		}
+
+	}else{
+		if(isset($_GET["orderId"]) && $_GET["orderId"]!="" ){
+			$order_id=$_GET["orderId"];
+			$order_id= preg_replace("/[a-zA-Z]+/", "", $order_id);
+			$whereCondition ="orderscustomer.deliveryboyid='$rider_id' AND orderscustomer.orderStatus!='6' AND orderscustomer.id='$order_id' ";
+		}else{
+			$whereCondition ="orderscustomer.deliveryboyid='$rider_id' AND orderscustomer.orderStatus!='6'";
+		}
+
+	}
+
+	
+
+	
 					$table = "orderscustomer";
 					$rows = "deliveryboyid,orderscustomer.cartTotal,orderscustomer.orderStatus as order_status, DATE_format(orderscustomer.orderDate,'%h:%i %p') as order_time,orderscustomer.gst,users.mobile as customer_mobile,users.username as customer_name,statusorder.status as OrderStatus,deliveryboy.username as rider_name,deliveryboy.mobile as rider_number,orderscustomer.id as orderID,date_format(orderDate,'%d-%M-%Y') as orderDate , totalAmount,deliveryCharge,deliveryAddress,paymentmethod,discount,couponCode,totalItem";
 					$join = "LEFT JOIN users on orderscustomer.userId=users.id LEFT JOIN  deliveryboy  on orderscustomer.deliveryboyid=deliveryboy.id  LEFT JOIN statusorder ON orderscustomer.orderStatus=statusorder.status_id";
@@ -44,6 +88,7 @@ if (!isset($status)) {
 					return false;
 				  } 
 		   }
+
 
 		if (isset($_REQUEST['id'])) {
 			$orderID = $_REQUEST['id'];
@@ -82,7 +127,7 @@ if (!isset($status)) {
 			$whereConditions = "orderdetail.order_id='$orderID'";
 			$joins = "LEFT JOIN products OM orderdetail.product_id=products.id";
 			$orderdetail = $data->sql(
-				"SELECT product_id,orderdetail.price,products.productName,orderdetail.qtyorder as qty FROM orderdetail LEFT JOIN  products ON orderdetail.product_id=products.id where orderdetail.order_id='$orderID'",
+				"SELECT admins.id as admin_id_products,admins.username,product_id,orderdetail.price,products.productName,orderdetail.qtyorder as qty FROM orderdetail LEFT JOIN  products ON orderdetail.product_id=products.id LEFT JOIN admins ON admins.id=products.admin_id where orderdetail.order_id='$orderID'",
 				"read"
 			);
 			$orderdata["products"] = $orderdetail['data'];
@@ -210,7 +255,7 @@ if (!isset($status)) {
 			$deliveryAddress=$userdata["deliveryAddress"];
   $totalRecord=$address["totalRecord"];
                  if(  $totalRecord  <=0){
-				$data->insert("address",["addrees"=>$deliveryAddress,"user_id"=>$customer_id]);
+				$data->insert("address",["address"=>$deliveryAddress,"user_id"=>$customer_id]);
 				 }
 
 
