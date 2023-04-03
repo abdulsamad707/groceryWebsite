@@ -46,7 +46,7 @@
 <input type="text" id="orderID" class="form-control mt-3" placeholder="Order Id "/>
 </div>
 <div class="col-sm-4" id="submitBTN">
-<button class="btn btn-primary mt-3" >Submit</button>
+<button class="btn btn-primary mt-3" >Search </button>
 </div>
 </div>
 <div class="modal fade" id="ExtralargeModal" tabindex="-1">
@@ -105,7 +105,7 @@
       <h1>Order</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+
           <li class="breadcrumb-item active">order </li>
         </ol>
       </nav>

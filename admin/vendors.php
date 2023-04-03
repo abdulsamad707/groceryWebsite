@@ -16,13 +16,25 @@
       <h1>Vendor</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+       
           <li class="breadcrumb-item active">Vendors</li>
         </ol>
       </nav>
     </div>
     <section class="section dashboard">
+    <div class="row"    id="OrdersColumn">
+  <div class="col-sm-4">
 
+<input type="text" id="datepicker" class="form-control mt-3" placeholder="Vendor Name " min="-1day" max="+1day">
+</div>
+
+<div class="col-sm-4">
+<input type="text" id="orderID" class="form-control mt-3" placeholder="Vendor Id "/>
+</div>
+<div class="col-sm-4" id="submitBTN">
+<button class="btn btn-primary mt-3" >Submit</button>
+</div>
+</div>
 <div class="row">
     <div class="col-12">
               <div class="card  overflow-auto">
