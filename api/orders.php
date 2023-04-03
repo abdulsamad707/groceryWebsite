@@ -47,6 +47,22 @@ if (!isset($status)) {
 					echo json_encode($orderdata);
 					return false;
 		}
+if(isset($_GET["orderDate"]) && $_GET["orderDate"]=="" && $_GET["rider_id"] ==0 ){
+          if(isset($_GET["orderId"]) &&  $_GET["orderId"]!=''){
+			$order_id=$_GET["orderId"];
+			$order_id= preg_replace("/[a-zA-Z]+/", "", $order_id);
+			$whereCondition =" orderscustomer.id='$order_id'";
+			$table = "orderscustomer";
+			$rows = "deliveryboyid,orderscustomer.cartTotal,orderscustomer.orderStatus as order_status, DATE_format(orderscustomer.orderDate,'%h:%i %p') as order_time,orderscustomer.gst,users.mobile as customer_mobile,users.username as customer_name,statusorder.status as OrderStatus,deliveryboy.username as rider_name,deliveryboy.mobile as rider_number,orderscustomer.id as orderID,date_format(orderDate,'%d-%M-%Y') as orderDate , totalAmount,deliveryCharge,deliveryAddress,paymentmethod,discount,couponCode,totalItem";
+			$join = "LEFT JOIN users on orderscustomer.userId=users.id LEFT JOIN  deliveryboy  on orderscustomer.deliveryboyid=deliveryboy.id  LEFT JOIN statusorder ON orderscustomer.orderStatus=statusorder.status_id";
+			$orderBy = "orderscustomer.id DESC";
+			$limit = null;
+			$orderdata = $data->getData($table, $rows, null, $join, $whereCondition, $orderBy, $limit, null);
+			echo json_encode($orderdata);
+			return false;
+		 }
+}
+
          if(isset($_REQUEST["customer_order"])){
 		$customer_id=$_REQUEST["customer_order"];
 		 }

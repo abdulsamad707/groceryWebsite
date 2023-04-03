@@ -49,9 +49,9 @@
                         <th scope="col">S.No </th>
                         <th scope="col">Users Name</th>
                        
-                        <th scope="col">Users Mobile</th>
-                        <th scope="col">Earning</th>
-                        <th scope="col">Number of  order</th>
+         
+                        <th scope="col">Mobile Number </th>
+                        <th scope="col">View </th>
                         <th scope="col">Status</th>
                       </tr>
                     </thead>
@@ -103,10 +103,10 @@ console.log(jsonInventory);
            userData+="<tr>";
            userData+="<td>"+(key+1)+"</td>";
            userData+="<td>"+capitalizeFirstWord(item.username)+"</td>";
-        
            userData+="<td>"+item.mobile+"</td>";
-           userData+="<td>"+item.Earning+" Rs </td>";
-           userData+="<td>"+item.number_of_order+"  </td>";
+           userData+="<td><button onclick=view('"+item.id+"') class='btn btn-primary'>View</button></td>";
+    
+
            userData+="<td>"+Btn+"</td>";
            userData+="</tr>";
           });

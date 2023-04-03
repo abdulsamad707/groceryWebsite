@@ -36,7 +36,7 @@
               </div><!-- End Small Modal-->
 
 <button type='button'  class='btn btn-primary' onclick="downloadAllOrderReport()">Print All Orders Detail</button>
-<div class="row">
+<div class="row"    id="OrdersColumn">
   <div class="col-sm-4">
 
 <input type="text" id="datepicker" class="form-control mt-3"  min="-1day" max="+1day">
@@ -204,8 +204,10 @@ console.log("Order id "+orderId);
   var  inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&vendorType="+adminType+"&rider_id="+id+"&orderDate="+orderDate+"&orderId="+orderId);
 var jsonInventory=await inventory.json();
 console.log(jsonInventory);
-
+    console.log(jsonInventory);
 orderHTML="";
+totalRecord=jsonInventory.totalRecord;
+if(totalRecord>0){
 jsonInventory.data.map((item,key)=>{
 orderHTML+="<tr>";
 orderHTML+="<td>"+(key+1)+"</td>";
@@ -230,6 +232,11 @@ orderHTML+="<td><button type='button'    class='btn btn-success' >"+item.OrderSt
 orderHTML+="<td><button type='button'  onclick=downloadInvoice("+item.orderID+")  class='btn btn-primary'>Download Invoice</button></td>";
 orderHTML+="</tr>";
 });
+}else{
+  orderHTML+="<tr>";
+  orderHTML+="<td colspan='7' style='text-align:center;'>No Order Found</td>";
+  orderHTML+="</tr>";
+}
 document.getElementById("orders").innerHTML=orderHTML;
 
 }
@@ -254,7 +261,9 @@ button.addEventListener('click', function() {
   if(OrderId=='' && OrderDate!=""){
     displayOrder(OrderDate,'');
   }
-
+  if(OrderId=='' && OrderDate==""){
+    displayOrder();
+  }
 });
 
 
