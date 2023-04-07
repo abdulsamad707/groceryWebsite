@@ -49,7 +49,7 @@ extract($vendorEarning);
  
       if($role==1 || $role==0){
      $inventory=inventory($inventoryType=$inventoryType,$rider_id);
-
+  
 
 if($role==1){
   $CurrentMonthItemSold=$inventory['CurrentMonthOrderCompleted'];
@@ -148,7 +148,7 @@ extract($inventory);
               <div class="card info-card revenue-card">
               <?php
             if($role==0 || $role==1 || $role==2){
-           
+         
             ?>
    
                 <div class="card-body">
@@ -299,7 +299,7 @@ extract($inventory);
    
        </div>
        <div class="ps-3">
-         <h6><?=  NumberOfActiveRider("active_riders")["data"][0]["numberofriders"];?></h6>
+         <h6><?=  NumberOfActiveRider("active_riders");?></h6>
          <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
  
        </div>

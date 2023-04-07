@@ -198,10 +198,16 @@ function NumberOfActiveRider($userType){
    
    
    */;
- 
- $link="riders.php?rider_type=".$userType;
-  return getDataFromApi($link,2);
- 
+
+ $link="rider_number.php?rider_type=".$userType;
+
+ $numberider=getDataFromApi($link,2);
+   if($numberider["data"][0]){
+      $number_of_rider=$numberider["data"][0]["numberofriders"];
+   }else{
+      $number_of_rider=0;
+   }
+ return $number_of_rider;
  }
 
 

@@ -39,14 +39,14 @@
 <div class="row"    id="OrdersColumn">
   <div class="col-sm-4">
 
-<input type="text" id="datepicker" class="form-control mt-3"  min="-1day" max="+1day">
+<input type="text" placeholder="Order Date" id="datepicker" class="form-control mt-3"  min="-1day" max="+1day">
 </div>
 
 <div class="col-sm-4">
 <input type="text" id="orderID" class="form-control mt-3" placeholder="Order Id "/>
 </div>
 <div class="col-sm-4" id="submitBTN">
-<button class="btn btn-primary mt-3" >Search </button>
+<button class="btn btn-primary mt-3">Search Order</button>
 </div>
 </div>
 <div class="modal fade" id="ExtralargeModal" tabindex="-1">
@@ -86,7 +86,7 @@
               <td>Product Name</td>
               <td> Qty </td>
               <td> Price </td>
-              <td> Owner </td>
+      
                 </tr>
 </thead>
 <tbody  id='orderItemdetail'>
@@ -106,7 +106,7 @@
       <nav>
         <ol class="breadcrumb">
 
-          <li class="breadcrumb-item active">order </li>
+   
         </ol>
       </nav>
     </div>
@@ -421,7 +421,7 @@ jsonInventory.products.map((orderItems,i)=>{
   ordersproductHTML+="<td>"+orderItems.productName+"</td>";
   ordersproductHTML+="<td>"+orderItems.qty+"</td>";
   ordersproductHTML+="<td>"+orderItems.price+" Rs </td>";
-  ordersproductHTML+="<td>"+orderItems.username+"  </td>";
+
   if(i >= 0  && OrderStatus==1){
 
     if(role==0){

@@ -18,8 +18,13 @@ if(isset($_GET["inventory"]) && isset($_GET["vendor_id"]) && $_GET["vendor_id"]!
     $sql.=" LEFT JOIN orderscustomer ON orderscustomer.id=orderdetail.order_id ";
     $sql.=" WHERE admins.role =2 AND admins.id='$admin_id' ANd orderscustomer.orderStatus='5'";
 
-    $sql.="  GROUP By month(orderDate),year(orderDate),admins.id HAVing earning > 0  ";
-    $sqlproduct="SElect ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue,products.productName From  products LEFT JOIN orderdetail ON orderdetail.product_id=products.id LEFT JOIN orderscustomer ON orderscustomer.id=orderdetail.order_id Where  products.admin_id='$admin_id' Group By products.id ";
+      $sql.="  GROUP By month(orderDate),year(orderDate),admins.id HAVing earning > 0  ";
+    
+
+
+
+   
+    $sqlproduct="SElect ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue,IFnull(SUM(orderdetail.orderqty),0) as qtysold,products.productName From  products LEFT JOIN orderdetail ON orderdetail.product_id=products.id LEFT JOIN orderscustomer ON orderscustomer.id=orderdetail.order_id Where  products.admin_id='$admin_id' Group By products.id ";
     $vendorproducts=$data->sql($sqlproduct,"read");
     $vendor["earning_details"]=$data->sql($sql,"read");
     $earning=0;
@@ -38,10 +43,17 @@ if(isset($_GET["inventory"]) && isset($_GET["vendor_id"]) && $_GET["vendor_id"]!
     echo json_encode($vendor);
     return false;
 }else{
+
+    
     $sql="select admins.id as admin_id,admins.username,admins.mobile,IFNULL(sum(orderdetail.orderqty*orderdetail.price),0) as earning from admins LEFT JOIN products ON products.admin_id=admins.id";
     $sql.=" LEFT JOIN orderdetail ON products.id=orderdetail.product_id";
     $sql.=" LEFT JOIN orderscustomer ON orderscustomer.id=orderdetail.order_id";
-    $sql.=" WHERE admins.role=2 ";
+    if(isset($_GET["vendor_name"]) &&  $_GET["vendor_name"]!=''){
+   $vendor_name=$_GET["vendor_name"];
+    $sql.=" WHERE admins.role=2 AND admins.username LIKE '%$vendor_name%'  ";
+    }else{
+      $sql.=" WHERE admins.role=2 ";
+    }
     $sql.=" GROUP BY products.admin_id order by admins.id ";
     
     $vendor=$data->sql($sql,"read");

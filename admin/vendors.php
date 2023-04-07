@@ -25,14 +25,12 @@
     <div class="row"    id="OrdersColumn">
   <div class="col-sm-4">
 
-<input type="text" id="datepicker" class="form-control mt-3" placeholder="Vendor Name " min="-1day" max="+1day">
+<input type="text" id="vendor_name" class="form-control mt-3" placeholder="Vendor Name " min="-1day" max="+1day">
 </div>
 
-<div class="col-sm-4">
-<input type="text" id="orderID" class="form-control mt-3" placeholder="Vendor Id "/>
-</div>
+
 <div class="col-sm-4" id="submitBTN">
-<button class="btn btn-primary mt-3" >Submit</button>
+<button class="btn btn-primary mt-3"  id="searchBTN" >Search</button>
 </div>
 </div>
 <div class="row">
@@ -44,7 +42,7 @@
                 <div class="modal-dialog modal-xl">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title text-center" id="vendor_name">Extra Large Modal</h5>
+                      <h5 class="modal-title text-center" id="vendor_names">Extra Large Modal</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -61,6 +59,7 @@
                          
                             
                             <td>Revenue</td>
+                            <td>Qty Sold</td>
                           </tr>
          
                         </thead>
@@ -75,7 +74,7 @@
                           <td>S.No</td>
                             <td>Month Year</td>
                             <td>Earning</td>
-                            
+                         
                           
                           </tr>
                         </thead>
@@ -142,10 +141,23 @@ function capitalizeFirstWord(str) {
 
 
 
-async  function  displayUsers(){
+var button = document.querySelector('#searchBTN');
+
+button.addEventListener('click', function() {
+   console.log("current Time "+new Date());
+   let vendor_name= document.getElementById("vendor_name").value;
+
+ if(vendor_name!=""){
+    displayUsers(vendor_name);
+   }else{
+    displayUsers();
+   }
+
+});
+async  function  displayUsers(vendor_name=""){
 
         
-const inventory=await fetch(API_PATH+"vendors.php?key=avdfheuw23");
+const inventory=await fetch(API_PATH+"vendors.php?key=avdfheuw23&vendor_name="+vendor_name);
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
 
@@ -171,7 +183,7 @@ async function view(vendor_id){
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
 document.getElementById("vendor_total_earning").innerText=jsonInventory.vendor_earning_total;
-document.getElementById("vendor_name").innerText=jsonInventory.vendor_detail.data[0].username;
+document.getElementById("vendor_names").innerText=jsonInventory.vendor_detail.data[0].username;
 document.getElementById("vendor_mobile").innerText=jsonInventory.vendor_detail.data[0].mobile;
 document.getElementById("vendor_total_product").innerText=jsonInventory.total_productIn_the_store;
 productEarningHtml="";
@@ -187,6 +199,7 @@ if(jsonInventory.total_productIn_the_store==0){
     productEarningHtml+="<td>"+sno+"</td>";
     productEarningHtml+="<td>"+item.productName+"</td>";
     productEarningHtml+="<td>"+item.revenue+" Rs </td>";
+    productEarningHtml+="<td>"+item.qtysold+"  </td>";
     productEarningHtml+="</tr>";
   });
  

@@ -17,6 +17,17 @@
       </nav>
     </div>
     <section class="section dashboard">
+    <div class="row"    id="OrdersColumn">
+  <div class="col-sm-4">
+
+<input type="text" id="vendor_name" class="form-control mt-3" placeholder="Product Name " min="-1day" max="+1day">
+</div>
+
+
+<div class="col-sm-4" id="submitBTN">
+<button class="btn btn-primary mt-3"  id="searchBTN" >Search</button>
+</div>
+</div>
     <button type="button" class="btn btn-primary"   onclick="add()" data-bs-toggle="modal" data-bs-target="#largeModal">
                 Add Product
               </button>
@@ -127,6 +138,8 @@
              <p>    Qty Remaining :<span id="qty_remaining">5</span></p>
              <p>    Revenue :<span id="revenue">5</span></p>
              <p>    Price :<span id="price">5</span></p>
+
+                <div id="productInvdetail"></div>
                     </div>
                     <div class="modal-footer">
             
@@ -211,10 +224,10 @@ let capitalized = str.charAt(0).toUpperCase() + str.slice(1);
           adminType="vendor";
           id=parsedJwtData.id;  
          }
-async  function  displayProduct(){
+async  function  displayProduct(productName=""){
 
         
-  const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23&vendor="+adminType+"&vendor_id="+id);
+  const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23&vendor="+adminType+"&vendor_id="+id+"&productName="+productName);
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
   console.log("helle"+Math.floor(Math.random()*10+1));
@@ -287,7 +300,30 @@ document.getElementById("price").innerText=jsonInventory.data[0].price+"  Rs ";
 
 console.log(productName);
 console.log(jsonInventory);
-
+console.log(jsonInventory.productInven);
+productInvHTML="";
+productInvHTML+="<table class='table table-striped'>";
+productInvHTML+="<thead>";
+productInvHTML+="<tr>";
+productInvHTML+="<td>S.No </td>";
+productInvHTML+="<td>Month Year </td>";
+productInvHTML+="<td>Qty Sold </td>";
+productInvHTML+="<td>Revenue </td>";
+productInvHTML+="</tr>";
+productInvHTML+="</thead>";
+productInvHTML+="<tbody>";
+jsonInventory.productInven.map((item,i)=>{
+productInvHTML+="<tr>";
+productInvHTML+="<td>"+(i+1)+"</td>";
+productInvHTML+="<td>"+item.monthorder+" </td>";
+productInvHTML+="<td>"+item.qty_sold+" </td>";
+productInvHTML+="<td>"+item.revenue+" Rs </td>";
+productInvHTML+="</tr>";
+});
+productInvHTML+="</tbody>";
+productInvHTML+="</table>";
+document.getElementById("productInvdetail").innerHTML=productInvHTML;
+   
 }
 displayProduct();
 var form = document.getElementById("formProduct");
@@ -431,4 +467,14 @@ displayProduct();
 
 }
 
+var Btn = document.querySelector('#searchBTN');
+Btn.addEventListener("click",function(){
+let productName= document.getElementById("vendor_name").value;
+ if(productName!=""){
+  
+displayProduct(productName);
+ }else{
+  displayProduct();
+ }
+});
 </script>

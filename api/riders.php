@@ -9,7 +9,7 @@ header('Access-Control-Allow-Methods:GET,POST');
 include("validkey.php");
 ob_start();
 
-extract($_GET);
+
 
 
 
@@ -21,9 +21,15 @@ extract($_GET);
  $reqMetod=$_SERVER["REQUEST_METHOD"];
 if($reqMetod=="GET"){
 
-
+  extract($_GET);
 if(isset($rider_id)){
- 
+  $sql="SELECT  deliveryboy.id,deliveryboy.status,deliveryboy.username,deliveryboy.mobile,IFNULL(sum(orderscustomer.deliveryCharge),0)-IFNULL(sum(orderscustomer.deliverygst),0) as Earning,count(orderscustomer.deliveryboyid) as number_of_order FROM deliveryboy LEFT JOIN orderscustomer ON deliveryboy.id=orderscustomer.deliveryboyid LEFT JOIN riderrating ON riderrating.rider_id=deliveryboy.id WHERE deliveryboy.id= '$rider_id' group by deliveryboy.id order by number_of_order";
+
+  $riderDatas=$data->sql($sql,"read");
+  $sqlRiders="select date_format(orderDate,'%M-%Y') as ordermonthyear ,count(*) as numberoforder,sum(deliveryCharge) as earning from orderscustomer WHERE deliveryboyid=' $rider_id ' Group by month(orderDate),year(orderDate),deliveryboyid ";
+  $sqlRiders=$data->sql($sqlRiders,"read");
+  $riderDatas["earning_detail"]=$sqlRiders["data"];
+echo json_encode($riderDatas);
 /*
     1-table
     2-rows
@@ -46,13 +52,7 @@ LEFT JOIN riderrating ON riderrating.rider_id=deliveryboy.id
  
  GROUP BY deliveryboy.id order by number_of_order";
 */
-$rows="deliveryboy.username,deliveryboy.mobile,IFNULL(sum(orderscustomer.deliveryCharge),0) as Earning,count(orderscustomer.deliveryboyid) as number_of_order_completed";
-  $whereCondition="deliveryboy.id='$rider_id'";
-$groupby=" deliveryboy.id ";
-$orderby="number_of_order_completed";
-$join=" LEFT JOIN assignorder ON assignorder.deliveryboyid=deliveryboy.id  LEFT JOIN orderscustomer ON deliveryboy.id=orderscustomer.deliveryboyid LEFT JOIN riderrating ON riderrating.rider_id=deliveryboy.id";
-  $riderData=$data->getData("deliveryboy",$rows,$groupby,$join,$whereCondition,$orderby,null,null); 
-  echo json_encode($riderData);  
+
 }else{
        if(isset($_GET["rider_type"])){
       $rider_type = $_GET["rider_type"];
@@ -62,13 +62,29 @@ $join=" LEFT JOIN assignorder ON assignorder.deliveryboyid=deliveryboy.id  LEFT 
        }if($rider_type=="total_riders"){
         $sql="SELECT count(DISTINCT deliveryboy.id) as numberofriders FROM `deliveryboy`";  
        }
+       $riderData=$data->sql($sql,"read");
+       echo json_encode($riderData); 
     }else{
+
+      if(isset($_GET['rider_id']) && $_GET['rider_id']!='' ){
+       $rider_id= $_GET['rider_id'];
+      
+       return false;
+       die();
+      }
+      if(isset($_GET['rider_name']) && $_GET['rider_name']!='' ){
+        $rider_name=$_GET['rider_name'];
+        $sql="SELECT  deliveryboy.id,deliveryboy.status,deliveryboy.username,deliveryboy.mobile,IFNULL(sum(orderscustomer.deliveryCharge),0)-IFNULL(sum(orderscustomer.deliverygst),0) as Earning,count(orderscustomer.deliveryboyid) as number_of_order FROM deliveryboy LEFT JOIN orderscustomer ON deliveryboy.id=orderscustomer.deliveryboyid LEFT JOIN riderrating ON riderrating.rider_id=deliveryboy.id WHERE username LIKE '%$rider_name%' group by deliveryboy.id order by number_of_order";
+      }else{
         $sql="SELECT  deliveryboy.id,deliveryboy.status,deliveryboy.username,deliveryboy.mobile,IFNULL(sum(orderscustomer.deliveryCharge),0)-IFNULL(sum(orderscustomer.deliverygst),0) as Earning,count(orderscustomer.deliveryboyid) as number_of_order FROM deliveryboy LEFT JOIN orderscustomer ON deliveryboy.id=orderscustomer.deliveryboyid LEFT JOIN riderrating ON riderrating.rider_id=deliveryboy.id group by deliveryboy.id order by number_of_order";
+      }
+      $riderData=$data->sql($sql,"read");
+      echo json_encode($riderData); 
     }
-    $riderData=$data->sql($sql,"read");
+ 
 
 }
-echo json_encode($riderData);  
+
 }else{
     $userdata=file_get_contents("php://input");
 
