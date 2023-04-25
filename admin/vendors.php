@@ -46,6 +46,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                      <p>Vendor Id : <span id="vendors_id"></span></p>
                     <p>Mobile Number : <span id="vendor_mobile">  </span> </p>
                     <p>Total Earning : <span id="vendor_total_earning">  </span> Rs</p>
                     <p>Total Product In the Store : <span id="vendor_total_product">  </span>  </p>
@@ -220,6 +221,7 @@ jsonInventory.earning_details.data.map((item,key)=>{
   });
   document.getElementById("earningdetail").innerHTML=EarningHtml;
 document.getElementById("produtEarning").innerHTML=productEarningHtml;
+document.getElementById("vendors_id").innerText="VendorID-"+vendor_id;
 }
 async function riderstatus(rider_id,status){
 

@@ -162,7 +162,7 @@
                       
                         <th scope="col">Status</th>
                         <th scope="col">Edit</th>
-                        <th scope="col">View</th>
+                     
                       </tr>
                     </thead>
                     <tbody id="productDisplay">
@@ -191,6 +191,16 @@
 
 
 <script src="assets/js/constant.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.core.min.js"></script>
+ 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.13/dist/jspdf.plugin.autotable.min.js"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
 <script>
 let formData = new FormData();
 /*
@@ -252,6 +262,7 @@ html+="<td><img class='productsImage' src='"+item.ProductImage+"'></td>";
 html+="<td><button class='btn "+badgeColor+"'>"+status+"</button></td>";
 html+="<td><button  class='btn btn-primary'  onclick='edit("+item.id+")'  data-bs-toggle='modal' data-bs-target='#largeModal' type='button'>Edit</button></td>";
 html+="<td> <button type='button' onclick='view("+item.id+")' class='btn btn-primary'data-bs-toggle='modal'  data-bs-target='#ExtralargeModal'>View</button></td>";
+html+="<td><button onclick='downloadReportProduct("+item.id+")' class='btn btn-outline-primary'>Download Product Sell Report</button></td>";
 html+="</tr>";
 });
 
@@ -477,4 +488,76 @@ displayProduct(productName);
   displayProduct();
  }
 });
+
+async function downloadReportProduct (id)  {
+  var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Month Year', style: 'tableHeader' }, { text: 'Revenue (Rs)', style: 'tableHeader' },{ text: 'Qty Sold', style: 'tableHeader' }];
+
+TotalEarning=[];
+currDate=new Date().toLocaleString("en-US",{month:"long",day:"numeric",year:"numeric",minute:"numeric",hour:"numeric"}).replace("at"," ");
+const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23&id="+id);
+const jsonInventory=await inventory.json();
+console.warn(jsonInventory);
+data=jsonInventory.productInven;
+const productName=capitalize(jsonInventory.data[0].productName);
+var docDefinition = {
+
+  content: [
+   { text:' Sell Report For '+productName, style: 'header' ,align:"center"},
+   { text:' Qty Sold :'+jsonInventory.data[0].qty_sold, style: 'header' ,align:"center"},
+   { text:' Qty Remaining :'+jsonInventory.data[0].qty_remaining, style: 'header' ,align:"center"},
+   { text:' Revenue :'+jsonInventory.data[0].revenue +" Rs", style: 'header' ,align:"center"},
+    {
+      table: {
+        headerRows:2,
+        widths: ['*', '*','*','*'],
+        body: [
+
+
+       headerPdf
+        
+             
+        ,
+  
+          ...data.map(function (item,index) {
+console.log(index+1);
+
+
+TotalEarning.push(item.earning);
+
+
+            IndexPdf=index+1;
+
+            return [IndexPdf,item.monthorder,item.revenue,item.qty_sold];
+         
+
+
+          })
+        ]
+  
+      },
+    
+  }
+
+    
+  
+  ],
+  styles: {
+      header: {
+         fontSize: 22,
+         bold: true,
+         alignment: 'center',
+         fontWeight:900
+       
+      },
+      tableHeader:{
+      bold: true
+
+      },
+    }
+};
+
+// download the PDF document
+pdfMake.createPdf(docDefinition).download("product_inventory_report"+".pdf");
+
+}
 </script>

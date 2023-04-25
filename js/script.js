@@ -219,7 +219,7 @@ verifyOtp.addEventListener("click", function(e) {
 });
 registerComplete.addEventListener("click", function(e) {
     e.preventDefault();
-    this.setAttribute("disabled", true);
+    console.log(e);
     const EmailAddress = document.getElementById("RegisterEmail").value;
     const mobileNumber = document.querySelector('#MobileUser').value;
     const UserPassword = document.querySelector('#UserPassword').value;
@@ -279,19 +279,20 @@ registerComplete.addEventListener("click", function(e) {
             console.log(formData);
         */
 
-    urlReg = "http://localhost/grocery/api/userregister.php?key=6CU1qSJfcs";
+    urlReg = "http://localhost/groceryWebsite/api/userregister.php?key=avdfheuw23";
     fetch(urlReg, {
         method: "POST",
         body: formData
     }).then(function(response) {
-        return response.json();
+        return response.text();
     }).then(function(json) {
         console.log(json);
+        return false;
         var code = json.code;
         var http_code = json.http_code;
 
         if (http_code = 200) {
-            this.setAttribute("disabled", false);
+
             var http_code = json.http_code;
             var operation = json.operationStatus;
             var msg = json.message;

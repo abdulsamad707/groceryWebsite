@@ -153,7 +153,11 @@ var parsedJwtData = JSON.parse(decodedJwtData);
  role=parsedJwtData.role;
  
   if(window.location=="http://localhost/grocerywebsite/admin/login.php"){
-       window.location="index.php?t="+role+"&i="+id;
+      if(role!=2){
+    window.location="index.php?t="+role+"&i="+id;
+      }else{
+        window.location="products.php?t="+role+"&i="+id;
+      }
   }
 
  }else{

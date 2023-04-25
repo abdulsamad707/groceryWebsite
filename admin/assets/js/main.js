@@ -337,7 +337,11 @@ if (WebSite == "index.php") {
     var parsedJwtData = JSON.parse(decodedJwtData);
     adminId = parsedJwtData.id;
     adminROLE = parsedJwtData.role;
-    window.location.href = "index.php?t=" + adminROLE + "&i=" + adminId;
+    if (role != 2) {
+        window.location.href = "index.php?t=" + adminROLE + "&i=" + adminId;
+    } else {
+        window.location.href = "myearning.php";
+    }
 }
 
 function CheckLogin() {

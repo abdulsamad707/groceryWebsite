@@ -1,6 +1,5 @@
 <?php include "header.php";
 
-error_reporting(0);
 ?>
   <main id="main" class="main">
 
@@ -374,7 +373,7 @@ if($role==0)
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Reports <span>Monthly</span></h5>
+                  <h5 class="card-title">Reports(Company) <span>Monthly</span></h5>
 
 
                   <!-- Line Chart -->
@@ -450,7 +449,7 @@ console.log(inventoryMonth);
                   <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">>Reports <span>Daily</span></h5>
+              <h5 class="card-title">>Reports (Company)<span>Daily</span></h5>
 
               <!-- Line Chart -->
               <div id="lineChart"></div>
@@ -541,7 +540,7 @@ inventoryEarningDaily.push(value.Earning);
 
 
                 <div class="card-body">
-                  <h5 class="card-title">Earning</h5>
+                  <h5 class="card-title">Earning(Company)</h5>
 
                
                   <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
@@ -781,7 +780,7 @@ if($role==0){
 
 ?>
                 <div class="card-body pb-0">
-                  <h5 class="card-title">Top 5 Compvared  Order  </h5>
+                  <h5 class="card-title">Top 5   Orders  </h5>
 
                   <table class="table table-borderless">
                     <thead>

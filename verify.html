@@ -1,95 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Otp Moblie verification</title>
-  <link rel="stylesheet" href="css/style2.css">
-</head>
-<body>
-  
 
-<div class="container">
-  <form action="action_page.php">
-    <div class="row">
-      <div class="col-25">
-        <label for="mobile">Mobile</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="mobile" name="mobile" placeholder="Mobile.">
-      </div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otp Moblie verification</title>
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+
+<body>
+
+
+    <div class="container">
+        <form action="action_page.php">
+            <div class="row">
+                <div class="col-25">
+                    <label for="mobile">Email</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="mobile" name="mobile" placeholder="Email.">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="otp">OTP</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="otp" name="otp" placeholder="OTP ">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <input type="submit" value="Verify Mobile" id="verify">
+            </div>
+        </form>
     </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="otp">OTP</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="otp" name="otp" placeholder="OTP ">
-      </div>
-    </div>
-    
- 
-    <div class="row">
-      <input type="submit" value="Verify Mobile" id="verify">
-    </div>
-  </form>
-</div>
 </body>
+
 </html>
 <script>
-var $_GET = {};
-if(document.location.toString().indexOf('?') !== -1) {
-    var query = document.location
-                   .toString()
-                   // get the query string
-                   .replace(/^.*?\?/, '')
-                   // and remove any existing hash string (thanks, @vrijdenker)
-                   .replace(/#.*$/, '')
-                   .split('&');
+    var $_GET = {};
+    if (document.location.toString().indexOf('?') !== -1) {
+        var query = document.location
+            .toString()
+            // get the query string
+            .replace(/^.*?\?/, '')
+            // and remove any existing hash string (thanks, @vrijdenker)
+            .replace(/#.*$/, '')
+            .split('&');
 
-    for(var i=0, l=query.length; i<l; i++) {
-       var aux = decodeURIComponent(query[i]).split('=');
-       $_GET[aux[0]] = aux[1];
+        for (var i = 0, l = query.length; i < l; i++) {
+            var aux = decodeURIComponent(query[i]).split('=');
+            $_GET[aux[0]] = aux[1];
+        }
     }
-}
 
-document.getElementById("mobile").value=$_GET['mobile'];
-  document.getElementById("verify").addEventListener("click", function(event){
-   
-      event.preventDefault();
 
- 
+    document.getElementById("verify").addEventListener("click", function(event) {
+
+        event.preventDefault();
 
 
 
 
-       token=aux[1];
-       var obj={
-        id:$_GET["id"],
-        mobile:document.getElementById("mobile").value,
-        otp:document.getElementById("otp").value
-       };
-       obj=JSON.stringify(obj);
 
-       url="http://localhost/grocery/api/verifyCustomer.php?key=6CU1qSJfcs";
-       fetch(url,{
-     method : "POST",
-     body : obj
-    
- }).then(function(response){
-   console.log(response);
-     return response.text();
- }).then(function(text){
-    console.log(text);
- }).catch(function(error){
-    console.log(error);
- });
-    
-  });
+
+        token = aux[1];
+        var obj = {
+
+            mobile: document.getElementById("mobile").value,
+            otp: document.getElementById("otp").value
+        };
+        obj = JSON.stringify(obj);
+
+        url = "http://localhost/groceryWebsite/api/verifyCustomer.php?key=avdfheuw23";
+        fetch(url, {
+            method: "POST",
+            body: obj
+
+        }).then(function(response) {
+            console.log(response);
+            return response.text();
+        }).then(function(text) {
+            console.log(text);
+        }).catch(function(error) {
+            console.log(error);
+        });
+
+    });
 </script>
 
 </body>
+
 </html>
-
-

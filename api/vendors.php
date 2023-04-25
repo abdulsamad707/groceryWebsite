@@ -17,11 +17,14 @@ if(isset($_GET["inventory"]) && isset($_GET["vendor_id"]) && $_GET["vendor_id"]!
     $sql.=" LEFT JOIN orderdetail ON products.id=orderdetail.product_id";
     $sql.=" LEFT JOIN orderscustomer ON orderscustomer.id=orderdetail.order_id ";
     $sql.=" WHERE admins.role =2 AND admins.id='$admin_id' ANd orderscustomer.orderStatus='5'";
-
+       if($_GET["inventory"]=="monthly" || $_GET["inventory"]==""){
       $sql.="  GROUP By month(orderDate),year(orderDate),admins.id HAVing earning > 0  ";
-    
+       }
 
-
+       if($_GET["inventory"]=="daily" || $_GET["inventory"]!=""){
+        $sql.="  GROUP By day(orderDate),month(orderDate),year(orderDate),admins.id HAVing earning > 0  ";
+         }
+  
 
    
     $sqlproduct="SElect ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue,IFnull(SUM(orderdetail.orderqty),0) as qtysold,products.productName From  products LEFT JOIN orderdetail ON orderdetail.product_id=products.id LEFT JOIN orderscustomer ON orderscustomer.id=orderdetail.order_id Where  products.admin_id='$admin_id' Group By products.id ";

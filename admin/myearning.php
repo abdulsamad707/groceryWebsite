@@ -1,4 +1,6 @@
-<?php include "header.php";?>
+<?php include "header.php";
+
+?>
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -24,11 +26,14 @@
      if()
      */
 
+
+
+
+
+
+
  
-
-
-
-
+ 
       ?>
             <!-- Sales Card -->
             <div class="col-xxl-4 col-md-6">
@@ -40,12 +45,9 @@
 
 
 
-           
-                  <h5 class="card-title">Total Product Sald<span>| This Momth</span></h5>
-                
-             
-          
-              
+   
+                  <h5 class="card-title">Total  Product Sold <span>| This Momth</span></h5>
+         
               
           
          
@@ -54,8 +56,9 @@
          
                     </div>
                     <div class="ps-3">
-                      <h6><span id="itemSold"></span></h6>
-                 
+                    
+                    <h6  id="monthproduct"></h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
 
                     </div>
                   </div>
@@ -63,23 +66,22 @@
 
               </div>
             </div><!-- End Sales Card -->
-         
+          
             <!-- Revenue Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
-
-   
+         
                 <div class="card-body">
 
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
-                  
-                
-         
            
+
+                  <h5 class="card-title">Total Product Sold <span>|Total</span></h5>
+
                   <div class="d-flex align-items-center">
                  
                     <div class="ps-3">
-                      <h6><span id="earning"></span></h6>
+                    <h6  id="totalProduct"></h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
                     
 
                     </div>
@@ -88,39 +90,266 @@
 
               </div>
             </div><!-- End Revenue Card --> 
-      
+    
             <!-- Customers Card -->
 
+      
+<div class="col-xxl-4 col-xl-6">
+
+<div class="card info-card customers-card">
+
+  <div class="card-body">
+    <h5 class="card-title">My Earning <span>| This month </span></h5>
+
+    <div class="d-flex align-items-center">
+      <div class=" d-flex align-items-center justify-content-center">
     
-     
- 
+      </div>
+      <div class="ps-3">
+      <h6  id="monththis"></h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
 
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+<div class="col-xxl-4 col-xl-6">
+
+<div class="card info-card customers-card">
+
+  <div class="card-body">
+    <h5 class="card-title">My Earning <span> | Total </span></h5>
+
+    <div class="d-flex align-items-center">
+      <div class=" d-flex align-items-center justify-content-center">
+    
+      </div>
+      <div class="ps-3">
+       <h6 id="totalEarn"></h6>
+        <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+</div>
    
+<!-- End Customers Card -->
+            <!-- Reports -->
+            <?php
 
+
+  ?>
+       
 
             <!-- Recent Sales -->
 
         
-    
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
 
-    
+
+                <div class="card-body">
+                  <h5 class="card-title">Earning </h5>
+
+               
+                  <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+                <li class="nav-item flex-fill" role="presentation">
+                  <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="true">Daily</button>
+                </li>
+                <li class="nav-item flex-fill" role="presentation">
+                  <button class="nav-link w-100 " id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Monthly</button>
+                </li>
+                
+              </ul>
+              <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+                <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+             
+             
+                <?php
+
+
+
+
+
+
+      ?>
+             
+             
+             
+             
+             
+             
+             
+                <table class="table table-borderless ">
+
+
+                <button type="button"  onclick="downloadReport('daily','pdf')" class="btn btn-primary" fdprocessedid="cxczp">Download Daily Earning Report PDF</button>
+                
+                <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th scope="col">Order Date </th>
+                        <th scope="col">Earning (Rs)</th>
+                    </thead>
+                    <tbody id="dailyR">
+                   <?php
+
+
+
+            ?>
+
+
+
+
+                      <tr>
+
+
+                    
+     
+                    
+                      </tr>
+               
+                  <?php 
+                 
+                  ?>
+
+                  <tr>
+                      <td>Earning</td>
+   
+                 </tr>
+                    </tbody>
+                  </table>
+
+
+
+
+
+
+
+
+                </div>
+                <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+               
+                <?php
+
+       
+
+ 
+
+
+
+
+
+
+      ?>
+             
+               
+               
+               
+               
+               
+                <table class="table table-borderless ">
+                <button type="button"  onclick="downloadReport('monthly','pdf')" class="btn btn-primary" fdprocessedid="cxczp">Download PDF</button>
+          
+                    <thead>
+                      <tr>
+                      <th scope="col">S.No </th>
+                        <th scope="col">Month Year </th>
+                        <th scope="col">Earning(Rs)</th>
+                        <?php
+                 
+                           ?>
+               
+
+                 
+                    </thead>
+                    <tbody id="RMonthly">
+                  
+                   
+             
+                
+                          <tr>
+                         
+
+                       
+ 
+
+                      </tr>
+                      <?php
+                   
+                      ?>
+                    <tr>
+                      <td>Earning</td>
+
+                 </tr>
+                    </tbody>
+                  </table>
+                </div>
+              
+              </div>
+
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Sales -->
+
+
+            <!-- Top Selling 
             <div class="col-12">
               <div class="card top-selling overflow-auto">
-<?php
-              $totalEarningapi="orders.php?orderType=topfive";
- $totalEarningapi=getDataFromApi($totalEarningapi,2);
+
+             
+
+                <div class="card-body pb-0">
+                  <h5 class="card-title">Top 2  Sell Product  </h5>
+
+                  <table class="table table-borderless">
+                    <thead>
+                      <tr>
+                        <th scope="col">Preview</th>
+                        <th scope="col">Product</th>
+                 
+                        <th scope="col">Sold</th>
+                        <th scope="col">Revenue</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sellProduct">
+               
 
 
+                    
+                 
+                    </tbody>
+                  </table>
 
-?>
+                </div>
 
-
-
-
-
-
-
-
+              </div>
+            </div>--><!-- End Top Selling -->
+     
+       
 
 
           </div>
@@ -140,14 +369,14 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved &reg;
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
       <!-- You can devare the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->
       <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> 
     </div>
   </footer><!-- End Footer -->
 
@@ -175,7 +404,76 @@
 
 <script src="assets/js/constant.js"></script>
 <script>
+    jwtToken = localStorage.getItem("id");
+    jwtToken = JSON.parse(jwtToken);
+    jwtToken = jwtToken.token;
 
+        var jwts = jwtToken;
+    var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
+    var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    var parsedJwtData = JSON.parse(decodedJwtData);
+    admin_id=parsedJwtData.id;
+
+  async  function Earning(admin_id,invType){
+    console.log("HT");
+  linkToHit=API_PATH+"specific_vendor_earning.php?key=avdfheuw23&inventory="+invType+"&vendor_id="+admin_id;
+  console.log(linkToHit);
+  vendorEarning=await fetch(linkToHit);
+  vendorEarningdata= await   vendorEarning.json();
+    console.log(  vendorEarningdata);
+    document.getElementById("monththis").innerText=vendorEarningdata.currentmonthearning + " Rs " ;
+    document.getElementById("totalEarn").innerText=vendorEarningdata.totalEarn+ " Rs " ;
+    document.getElementById("totalProduct").innerText=vendorEarningdata.productsellTotal;
+    document.getElementById("monthproduct").innerText=vendorEarningdata.totalProductSellTHismOnth;
+dailyReportHTML="";
+
+    vendorEarningdata.earndetaildaily.map((item,index)=>{
+      keysTable=index+1;
+      dailyReportHTML+="<tr>";
+      dailyReportHTML+="<td>"+keysTable+"</td>";
+      dailyReportHTML+="<td>"+item.orderDates+"</td>";
+      dailyReportHTML+="<td>"+item.earning+"</td>";
+      dailyReportHTML+="</tr>";
+    });
+    MonthlyReportHTML="";
+
+    vendorEarningdata.earndetailmonthly.map((item,index)=>{
+      keysTable=index+1;
+      MonthlyReportHTML+="<tr>";
+      MonthlyReportHTML+="<td>"+keysTable+"</td>";
+      MonthlyReportHTML+="<td>"+item.orderDates+"</td>";
+      MonthlyReportHTML+="<td>"+item.earning+"</td>";
+      MonthlyReportHTML+="</tr>";
+    });
+document.getElementById("dailyR").innerHTML=   dailyReportHTML;
+document.getElementById("RMonthly").innerHTML=MonthlyReportHTML;
+  }
+  Earning(admin_id,"monthly");
+function CheckLogin() {
+    var LsId = localStorage.getItem("id");
+
+
+    if (LsId != null) {
+        currentTime = new Date().getTime();
+        var LsId = localStorage.getItem("id");
+        console.log("adminTitle");
+
+        LsId = JSON.parse(LsId);
+        console.log(LsId);
+        expirydate = new Date(LsId.expiry);
+        console.log(expirydate + LsId.expiry);
+        console.log(Math.floor((LsId.expiry - currentTime) / (1000 * 60)));
+        if (currentTime > LsId.expiry) {
+
+        }
+        
+    } else {
+
+        window.location.href = "login.php";
+        return false;
+    }
+}
+CheckLogin();
  function  capitalize(stri){
   var str = stri;
 var capitalized = str.charAt(0).toUpperCase() + str.slice(1);
@@ -192,41 +490,6 @@ return TotalEarningInv;
 
 }
 // data to be exported
-
-async function Earning(){
-  jwtToken = localStorage.getItem("id");
-    jwtToken = JSON.parse(jwtToken);
-    jwtToken = jwtToken.token;
-
-    var jwts = jwtToken;
-    var jwtData = jwts.split('.')[1]; // Get the data section of the JWT
-    var decodedJwtData = atob(jwtData); // Decode the base64-encoded data
-    var parsedJwtData = JSON.parse(decodedJwtData);
-    adminId=parsedJwtData.id;
-const inventory=await fetch(API_PATH+"myearning.php?vendor="+adminId+"&key=avdfheuw23");
-const jsonInventory=await inventory.json();
-const inventorysecond=await fetch(API_PATH+"myearning.php?vendor="+adminId+"&key=avdfheuw23&last_two");
-const jsonInventorysecond=await inventorysecond.json();
-
-document.getElementById("earning").innerText=jsonInventory.earning+" PKR";
-  
-document.getElementById("itemSold").innerText=jsonInventory.qtysold;
-console.log(jsonInventory);
-console.log(jsonInventorysecond);
-earningItem="";
-jsonInventorysecond.data.forEach((item)=>{
-    earningItem+="<tr>";
-    earningItem+="<th scope='row'><a href='#'><img src='"+item.productImage+"' alt=''></a></th>";
-    earningItem+="<td><a href='#' class='text-primary fw-bold'>"+item.productName+"</a></td>";
-    earningItem+="<td>"+item.price+"</td>";
-    earningItem+="<td class='fw-bold'>"+item.qtysold+"</td>";
-    earningItem+="<td>"+item.revenue+"</td>";
-    earningItem+="</tr>";
-   document.getElementById("earningDetail").innerHTML="";
-   document.getElementById("earningDetail").innerHTML=earningItem;
-});
-}
-Earning();
 async   function downloadReport(urlData,type){
 
   jwtToken = localStorage.getItem("id");
@@ -245,7 +508,7 @@ async   function downloadReport(urlData,type){
       adminID=parsedJwtData.id;
       adminType="ride";
     }
-  const inventory=await fetch(API_PATH+"inventory.php?key=avdfheuw23&invtype="+urlData+"&vendorType="+adminType+"&id="+adminID);
+const inventory=await fetch(API_PATH+"specific_vendor_earning.php?key=avdfheuw23&&inventory="+urlData+"&vendor_id="+adminID);
 const jsonInventory=await inventory.json();
 console.log(inventory);
 console.log(jsonInventory);
@@ -257,16 +520,23 @@ console.log(today.getTime()+1000*60*3);
 console.log(new Date(today.getTime()+1000*60*3));
 // save the PDF document
 const name=today.getMonth()+today.getDate();
-data=jsonInventory.data;
+
+
+if(urlData=="monthly"){
+data=jsonInventory.earndetailmonthly;
+
+}
+if(urlData=="daily"){
+data=jsonInventory.earndetaildaily;
+
+}
 
 
 
 if(type==="pdf"){
-if(urlData=="monthly"){
+
  var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Month Year', style: 'tableHeader' }, { text: 'Earning (Rs)', style: 'tableHeader' }];
-}else{
-  var headerPdf=  [{ text: 'S.No', style: 'tableHeader' },{ text: 'Date', style: 'tableHeader' }, { text: 'Earning (Rs)', style: 'tableHeader' }]
-}
+
 TotalEarning=[];
 currDate=new Date().toLocaleString("en-US",{month:"long",day:"numeric",year:"numeric",minute:"numeric",hour:"numeric"}).replace("at"," ");
 
@@ -291,23 +561,21 @@ var docDefinition = {
 console.log(index+1);
 
 
-TotalEarning.push(item.Earning);
+TotalEarning.push(item.earning);
 
 
             IndexPdf=index+1;
-          if(urlData=="monthly"){
-            return [IndexPdf,item.monthyear,item.Earning];
-          }else{
-            return [IndexPdf,item.OrderDate,item.Earning];
-          }
+
+            return [IndexPdf,item.orderDates,item.earning];
+         
 
 
           })
         ]
   
       }
-    },
-    { text: 'Total Earning:'+ TotalIncome(TotalEarning)+' Rs', style: 'thanks' }
+    }
+
   
   ],
   styles: {
@@ -394,7 +662,7 @@ link.click();
 </script>
   <!-- Template Main JS File -->
  
-  <script src="assets/js/main.js?v=<?= time();?>"></script>
+  <script src="assets/js/main.js"></script>
   <script>
 
  </script>

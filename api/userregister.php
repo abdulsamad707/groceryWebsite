@@ -23,18 +23,17 @@ $posttye=$_SERVER['REQUEST_METHOD'];
       $username=ucfirst($username);
 
 
-    
+    /*
    
-     $checkData=['email'=>"'$email'",'mobile'=>"'$mobile'",'username'=>"'$username'"];
-     
-                
-      $userdat=  $data->getData('users','id',null,$checkData,null,null,'OR');
+     $checkData=['email'=>"'$email'",'mobile'=>"'$mobile'",'username'=>"''"];
+     */
+      $checkData="email='$email' and mobile='$mobile' AND  username='$username' ";          
+      $userdat=  $data->getData('users','id',null,null,$checkData,null,null,null);
         $totalRecord= $userdat['totalRecord'];
 
              if($totalRecord<1){
         
-          include ("phpmail.php");  
-          include ("smtp.php");  
+      
         
 
          $randStr= $data->generateRandomString();
@@ -43,10 +42,10 @@ $posttye=$_SERVER['REQUEST_METHOD'];
               
               //Load Composer's autoloader
               $html="";
-      $html.="<br> Thanks For Register With Us Please  Verify Your Email At <a href='http://localhost/grocery/verify.html?token=$rdStr&mobile=$mobile'> verify  </a> ";
+      $html.="<br> Thanks For Register With Us Please  Verify Your Email At <a href='http://localhost/grocerywebsite/verify.html?token=$rdStr&mobile=$mobile'> verify  </a> ";
          $email_message="Your Otp is $otp ".$html;
             $subject="Verification Code";
-        $sendMailer=sendMail($email_message,$email,$username,$subject);
+       echo  $sendMailer=sendMail($email_message,$email,$username,$subject);
         $number="+".$mobile;
         $message="Thanks For Registration $username Your OTP is ".$otp."Regards IAD Project Grocery PK";
    /*    $json= SendSms($number,$message);*/
@@ -55,8 +54,8 @@ $posttye=$_SERVER['REQUEST_METHOD'];
     
     
    
-            $insertData=['email'=>$email,'mobile'=>$mobile,'verified'=>0,'status'=>1,
-            'username'=>$username,'password'=>$password,'otp'=>$otp,'str_rand'=>$rdStr];
+            $insertData=['email'=>$email,'mobile'=>$mobile,'status'=>1,
+            'username'=>$username,'password'=>$password,'otp'=>$otp,'otp_verify'=>0];
            $insertStatus=$data->insert('users',$insertData);
            $insertStatus['http_code']=200;
            $insertStatus['operationStatus']="success";

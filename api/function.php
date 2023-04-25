@@ -24,7 +24,7 @@ $mail->Port = 587;
 if(!$mail->send()) {
     echo 'Error sending email: ' . $mail->ErrorInfo;
 } else {
- 
+ return 1;
 }
       }
      function SendSms($number,$message){

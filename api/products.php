@@ -90,9 +90,12 @@ if(isset($_GET["id"])){
 $productData=$data->sql($sql,"read");
 if(isset($_GET["id"])){
   $product_id=$_GET["id"];
-  $sqlProductInv="SELECT products.productName,IFNULL(DATE_Format(orderscustomer.orderDate,'%M-%Y'),'NOTSOLD') as monthorder,IFNULL(sum(orderdetail.orderqty*orderdetail.price),0) as revenue,IFNULL(sum(orderdetail.orderqty),0) as qty_sold FROM products LEFT JOIN orderdetail ON orderdetail.product_id=products.id LEFT JOIN orderscustomer ON orderdetail.order_id=orderscustomer.id WHERE products.id='$product_id' GROUP BY month(orderscustomer.orderDate),month(orderscustomer.orderDate),products.id ";
+  $sqlProductInv="SELECT products.productName,IFNULL(DATE_Format(orderscustomer.orderDate,'%M-%Y'),'NOTSOLD') as monthorder,IFNULL(sum(orderdetail.orderqty*orderdetail.price),0) as revenue,IFNULL(sum(orderdetail.orderqty),0) as qty_sold FROM products LEFT JOIN orderdetail ON orderdetail.product_id=products.id LEFT JOIN orderscustomer ON orderdetail.order_id=orderscustomer.id WHERE products.id='$product_id' GROUP BY month(orderscustomer.orderDate),year(orderscustomer.orderDate),products.id ";
   $sqlProductInvdata=$data->sql($sqlProductInv,"read");
   $productData["productInven"]=  $sqlProductInvdata["data"];
+  $sqlProductInvdaily="SELECT products.productName,IFNULL(DATE_Format(orderscustomer.orderDate,'%d-%M-%Y'),'NOTSOLD') as monthorder,IFNULL(sum(orderdetail.orderqty*orderdetail.price),0) as revenue,IFNULL(sum(orderdetail.orderqty),0) as qty_sold FROM products LEFT JOIN orderdetail ON orderdetail.product_id=products.id LEFT JOIN orderscustomer ON orderdetail.order_id=orderscustomer.id WHERE products.id='$product_id' GROUP BY day(orderscustomer.orderDate),month(orderscustomer.orderDate),year(orderscustomer.orderDate),products.id ";
+  $sqlProductInvdatadaily=$data->sql($sqlProductInvdaily,"read");
+  $productData["productInvendaily"]=  $sqlProductInvdatadaily["data"];
 }
 echo json_encode($productData);
 
@@ -222,6 +225,14 @@ $productArray=$_POST;
  $productArray["keyword"]=$productName;
  unset($productArray['admin_id']);
  $data->updateData("products", $productArray,["id"=>"'$product_id'"]);
+ $productINCart="$product_id";
+ /*
+ select * FROM products LEFT JOIN carts ON carts.productID=products.id
+ LEFT JOIN orderdetail ON orderdetail.product_id=products.id
+*/
+
+
+
 
  echo json_encode(["msg"=>"Product Update Successfully","status"=>"success"]);
 

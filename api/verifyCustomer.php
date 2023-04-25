@@ -15,16 +15,16 @@ ob_start();
 if(!isset($status)){
      $userdata=file_get_contents("php://input");
            $userdata=json_decode($userdata,true);
-          $customer_id=$userdata["id"];
+          $customer_id=$userdata["mobile"];
 
   $insertStatus['message']='Customer Verified Successfully';
-  $useraddressdata=$data->getData("users",null,null,null,"id='$customer_id'",null,null,null);
+  $useraddressdata=$data->getData("users",null,null,null,"email='$customer_id'",null,null,null);
   $email=$useraddressdata["data"][0]["email"];
   $username=$useraddressdata["data"][0]["username"];
-  $message="OTP Has Been Verified Login Successfully";
+  $message="OTP Has Been Verified  Successfully";
   $subject="OTP Verification";
   sendMail($message,$email,$username,$subject);
-  $updatedata=  $data->updateData("users",['otp_verify'=>1,'otp'=>0],["id"=>"'$customer_id'"]);
+  $updatedata=  $data->updateData("users",['otp_verify'=>1,'otp'=>0],["email"=>"'$customer_id'"]);
 
   echo json_encode($insertStatus);
   

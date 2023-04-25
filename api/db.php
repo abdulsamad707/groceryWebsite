@@ -35,7 +35,7 @@ function getConnection(){
 function getData($table=null,$rows=null,$groupBy=null,$join=null,$whereCondition=null,string $orderBy=null,$limit=null,$operator=null){
 $db=$this->pdo;
                                  
-            
+
 
              if($rows==null){
              $rows="*";
@@ -74,8 +74,8 @@ $db=$this->pdo;
               
               }
               
-                   
-              
+ 
+   
    
 
                   
@@ -228,7 +228,7 @@ function updateData ($table,$params=array(),$whereCod=null){
     $row=implode(",",array_keys($row));
 
   echo  $wherCondition=implode($operator,$args);
-
+die();
  $datagiven=$this->getData($table,null,null,null, $wherCondition,null,null,null);
     return $datagiven["totalRecord"];
    }
