@@ -106,7 +106,11 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
         <input type='password' id='userPassword' name='password' placeholder='your password' class='box'>
         <p>forget your password <a href='#'>click here</a></p>
         <p>don't have an account <a href='#' class='reg-form'>create now</a></p>
+        <p> </p>
         <input type='submit' value='login now' class='btn-product' id='loginBTN'>
+
+        
+        <span id="loginError"></span>
     </form>
     <form action='' method='POST' class='login-form regForm' id='userregis'>
         <h3> Register Now</h3>
@@ -130,16 +134,19 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
     </form>
 </header>
 <script>
- function searchproduct(){
+ async function searchproduct(){
     let min = 1;
 let max = 10;
 let randomInt = Math.floor(Math.random() * (max - min + 1) + min);
 console.log(randomInt);
 console.log(Math.random());
  productName=document.getElementById('searchBox').value;
- setTimeout(async () => {
-    
- }, 3000);
 
+ if(productName!=""){
+ setTimeout(async () => {
+    displayProduct(productName);
+    console.log( productName+randomInt);
+ }, 3000);
+ }
  }
     </script>

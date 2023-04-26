@@ -57,9 +57,17 @@ if(isset($_GET["id"])){
   $groupby =" group by products.id";
 
 }else{
-
+           
   if($status==1){
-    $whereConduction="products.status='1'";
+    
+    if(isset($_GET["productName"]) && $_GET["productName"]!=""){
+      $productName=$_GET["productName"];
+      $whereConduction="products.productName LIKE '%$productName%' aND products.status='1' ";
+    }else{
+      $whereConduction="products.status='1' ";
+    }
+
+  
   }else{
    
     $vendor=$_GET['vendor'];

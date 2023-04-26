@@ -77,7 +77,7 @@ loginBTN.addEventListener("click", function(e) {
     }).then(function(response) {
         console.log(response);
 
-        if (response.key != undefined) {
+        if (response.key != undefined && response.code != 404) {
             loginForm.classList.remove('active');
             searchForm.classList.remove('active');
             shoppingCart.classList.remove('active');
@@ -95,6 +95,14 @@ loginBTN.addEventListener("click", function(e) {
 
             sessionStorage.setItem("key", response.key);
             displayIcon();
+        } else {
+
+            cartMSG = "<div class='alert alert-danger fade in alert-dismissible show'>";
+            cartMSG += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
+            cartMSG += "  <span aria-hidden='true' style='font-size:20px'>×</span>";
+            cartMSG += "</button><h2>" + response.message + "</h2>";
+            cartMSG += "</div>";
+            document.getElementById("loginError").innerHTML = cartMSG;
         }
 
 
@@ -204,7 +212,7 @@ verifyOtp.addEventListener("click", function(e) {
         cartMSG = "<div class='alert alert-danger fade in alert-dismissible show'>";
         cartMSG += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
         cartMSG += "  <span aria-hidden='true' style='font-size:20px'>×</span>";
-        cartMSG += "</button> Wrong OTP";
+        cartMSG += "</button><h2> Wrong OTP</h2>";
         cartMSG += "</div>";
         $("#msgdisplay").html(cartMSG);
 
@@ -664,10 +672,10 @@ DisplayCartItem();
 
 
 
-function displayProduct() {
+function displayProduct(productName = "") {
 
     searchItem = "";
-    apiurl = API_PATH + "products.php?key=" + APIKEY + "&status";
+    apiurl = API_PATH + "products.php?key=" + APIKEY + "&status&productName=" + productName;
     fetch(apiurl, {
         method: "GET"
     }).then(function(response) {

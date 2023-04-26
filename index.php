@@ -133,25 +133,7 @@ curl_close($curl);
  
         </div>
 
-        <div class="box">
-            <img src="image/cat-2.png" alt="">
-            <h3>fresh fruits</h3>
-       
-        </div>
-
-        <div class="box">
-            <img src="image/cat-3.png" alt="">
-            <h3>dairy products</h3>
-   
-           
-        </div>
-
-        <div class="box">
-            <img src="image/cat-4.png" alt="">
-            <h3>fresh meat</h3>
-       
-          
-        </div>
+  
 
     </div>
 
