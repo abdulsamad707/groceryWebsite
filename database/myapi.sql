@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2023 at 01:02 PM
+-- Generation Time: Apr 29, 2023 at 12:16 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `address`
 --
+
 CREATE TABLE `address` (
   `id_address` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
@@ -37,7 +38,8 @@ CREATE TABLE `address` (
 --
 
 INSERT INTO `address` (`id_address`, `address`, `user_id`) VALUES
-(1, 'D1 Islamic', 4);
+(1, 'D1 Islamic', 4),
+(2, 'samama', 8);
 
 -- --------------------------------------------------------
 
@@ -59,10 +61,10 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `mobile`, `username`, `password`, `role`, `added_on`) VALUES
-(1, '3357467403', 'admin', '$2y$12$Y2x9LNctpwXFv5yaAQbonOntXJQi3wn6NsvGj4JFan98VXe3V99X2', 0, '2023-03-29 19:46:23'),
+(1, '0335746403', 'admins', '$2y$12$Y2x9LNctpwXFv5yaAQbonOntXJQi3wn6NsvGj4JFan98VXe3V99X2', 0, '2023-04-27 22:57:12'),
 (2, '03357467403', 'vendoryousuf', '$2y$12$pcp6QQjLinxAaTuzMFIJDelhzoP6ID7OCgG8f9HbZdDD0wteVsOb.', 2, '2023-03-18 18:19:01'),
 (3, '03357467402', 'yousuf', '$2y$12$Y2x9LNctpwXFv5yaAQbonOntXJQi3wn6NsvGj4JFan98VXe3V99X2', 2, '2023-04-01 21:34:20'),
-(4, '03357467403', 'vendor', '$2y$12$uww5TSX74riu7IvjvIRoPukjjjBsdRwqba9vKWsjalmOWh67DEKdG', 2, '2023-03-22 20:30:11'),
+(4, '03357467403', 'vendor', '$2y$12$Y2x9LNctpwXFv5yaAQbonOntXJQi3wn6NsvGj4JFan98VXe3V99X2', 2, '2023-04-08 20:47:59'),
 (5, '03357568402', 'salmanvendor', '$2y$12$QAL3E/OfvK31FUyEuxtfqOY5iHj4IqcV.7uVcuH105QnncynNahta', 2, '2023-03-31 21:41:50');
 
 -- --------------------------------------------------------
@@ -324,7 +326,10 @@ INSERT INTO `assignorder` (`id`, `order_id`, `deliveryboyid`) VALUES
 (220, 6, 4),
 (221, 7, 4),
 (222, 8, 4),
-(223, 11, 2);
+(223, 11, 2),
+(224, 19, 4),
+(225, 18, 4),
+(226, 20, 4);
 
 -- --------------------------------------------------------
 
@@ -342,15 +347,6 @@ CREATE TABLE `carts` (
   `ip_add` varchar(255) NOT NULL,
   `cartadmin_ad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `userId`, `productID`, `userType`, `qty`, `price`, `ip_add`, `cartadmin_ad`) VALUES
-(1221, 4, 14, 'Reg', '1', '100', '::1', 0),
-(1222, 4, 15, 'Reg', '1', '100', '::1', 0),
-(1223, 4, 16, 'Reg', '1', '250', '::1', 0);
 
 -- --------------------------------------------------------
 
@@ -391,12 +387,9 @@ CREATE TABLE `deliveryboy` (
 --
 
 INSERT INTO `deliveryboy` (`id`, `mobile`, `username`, `location`, `password`, `added_on`, `busy`, `status`) VALUES
-(1, '923357467403', 'sarfaraz', '67.11000,24.9214', '$2y$12$Y2x9LNctpwXFv5yaAQbonOntXJQi3wn6NsvGj4JFan98VXe3V99X2', '2023-03-25 22:06:05', '1', 1),
-(2, '92331234567', 'samad', NULL, '$2y$12$Y2x9LNctpwXFv5yaAQbonOntXJQi3wn6NsvGj4JFan98VXe3V99X2', '2023-03-23 17:51:20', '0', 1),
-(3, '92331234567', 'yousufride', NULL, '$2y$12$Y2x9LNctpwXFv5yaAQbonOntXJQi3wn6NsvGj4JFan98VXe3V99X2', '2023-04-03 18:38:09', '0', 1),
-(4, '03357467403', 'fahim', NULL, '$2y$12$WWGfkb4nCTySxCPvE4UQ7.adMICiDXrCOckAfcnKzfUXh3asQPr.O', '2023-04-06 19:31:08', '0', 1),
-(6, '03357467345', 'riders', NULL, '$2y$12$gg2QqqG4mIbf2sG3qHP26.N5IOllHcz6tbG/HQIISye5yXM62y12u', '2023-04-06 18:10:18', '0', 1),
-(7, '03357467403', 'ridersNew', NULL, '$2y$12$vGKmVlVeqJIN1F7bpxpoIepkjNVHsW3tZTHZbiEHdCvhcBTca9fBu', '2023-04-06 19:31:32', '0', 1);
+(2, '92331234567', 'samad', NULL, '$2y$12$Y2x9LNctpwXFv5yaAQbonOntXJQi3wn6NsvGj4JFan98VXe3V99X2', '2023-04-12 18:10:21', '0', 0),
+(3, '92331234567', 'yousufride', NULL, '$2y$12$Y2x9LNctpwXFv5yaAQbonOntXJQi3wn6NsvGj4JFan98VXe3V99X2', '2023-04-18 21:14:36', '0', 0),
+(4, '0335746403', 'fahims', NULL, '$2y$12$uXFzExK3ZIjoTj1364U/ruHsnqX5n3pHumcQUM6IcgV/49Fycm9Xi', '2023-04-27 22:17:01', '0', 1);
 
 -- --------------------------------------------------------
 
@@ -420,15 +413,11 @@ CREATE TABLE `orderdetail` (
 
 INSERT INTO `orderdetail` (`id`, `product_id`, `qtyorder`, `price`, `user_id`, `order_id`, `orderqty`) VALUES
 (1, 6, 1, 100, 4, 1, 1),
-(2, 4, 1, 50, 4, 1, 1),
 (3, 3, 1, 120, 4, 1, 1),
 (4, 7, 1, 100, 4, 1, 1),
-(5, 8, 1, 100, 4, 1, 1),
-(6, 4, 1, 50, 4, 2, 1),
 (7, 3, 1, 120, 4, 2, 1),
 (8, 6, 1, 100, 4, 2, 1),
 (9, 7, 1, 100, 4, 2, 1),
-(10, 8, 1, 100, 4, 2, 1),
 (11, 9, 1, 1275, 4, 2, 1),
 (12, 10, 1, 300, 4, 2, 1),
 (13, 11, 1, 280, 4, 2, 1),
@@ -436,26 +425,19 @@ INSERT INTO `orderdetail` (`id`, `product_id`, `qtyorder`, `price`, `user_id`, `
 (16, 14, 1, 100, 4, 2, 1),
 (17, 15, 1, 100, 4, 2, 1),
 (18, 16, 1, 250, 4, 2, 1),
-(19, 2, 1, 30, 4, 2, 1),
-(20, 4, 1, 50, 4, 3, 0),
 (21, 3, 1, 120, 4, 3, 0),
 (22, 6, 1, 100, 4, 3, 0),
 (23, 7, 1, 100, 4, 3, 0),
-(24, 2, 1, 30, 4, 4, 1),
 (25, 3, 1, 120, 4, 4, 1),
 (26, 7, 1, 100, 4, 4, 1),
 (27, 6, 1, 100, 4, 4, 1),
 (28, 11, 1, 280, 4, 5, 1),
 (29, 10, 1, 300, 4, 5, 1),
 (30, 9, 1, 1275, 4, 5, 1),
-(32, 2, 1, 30, 4, 6, 1),
 (33, 3, 1, 120, 4, 6, 1),
-(34, 4, 1, 50, 4, 6, 1),
 (35, 3, 2, 120, 4, 7, 2),
-(36, 4, 2, 50, 4, 7, 2),
 (37, 6, 2, 100, 4, 7, 2),
 (38, 7, 2, 100, 4, 7, 2),
-(39, 8, 2, 100, 4, 7, 2),
 (40, 9, 2, 1275, 4, 7, 2),
 (41, 10, 2, 300, 4, 7, 2),
 (42, 11, 2, 280, 4, 7, 2),
@@ -464,7 +446,6 @@ INSERT INTO `orderdetail` (`id`, `product_id`, `qtyorder`, `price`, `user_id`, `
 (45, 14, 2, 100, 4, 7, 2),
 (46, 15, 2, 100, 4, 7, 2),
 (47, 16, 2, 250, 4, 7, 2),
-(48, 2, 2, 30, 4, 7, 2),
 (49, 9, 1, 1275, 4, 8, 1),
 (50, 10, 1, 300, 4, 8, 1),
 (51, 17, 1, 550, 4, 9, 1),
@@ -479,7 +460,42 @@ INSERT INTO `orderdetail` (`id`, `product_id`, `qtyorder`, `price`, `user_id`, `
 (60, 17, 2, 550, 4, 10, 2),
 (61, 6, 3, 100, 4, 11, 3),
 (62, 7, 3, 100, 4, 11, 3),
-(63, 4, 3, 50, 4, 11, 3);
+(64, 14, 1, 100, 4, 12, 1),
+(65, 15, 1, 100, 4, 12, 1),
+(66, 16, 1, 250, 4, 12, 1),
+(68, 18, 1, 100, 4, 12, 1),
+(69, 19, 1, 235, 4, 12, 1),
+(70, 17, 1, 550, 4, 12, 1),
+(71, 3, 1, 120, 4, 13, 1),
+(72, 3, 1, 120, 4, 13, 1),
+(73, 20, 1, 380, 4, 13, 1),
+(74, 19, 1, 235, 4, 13, 1),
+(75, 18, 1, 100, 4, 13, 1),
+(76, 3, 1, 120, 4, 14, 1),
+(78, 18, 1, 100, 8, 15, 1),
+(80, 3, 1, 120, 8, 15, 1),
+(81, 11, 3, 280, 4, 16, 3),
+(83, 7, 1, 100, 4, 16, 1),
+(84, 6, 1, 100, 4, 16, 1),
+(85, 9, 2, 1275, 4, 16, 2),
+(86, 10, 1, 300, 4, 16, 1),
+(87, 2, 4, 30, 4, 17, 4),
+(88, 9, 2, 1275, 8, 18, 2),
+(89, 16, 1, 250, 8, 18, 1),
+(90, 17, 1, 550, 8, 18, 1),
+(91, 2, 2, 30, 8, 18, 2),
+(92, 4, 1, 50, 8, 18, 1),
+(93, 6, 1, 100, 8, 18, 1),
+(94, 7, 1, 100, 8, 18, 1),
+(95, 2, 1, 30, 8, 19, 1),
+(96, 3, 1, 120, 8, 19, 1),
+(97, 2, 1, 30, 4, 20, 1),
+(98, 3, 1, 120, 4, 20, 1),
+(99, 7, 1, 100, 4, 20, 1),
+(100, 8, 1, 100, 4, 20, 1),
+(101, 18, 1, 100, 4, 20, 1),
+(102, 4, 1, 50, 4, 20, 1),
+(103, 6, 1, 100, 4, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -524,7 +540,16 @@ INSERT INTO `orderscustomer` (`id`, `userId`, `gst`, `totalAmount`, `cartTotal`,
 (8, 4, '142', '1847', '1575', '1', 5, 4, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'D1 Islamic', '2', '2023-04-02 22:06:57', 0, 9),
 (9, 4, '81', '1111', '900', '1', 5, 4, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'D1 Islamic', '3', '2023-04-03 05:27:06', 0, 9),
 (10, 4, '260', '3270', '2880', '1', 5, 4, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'D1 Islamic', '7', '2023-04-03 16:21:39', 0, 9),
-(11, 4, '68', '948', '750', '1', 5, 2, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'D1 Islamic', '3', '2023-04-06 18:56:09', 0, 9);
+(11, 4, '68', '948', '750', '1', 5, 2, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'D1 Islamic', '3', '2023-04-06 18:56:09', 0, 9),
+(12, 4, '123', '1618', '1365', '1', 5, 3, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'D1 Islamic', '7', '2023-04-07 14:14:01', 0, 9),
+(13, 4, '115', '1200', '955', '1', 5, 4, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'D1 Islamic', '5', '2023-04-12 18:05:56', 0, 12),
+(14, 4, '15', '265', '120', '1', 5, 4, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'D1 Islamic', '1', '2023-04-16 18:13:13', 0, 12),
+(15, 8, '27', '377', '220', '1', 5, 4, NULL, NULL, '130', 'cash', '0', 'No Coupon ', 'samama', '2', '2023-04-24 09:23:31', 0, 12),
+(16, 4, '467', '4487', '3890', '1', 5, 4, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'd1 ', '5', '2023-04-25 14:32:57', 0, 12),
+(17, 4, '15', '265', '120', '1', 5, 4, NULL, NULL, '130', 'cash', '0', 'No Coupon Code Applied', 'D1 Islamic', '1', '2023-04-25 14:36:54', 0, 12),
+(18, 8, '440', '4250', '3660', '1', 5, 4, NULL, NULL, '150', 'cash', '0', 'No Coupon Code Applied', 'samama', '7', '2023-04-28 11:44:18', 0, 12),
+(19, 8, '18', '318', '150', '1', 5, 4, NULL, NULL, '150', 'cash', '0', 'No Coupon Applied', 'samama', '2', '2023-04-28 11:44:09', 0, 12),
+(20, 4, '72', '822', '600', '1', 5, 4, NULL, NULL, '150', 'cash', '0', 'No Coupon Applied', 'D1 Islamic', '7', '2023-04-28 11:50:10', 0, 12);
 
 -- --------------------------------------------------------
 
@@ -574,7 +599,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `productName`, `productqty`, `keyword`, `price`, `status`, `added_on`, `image`, `admin_id`) VALUES
-(2, 'Potato', '173', 'Potato', '30', '1', '2023-04-06 20:51:11', 'productImage/potato.png', 1),
+(2, 'Potato', '2093', 'potatos,aloo', '30', '1', '2023-04-27 20:39:26', 'productImage/potato.png', 1),
 (3, 'Cabbage', '100', 'Cabbage', '120', '1', '2023-03-06 01:34:48', 'productImage/1676095070.png', 1),
 (4, 'Carrot', '100', 'Carrot', '50', '1', '2023-03-07 00:11:17', 'productImage/1676095337.png', 1),
 (6, 'Spanish', '253', 'Spanish', '100', '1', '2023-03-04 21:25:01', 'productImage/1677990301.jpg', 1),
@@ -587,9 +612,11 @@ INSERT INTO `products` (`id`, `productName`, `productqty`, `keyword`, `price`, `
 (13, 'Cocumber', '100', 'Cocumber', '70', '1', '2023-03-23 17:31:51', 'productImage/1679544017.jpg', 1),
 (14, 'Peas', '1000', 'Peas', '100', '1', '2023-03-22 22:54:27', 'productImage/1679550867.jpg', 4),
 (15, 'Beetroot', '1000', 'Beetroot', '100', '1', '2023-03-23 03:47:45', 'productImage/1679568465.jpg', 4),
-(16, 'Moong Daal', '1000', 'Moong Daal', '250', '1', '2023-03-25 22:23:42', 'productImage/1679808222.jpg', 4),
-(17, 'Tapal Mixture', '1000', 'Tapal Mixture', '550', '1', '2023-04-06 21:13:16', 'productImage/1680523676.jpg', 5),
-(18, 'Eggplant', '50', 'Eggplant', '100', '1', '2023-04-06 23:33:55', 'productImage/1680849234.jpg', 1);
+(16, 'Moong Daal', '1000', 'Moong Daal', '250', '0', '2023-04-25 23:07:14', 'productImage/1679808222.jpg', 4),
+(17, 'Tapal Mixture', '1000', 'Tapal Mixture', '550', '1', '2023-04-07 14:06:03', 'productImage/1680523676.jpg', 5),
+(18, 'Eggplant', '50', 'Eggplant', '100', '1', '2023-04-06 23:33:55', 'productImage/1680849234.jpg', 1),
+(19, 'Khala Chana', '2', 'Khala Chana', '235', '1', '2023-04-13 15:47:05', 'productImage/1680901863.jpg', 5),
+(20, 'White Channa', '2', 'white channa', '380', '1', '2023-04-09 22:41:12', 'productImage/1680992430.jpg', 5);
 
 -- --------------------------------------------------------
 
@@ -650,15 +677,16 @@ CREATE TABLE `setting` (
   `comapny_twitter` varchar(255) NOT NULL,
   `comapny_facebook` varchar(255) NOT NULL,
   `comapny_instragram` varchar(255) NOT NULL,
-  `company_linkend` varchar(255) NOT NULL
+  `company_linkend` varchar(255) NOT NULL,
+  `websiteName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `setting`
 --
 
-INSERT INTO `setting` (`id`, `deliveryCharge`, `webSiteStatus`, `gst`, `minOrder`, `deliverygst`, `company_mobile`, `company_email`, `comapny_twitter`, `comapny_facebook`, `comapny_instragram`, `company_linkend`) VALUES
-(1, '130', '1', '9', 100, 0, '3357467403', 'abdulsamadahsan@gmail.com', 'https://twitter.com/', 'https://facebook.com', 'https://instagram.com/', 'https://linkedin.com/');
+INSERT INTO `setting` (`id`, `deliveryCharge`, `webSiteStatus`, `gst`, `minOrder`, `deliverygst`, `company_mobile`, `company_email`, `comapny_twitter`, `comapny_facebook`, `comapny_instragram`, `company_linkend`, `websiteName`) VALUES
+(1, '150', '1', '12', 100, 0, '3357467403', 'abdulsamadahsan@gmail.com', 'https://twitter.com/', 'https://facebook.com', 'https://instagram.com/', 'https://linkedin.com/', 'VegSeller');
 
 -- --------------------------------------------------------
 
@@ -707,11 +735,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `mobile`, `password`, `email`, `status`, `added_on`, `otp`, `otp_verify`) VALUES
-(1, 'Waqar', '923323565866', '$2y$12$XjfNg5NtFNIFb9yvHnjWj.DYhfe/Hkiqg1jACDPHnuVCJslptn6ti', 'waqar@gmail.com', '1', '2023-03-28 16:42:35', 0, 0),
-(2, 'Asif', '923111234567', '$2y$12$vk7oiev9uNZyalIM2A3kw.91qmDtMOs877EG4dUVqpA1aSNiVgXKu', 'asif@gmail.com', '1', '2023-03-27 21:26:56', 0, 0),
-(3, 'Naseem', '923323565866', '$2y$12$nwe9ioJ14wNeJpdogG75c.rsYoSc57s235Ct7Wy1biNvc2J4B2lC6', 'ep19102077.naseem@gmail.com', '1', '2023-03-18 19:16:03', 0, 0),
-(4, 'Samad', '9234321462082', '$2y$12$WE4t32YSZwjzseH1q2LzXe/87gkz/V4.Y16h9YWcH2lLMtN6fngHm', 'abdulsamadahsan@gmail.com', '1', '2023-03-29 15:09:27', 0, 1),
-(5, 'ali', '9234321462092', '$2y$12$66pzbMzpfenwz94otnzLLuFodNccsQvAH30mDlA4RCwBLKFWAyaF6', 'ali@gmail.com', '1', '2023-03-18 19:16:09', 0, 0);
+(4, 'Samad', '9234321462082', '$2y$12$hiFRsvQijuGQgKMs/pnW7eXjW1fI5/uB0n9evVLtsmVOoTMKXUb4W', 'abdulsamadahsan@gmail.com', '1', '2023-04-28 11:47:16', 0, 1),
+(8, 'Asad', '923357467403', '$2y$12$gYH1YyduRKdyDgrd7uTLyO8IqE8rIgnKiG7IwZNt4P6xnQ6lxqqPC', 'syedabdultechnicalcop@gmail.com', '1', '2023-04-28 11:33:32', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -833,13 +858,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `id_address` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_address` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `apikey`
@@ -851,13 +876,13 @@ ALTER TABLE `apikey`
 -- AUTO_INCREMENT for table `assignorder`
 --
 ALTER TABLE `assignorder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1224;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1274;
 
 --
 -- AUTO_INCREMENT for table `couponcodes`
@@ -875,13 +900,13 @@ ALTER TABLE `deliveryboy`
 -- AUTO_INCREMENT for table `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `orderscustomer`
 --
 ALTER TABLE `orderscustomer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `productrating`
@@ -893,7 +918,7 @@ ALTER TABLE `productrating`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -923,7 +948,7 @@ ALTER TABLE `statusorder`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

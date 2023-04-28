@@ -140,20 +140,6 @@ $response=json_decode($response,true);
 
 ?>
 
-              <li class="list-group-item  d-flex justify-content-between bg-light">
-                    <div class="text-success">
-                        <h6 class="my-0">Promo code</h6>
-                        <?php
-if($response["cartTotal"]["couponCode"]==""){
-    $code="No Coupon Code Applied";
-}else{
-    $code=$response["cartTotal"]["couponCode"];
-}
-                        ?>
-                        <h2 id="couponcode"><?php echo $code;?></h2>
-                    </div>
-                 
-                </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <h1>Total Cart (Rs)</h1>
                     <h1 id="cartTotal"><?= $response["cartTotal"]["cartTotal"]; ?></h1>
@@ -261,7 +247,7 @@ if($response["cartTotal"]["couponCode"]==""){
 async function PlaceOrder(){
 
   var discount= document.getElementById("discount").innerText;
-  var couponcode= document.getElementById("couponcode").innerText;
+  var couponcode ="No Coupon Applied";
   discount=parseInt(discount);
 
 
@@ -398,7 +384,7 @@ async function applyCoupon() {
             document.getElementById("deliveryCharge").innerText = response.deliveryCharge;
             document.getElementById("finalAmount").innerText = response.totalAmount;
             document.getElementById("discount").innerText = response.discount;
-            document.getElementById("couponcode").innerText = response.couponCode;
+
             discount = response.discount;
             code = response.couponCode;
                  var cartDiscount={

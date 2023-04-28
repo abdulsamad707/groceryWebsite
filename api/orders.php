@@ -26,6 +26,21 @@ if (!isset($status)) {
 															$reqMetod = $_SERVER["REQUEST_METHOD"];
 	if ($reqMetod == "GET") {
 
+if(isset($_GET["customer_order"]) && $_GET["customer_order"]!=""  ){
+	$customer_id=$_GET["customer_order"];
+	$table = "orderscustomer";
+	$rows = "deliveryboyid,orderscustomer.cartTotal,orderscustomer.orderStatus as order_status, DATE_format(orderscustomer.orderDate,'%h:%i %p') as order_time,orderscustomer.gst,users.mobile as customer_mobile,users.username as customer_name,statusorder.status as OrderStatus,deliveryboy.username as rider_name,deliveryboy.mobile as rider_number,orderscustomer.id as orderID,date_format(orderDate,'%d-%M-%Y') as orderDate , totalAmount,deliveryCharge,deliveryAddress,paymentmethod,discount,couponCode,totalItem";
+	$join = "LEFT JOIN users on orderscustomer.userId=users.id LEFT JOIN  deliveryboy  on orderscustomer.deliveryboyid=deliveryboy.id  LEFT JOIN statusorder ON orderscustomer.orderStatus=statusorder.status_id";
+	$orderBy = "orderscustomer.id DESC";
+	$limit = null;
+	$whereCondition ="userId='$customer_id'" ;
+	$orderdata = $data->getData($table, $rows, null, $join, $whereCondition, $orderBy, $limit, null);
+	echo json_encode($orderdata);
+	return false;
+}
+
+
+
 		if(isset($_GET["orderDate"]) && $_GET["orderDate"]!="" && $_GET["rider_id"] ==0 ){
 		$orderDate=	$_GET["orderDate"];
 	     if(isset($_GET["orderId"]) &&  $_GET["orderId"]!=''){
@@ -63,9 +78,7 @@ if(isset($_GET["orderDate"]) && $_GET["orderDate"]=="" && $_GET["rider_id"] ==0 
 		 }
 }
 
-         if(isset($_REQUEST["customer_order"])){
-		$customer_id=$_REQUEST["customer_order"];
-		 }
+        
 		   if(isset($_GET["vendorType"])  &&  isset($_GET["rider_id"])  ){
 		$rider_id=$_GET["rider_id"];
                   if($rider_id > 0){

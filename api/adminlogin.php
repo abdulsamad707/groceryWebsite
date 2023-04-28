@@ -23,7 +23,7 @@ $productData=$data->getData('admins',null,null,null,$whereCondition,null,null,nu
 
   $username=$productData['data'][0]["username"];
     $dbpassword=$productData['data'][0]["password"];
-
+    $mobile=$productData['data'][0]["mobile"];
     $id=$productData['data'][0]["id"];
     $role=$productData['data'][0]["role"];
      if(isset($remember)){
@@ -51,6 +51,7 @@ $productData=$data->getData('admins',null,null,null,$whereCondition,null,null,nu
 "id"=>$id,
 "role"=>$role,
 "username"=>$productData['data'][0]["username"],
+"mobile"=> $mobile,
 'loginTime'=>$currentTime
         ];
         $jwt=  $data-> CreateToken($payload,'key');
@@ -74,7 +75,7 @@ $productData=$data->getData('admins',null,null,null,$whereCondition,null,null,nu
       $username=$productData['data'][0]["username"];
       $status=$productData['data'][0]["status"];
       $role=1;
-
+      $mobile=$productData['data'][0]["mobile"];
 
       if($status==1){
 
@@ -101,7 +102,8 @@ $productData=$data->getData('admins',null,null,null,$whereCondition,null,null,nu
  "id"=>$id,
  "role"=>$role,
  'loginTime'=>$currentTime,
-   "username"=>$username
+   "username"=>$username,
+   "mobile"=> $mobile
          ];
          $jwt=  $data-> CreateToken($payload,'key');
          $adminStatus["token"]=$jwt;

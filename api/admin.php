@@ -16,9 +16,9 @@ extract($userdata);
 $pass=password_hash($password,PASSWORD_BCRYPT,['cost'=>12]);
 
 if($admin_role==1){
-$data->updateData("deliveryboy",["password"=>$pass],["id"=>"'$admin_id'"]);
+$data->updateData("deliveryboy",["password"=>$pass,"username"=>$username,"mobile"=>$mobile],["id"=>"'$admin_id'"]);
 }else{
- $data->updateData("admins",["password"=>$pass],["id"=>"'$admin_id'"]);
+ $data->updateData("admins",["password"=>$pass,"username"=>$username,"mobile"=>$mobile],["id"=>"'$admin_id'"]);
 }
 ?>
 

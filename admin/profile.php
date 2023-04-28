@@ -172,7 +172,8 @@
         <script>
          /* bi bi-eye-slash*/
          role=parsedJwtData.role;
-
+console.log("dd"+parsedJwtData.mobile);
+ document.getElementById("phone_number").value=parsedJwtData.mobile;
 
 
       document.getElementById("fullName").value=parsedJwtData.username;

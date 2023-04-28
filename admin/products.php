@@ -76,10 +76,9 @@
                     <input class="form-control" type="file" id="formFile">
                   </div>
                 </div>
-                <label for="inputNumber" class=" col-form-label">Product Description</label>
-                <div class="quill-editor-full">
-                <p>Hello World!</p>
-                <p>This is Quill <strong>full</strong> editor</p>
+                <label for="inputNumber" class=" col-form-label">Product Key Word </label>
+                <div class="quill-editor-full"  id="productKeyWord">
+       
               </div>
 
                 <input type="text" hidden="true" class="form-control" id="id_product">
@@ -240,7 +239,7 @@ async  function  displayProduct(productName=""){
   const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23&vendor="+adminType+"&vendor_id="+id+"&productName="+productName);
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
-  console.log("helle"+Math.floor(Math.random()*10+1));
+  console.log("helle"+Math.floor(Math.random()*10+1));                                 
 let html="";
 if(jsonInventory.totalRecord > 0 ){
 jsonInventory.data.map((item,key)=>{
@@ -405,7 +404,7 @@ var available=document.getElementById("gridRadios1").checked;
   }
 
 requiredCheck=document.getElementById("formFile").required;
-
+productKeyWord=document.getElementById("productKeyWord").innerText;
 
     if(file==undefined && requiredCheck==true){
       displayMsg("Please Product Image",'error');
@@ -454,7 +453,7 @@ formData.append("productqty",qty);
 formData.append("price",price);
 formData.append("pid",productId);
 formData.append("productStatus",available);
-
+formData.append("keyword",productKeyWord);
 
 console.log(formData);
 const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23",

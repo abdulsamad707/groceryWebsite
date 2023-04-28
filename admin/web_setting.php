@@ -251,13 +251,14 @@
         
          
         
-        document.getElementById("fullName").value=parsedJwtData.username;
+        document.getElementById("fullName").value=settingData.data[0].websiteName;
             }   
          async  function submitSetting(){
 
   
     gst=document.getElementById('gst').value;
          deliveryCharge=document.getElementById("deliveryCharge").value;
+         WebsiteName=document.getElementById("fullName").value;
        linkedIn=document.getElementById("Linkedin").value;
         facebook = document.getElementById("Facebook").value;
     twitter=document.getElementById("Twitter").value;
@@ -281,7 +282,8 @@
             comapny_instragram:instrgam,
             comapny_twitter:twitter,
             comapny_facebook:facebook,
-            company_linkend:linkedIn
+            company_linkend:linkedIn,
+            websiteName:WebsiteName
         }
         settingObject=JSON.stringify(settingObject);
         console.log(settingObject);

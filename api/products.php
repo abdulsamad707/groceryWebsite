@@ -62,7 +62,7 @@ if(isset($_GET["id"])){
     
     if(isset($_GET["productName"]) && $_GET["productName"]!=""){
       $productName=$_GET["productName"];
-      $whereConduction="products.productName LIKE '%$productName%' aND products.status='1' ";
+      $whereConduction="products.productName LIKE '%$productName%' OR soundex(products.productName)=soundex('$productName') aND products.status='1' ";
     }else{
       $whereConduction="products.status='1' ";
     }
@@ -153,6 +153,8 @@ $productArray=$_POST;
    6-orderBy
    7-limit
    */
+
+  
   $whereConduction="products.productName='$productName'";
   $productData=$data->getData("products",null,null,null,$whereConduction,null,null,null);
  if( isset($productData['data'][0])){
@@ -230,13 +232,33 @@ $productArray=$_POST;
             unset($productArray['file']);
 
  $productArray["status"]=$status;
- $productArray["keyword"]=$productName;
+
+
+$sqlProduct="SELECT products.productqty,format(ifnull(AVG(productrating.rating),0),2) as rating,products.status,products.price,products.productName,products.id,concat('http://localhost/grocerywebsite/api/',products.image) as ProductImage,ifnull(sum(orderdetail.orderqty),0) as qty_sold, ifnull(products.productqty-(ifnull(sum(orderdetail.orderqty),0)),0) as qty_remaining,ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue from products left join orderdetail on orderdetail.product_id=products.id  left join productrating  ON productrating.product_id=products.id where products.id='$product_id' group by products.id";
+/*qty_remaining+products.productqty*/
+$sqlProductdata=$data->sql($sqlProduct,'read');
+ $qty_remaining=$sqlProductdata['data']['0']["qty_remaining"];
+$sqlProductCart="SELECT ifnull(sum(qty),0) as cartQty FROM carts where  productID= '$product_id'";
+
+$sqlProductCartdata=$data->sql($sqlProductCart,"read");
+
+$cartQty=$sqlProductCartdata["data"][0]['cartQty'];
+$qty_remaining=$qty_remaining-$cartQty;
+$productArray["productqty"]=$productArray["productqty"]+$qty_remaining;
+
+/*productqty
+  */
+
  unset($productArray['admin_id']);
  $data->updateData("products", $productArray,["id"=>"'$product_id'"]);
  $productINCart="$product_id";
  /*
  select * FROM products LEFT JOIN carts ON carts.productID=products.id
  LEFT JOIN orderdetail ON orderdetail.product_id=products.id
+
+
+
+
 */
 
 
@@ -253,6 +275,7 @@ $productArray=$_POST;
 }
 }
 catch (Exception $e) {
+ 
   echo json_encode(["msg"=>"Server Error","status"=>"error"]);
 }
 

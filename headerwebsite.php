@@ -104,8 +104,8 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
         <h3>login now</h3>
         <input type='email' name='email' id='userEmail' placeholder='your email' class='box'>
         <input type='password' id='userPassword' name='password' placeholder='your password' class='box'>
-        <p>forget your password <a href='#'>click here</a></p>
-        <p>don't have an account <a href='#' class='reg-form'>create now</a></p>
+        <p>forget your password <a href='javascript:void(0)'   class='forget-form'>click here</a></p>
+        <p>don't have an account <a href='javascript:void(0)' class='reg-form'>create now</a></p>
         <p> </p>
         <input type='submit' value='login now' class='btn-product' id='loginBTN'>
 
@@ -122,6 +122,25 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
        
         <input type='submit' value='Register now' id='register' class='btn' >
     </form>
+    <form action='' method='POST' class='login-form regForm' id='forgotPassword'>
+        <h3>Forgot Password</h3>
+        <div id='Error'><span><span id='ErrorMsg'class='errorHeading'>Please Enter Correct Email Address</span></span> </div>
+        <input type='email' id='ForgotEmail' placeholder='your email' name='email' class='box'>
+
+        <input type='password' id='ForgotPassword' name='password' placeholder='your new password' class='box'>
+        <input type='text' id='ForgotOTP' name='mobile' placeholder='OTP' class='box'>
+      
+ 
+        <input type='button' value='SEND OTP' id='forgot' class='btn'>
+     
+  
+        <input type='button' value='Forgot Password' id='passForgot' class='btn'>
+  
+
+
+      
+    </form>
+
     <form action='' method='POST' class='login-form regForm' id='loginOTP'>
         <h3> Verify OTP</h3>
         <div id='Error'><span><span id='ErrorMsg'class='errorHeading'>Please Enter Correct Email Address</span></span> </div>
@@ -134,6 +153,7 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
     </form>
 </header>
 <script>
+
  async function searchproduct(){
     let min = 1;
 let max = 10;
@@ -143,10 +163,10 @@ console.log(Math.random());
  productName=document.getElementById('searchBox').value;
 
  if(productName!=""){
- setTimeout(async () => {
+
     displayProduct(productName);
     console.log( productName+randomInt);
- }, 3000);
+
  }
  }
     </script>

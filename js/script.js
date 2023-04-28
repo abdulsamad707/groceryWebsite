@@ -3,22 +3,47 @@ var searchForm = document.querySelector('.search-form');
 var shoppingCart = document.querySelector('.shopping-cart');
 var loginForm = document.querySelector('.login-form');
 var regForm = document.querySelector('.reg-form');
+var forgotForm = document.querySelector('.forget-form');
 var regFormdata = document.querySelector('.regForm');
 var loginOTP = document.querySelector('#loginOTP');
 var navbar = document.querySelector('.navbar');
+var forgetPass = document.querySelector('#forgotPassword');
+var forgot = document.getElementById("forgot");
+
+function forgetKey() {
+    loginForm.classList.remove('active');
+    searchForm.classList.remove('active');
+    shoppingCart.classList.remove('active');
+    navbar.classList.remove('active');
+    regFormdata.classList.remove('active');
+    loginOTP.classList.remove("active");
+    forgetPass.classList.toggle('active');
+    console.log("kTY");
+    forgetPass.classList.remove('active');
+
+}
 document.querySelector('#search-btn').onclick = () => {
     searchForm.classList.toggle('active');
     shoppingCart.classList.remove('active');
     loginForm.classList.remove('active');
     navbar.classList.remove('active');
     regFormdata.classList.remove('active');
+    forgetPass.classList.remove('active');
 }
 regForm.onclick = () => {
     shoppingCart.classList.remove('active');
     loginForm.classList.remove('active');
     navbar.classList.remove('active');
     searchForm.classList.remove('active');
+    forgetPass.classList.remove('active');
     regFormdata.classList.toggle('active');
+}
+forgotForm.onclick = () => {
+    shoppingCart.classList.remove('active');
+    loginForm.classList.remove('active');
+    navbar.classList.remove('active');
+    searchForm.classList.remove('active');
+    forgetPass.classList.toggle('active');
 }
 
 
@@ -38,6 +63,7 @@ document.querySelector('#menu-btn').onclick = () => {
     shoppingCart.classList.remove('active');
     loginForm.classList.remove('active');
     regFormdata.classList.remove('active');
+    forgetPass.classList.remove('active');
 }
 
 window.onscroll = () => {
@@ -45,12 +71,64 @@ window.onscroll = () => {
     shoppingCart.classList.remove('active');
     loginForm.classList.remove('active');
     navbar.classList.remove('active');
+    forgetPass.classList.remove('active');
+
 }
 $("#SubmitBtn").click(function(e) {
 
 });
-
 loginBTN = document.getElementById("loginBTN");
+ForgetBTN = document.getElementById("forgot");
+cHANGEBTN = document.getElementById("passForgot");
+cHANGEBTN.addEventListener("click", function(e) {
+
+    email = document.getElementById("ForgotEmail").value;
+    forgtPas = document.getElementById("ForgotPassword").value;
+    otp = document.getElementById("ForgotOTP").value;
+
+
+    apiurl = "http://localhost/groceryWebsite/api/resetpassword.php?key=" + APIKEY;
+    loginObj = {
+        email: email,
+        pass: forgtPas,
+        otp: otp
+    };
+    loginObj = JSON.stringify(loginObj);
+    fetch(apiurl, {
+        method: "POST",
+        body: loginObj
+    }).then(function(res) {
+
+        return res.text();
+    }).then(function(response) {
+        console.log(response);
+    });
+
+
+});
+ForgetBTN.addEventListener("click", function(e) {
+    apiurl = "http://localhost/groceryWebsite/api/reset.php?key=" + APIKEY;
+
+    email = document.getElementById("ForgotEmail").value;
+    console.log(email);
+    loginObj = {
+        email: email
+
+    };
+
+    loginObj = JSON.stringify(loginObj);
+    fetch(apiurl, {
+        method: "POST",
+        body: loginObj
+    }).then(function(res) {
+
+        return res.text();
+    }).then(function(response) {
+        console.log(response);
+    });
+
+
+});
 loginBTN.addEventListener("click", function(e) {
 
 
@@ -95,6 +173,7 @@ loginBTN.addEventListener("click", function(e) {
 
             sessionStorage.setItem("key", response.key);
             displayIcon();
+            websiteLink();
         } else {
 
             cartMSG = "<div class='alert alert-danger fade in alert-dismissible show'>";
@@ -134,6 +213,7 @@ function login() {
     navbar.classList.remove('active');
     regFormdata.classList.remove('active');
     loginOTP.classList.remove("active");
+    forgetPass.classList.remove('active');
     console.log("hi");
 }
 
@@ -149,6 +229,7 @@ function displayIcon() {
     } else {
         htmlCart = "  <div class='fas fa-user' id='loginout' onclick=login()></div>";
     }
+
     htmlCart += " <div class='cart-icon'>";
     htmlCart += " <i class='fas fa-shopping-cart' onclick=cart()   ></i>";
     htmlCart += " <span class='cart-count' id='numberofcart'></span>";
@@ -162,6 +243,7 @@ function logout() {
     window.location.href = "index.php";
     displayIcon();
     DisplayCartItem();
+    websiteLink();
 }
 
 
@@ -182,6 +264,10 @@ async function verifyOTP(id) {
         method: "POST",
         body: loginObj
     });
+}
+
+function updateOTP(customerid) {
+    console.log(customerid);
 }
 registerComplete = document.getElementById("register");
 verifyOne = document.getElementById("verifyOtp");
@@ -204,10 +290,13 @@ verifyOtp.addEventListener("click", function(e) {
     user_id = parsedJwtData.id;
     if (dataOtp == verifyOne) {
         verifyOTP(user_id);
+        updateOTP(user_id);
         localStorage.setItem("key", token);
         setTimeout(() => {
             loginOTP.classList.remove("active");
         }, 1000);
+
+
     } else {
         cartMSG = "<div class='alert alert-danger fade in alert-dismissible show'>";
         cartMSG += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
@@ -223,8 +312,10 @@ verifyOtp.addEventListener("click", function(e) {
     */
     displayIcon();
     DisplayCartItem();
-
+    websiteLink();
 });
+
+
 registerComplete.addEventListener("click", function(e) {
     e.preventDefault();
     console.log(e);
@@ -749,8 +840,6 @@ function displayProduct(productName = "") {
 }
 displayProduct();
 
-
-
 async function cartCheckout() {
     /*
         localStorage.setItem("carts", JSON.stringify(cartData));
@@ -887,6 +976,9 @@ async function cartCheckout() {
 
 
 cartCheckout();
+
+
+
 
 function increaseQty(qty, product_id) {
     qty = parseInt(qty);
@@ -1070,5 +1162,15 @@ function websiteLink() {
     const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
     const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
     const parsedJwtData = JSON.parse(decodedJwtData);
+    if (jwtToken != undefined) {
+        $("#navBar").append("<a href='myorder.php'>My Order</a>");
+    } else {
+
+    }
+    console.log();
+
+
 }
+
+
 websiteLink();
