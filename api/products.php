@@ -211,10 +211,7 @@ $productArray=$_POST;
                 $file_destination = 'productImage/' . $file_name_new;
               if (move_uploaded_file($file_tmp, $file_destination)) {
           
-                if (file_exists($prveImag)) {
-                  unlink($prveImag);
-            
-              }
+          
 
 
               

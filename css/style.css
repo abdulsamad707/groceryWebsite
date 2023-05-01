@@ -168,6 +168,10 @@ section {
     color: var(--orange);
 }
 
+.home .content h1 {
+    color: var(--orange);
+}
+
 .header .shopping-cart {
     position: absolute;
     top: 110%;

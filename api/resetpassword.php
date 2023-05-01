@@ -47,12 +47,12 @@ if(isset($userDataformbase["data"][0])){
  
   $password=password_hash($pass,PASSWORD_BCRYPT,['cost'=>12]);
  $data->updateData("users",["otp"=>0,"password"=>$password],["email"=>"'$email'"]);
-    echo json_encode(["message"=>"Password Change Successfully","key"=>" ","code"=>200,"status"=>"success"]);
+    echo json_encode(["message"=>"Password Change Successfully","code"=>200,"status"=>"success"]);
       }else{
-        echo json_encode(["message"=>"Invalid OTP","key"=>" ","code"=>404,"status"=>"error"]);
+        echo json_encode(["message"=>"Invalid OTP","code"=>404,"status"=>"error"]);
       }
 }else{
-    echo json_encode(["message"=>"User Not Register","key"=>" ","code"=>404,"status"=>"error"]);
+    echo json_encode(["message"=>"User Not Register","code"=>404,"status"=>"error"]);
 }
 
 

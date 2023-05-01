@@ -137,12 +137,12 @@ $productImage=$value['image'];
          
              <div class="row">
              <div class="col-md-6">
-                <button class="btn btn-primary btn-lg btn-block" id="placeOrder"  onclick='checkout()'  type="button">Proceed To Checkout</button>
+                <button class="btn  btn-lg btn-block" id="placeOrder"  onclick='checkout()'  type="button">Proceed To Checkout</button>
 
                 </div>
                 <div class="col-md-6">
 
-                <button class="btn  btn-primary btn-block" id="backButton" type="button" onclick="backtoHome()">Back To Shopping</button>
+                <button class="btn   btn-block" id="backButton" type="button" onclick="backtoHome()">Back To Shopping</button>
            </div>
             </div>
             <?php

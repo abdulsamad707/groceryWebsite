@@ -230,7 +230,7 @@ $response=json_decode($response,true);
                     <p id="errorMsg">
        
 </p>
-                    <button class="btn  btn-primary btn-block" id="backButton" type="button" onclick="backtoHome()">Back To Shopping</button>
+                    <button class="btn   btn-block" id="backButton" type="button" onclick="backtoHome()">Back To Shopping</button>
                     <button class="btn  btn-lg btn-block" id="placeOrder"  onclick="PlaceOrder()"  type="button">Place Order</button>
                 </form>
             </div>

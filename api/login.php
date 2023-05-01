@@ -88,7 +88,7 @@ $data->updateData("users",["otp"=>$otp,"otp_verify"=>0],["id"=>"'$customer_id'"]
 
 
 }else{
-echo json_encode(["message"=>"Invalid Credential","key"=>" ","code"=>404,"status"=>"error"]);
+echo json_encode(["message"=>"Invalid Credentials","key"=>" ","code"=>404,"status"=>"error"]);
 
 }
 

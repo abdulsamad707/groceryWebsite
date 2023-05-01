@@ -343,14 +343,7 @@ registerComplete.addEventListener("click", function(e) {
     if (!EmailPattern.test(EmailAddress)) {
         swal('Oops', 'Wrong Email Format ', 'error');
     }
-    if (!PassWordPattern.test(UserPassword)) {
-
-        swal('Oops', 'Wrong Password Format Must Contain Special Character And AlphaNumeric', 'error');
-
-
-        return false;
-    }
-
+ 
 
     var formData = new FormData();
     formData.append('email', EmailAddress);

@@ -12,7 +12,7 @@
 
     <div class="content">
 
-        <p>My Order </p>
+        <h1>My Order </h1>
 
     </div>
 

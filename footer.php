@@ -4,7 +4,7 @@
 
         <div class="box">
             <h3> groco <i class="fas fa-shopping-basket"></i> </h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam, saepe.</p>
+            <p>Eat your veggies and you will grow up big and strong ! shop fresh and flavorful produce at our online market</p>
             <div class="share">
                 <a href="" class="fab fa-facebook-f"></a>
                 <a href="#" class="fab fa-twitter"></a>

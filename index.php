@@ -9,7 +9,7 @@ include("apiCredential.php");
 
     <div class="content">
         <h3>fresh and <span>organic</span> products for your</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam libero nostrum veniam facere tempore nisi.</p>
+        <p></p>
         <a href="#" class="btn">shop now</a>
     </div>
 
@@ -28,7 +28,7 @@ include("apiCredential.php");
         <div class="box">
             <img src="image/feature-img-1.png" alt="">
             <h3>fresh and organic</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
+            <p>We ae poviding best quality vegetables at home </p>
 
         </div>
 
@@ -42,7 +42,7 @@ include("apiCredential.php");
         <div class="box">
             <img src="image/feature-img-3.png" alt="">
             <h3>easy payments</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
+            <p>Easy And Secure payments</p>
        
         </div>
 
@@ -209,3 +209,4 @@ curl_close($curl);
 
 <!-- footer section starts  -->
 
+            

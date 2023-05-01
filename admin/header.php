@@ -445,8 +445,6 @@ console.log( parsedJwtData );
     document.getElementById("adminTitle").innerText=  username;
     document.getElementById("sidebar-nav").innerHTML=   LINK;
 
-    console.log(LINK);        
-
 
 
 </script>
