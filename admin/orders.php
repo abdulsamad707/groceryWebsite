@@ -75,8 +75,7 @@
 
 
              </span></p>
-             <p>  Coupon Code :<span id="coupon_code"></span></p>
-             <p>  Discount :<span id="discount"></span></p>
+        
              <p>  GST paid :<span id="gst"></span></p>
              <table class="table table-borderless"">
              
@@ -435,9 +434,9 @@ document.getElementById("rider_number").innerText=RiderNumber;
 document.getElementById("rider_name").innerText=RiderName;
 document.getElementById("orderStatusBtn").className=OrderStatusClass;
 document.getElementById("orderStatusBtn").innerText=Order_Status;
-document.getElementById("coupon_code").innerText=jsonInventory.data[0].couponCode;
+
 document.getElementById("gst").innerText=jsonInventory.data[0].gst+" Rs";
-document.getElementById("discount").innerText=jsonInventory.data[0].discount+" Rs";
+
 document.getElementById("cart_total").innerText=jsonInventory.data[0].cartTotal+"Rs";
 document.getElementById("deliveryCharge").innerText=deliveryCharge;
 
@@ -476,8 +475,7 @@ content: [
   {text:"Customer Name :"+jsonInventory.data[0].customer_name},
   {text:"Customer Number :"+jsonInventory.data[0].customer_mobile},
   {text:"Delivery Address :"+jsonInventory.data[0].deliveryAddress},
-  {text:"Coupon Code :"+  CouponApply},
-  {text:"Discount :"+  discount+" Rs"},
+
   {text:"Gst :"+jsonInventory.data[0].gst+" Rs"},
   {text:"Order Amount :"+jsonInventory.data[0].totalAmount+" Rs"},
   {text:"Cart Total :"+jsonInventory.data[0].cartTotal+" Rs"},

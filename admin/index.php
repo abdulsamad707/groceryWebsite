@@ -36,10 +36,11 @@ $total_vendor=0;
 $vendorEarningsTotal=vendorEarningsTotal();
 
 $vendorEarning= vendorEarnings();
+$totalvendor=0;
 
 
 
-extract($vendorEarning);
+
    }
    if($role==1){
     $inventoryType="rider";
@@ -70,9 +71,9 @@ extract($inventory);
 
 
  
- $totalEarn=0;
 
- $totalEarn;
+
+ $totalEarn=0;
       }
       if($role==2){
 
@@ -100,6 +101,13 @@ extract($inventory);
       $perText="increase";
     }
 
+   if (isset($vendorEarning["totalEarn"])){
+    $vendorEarnings=$vendorEarning["totalEarn"];
+    $totalvendor=$vendorEarning["totalvendor"];
+   }else{
+    $vendorEarnings=0;
+    $totalvendor=0;
+   }
  
     $previousMonthItemSold;
   }
@@ -161,7 +169,7 @@ extract($inventory);
                   <div class="d-flex align-items-center">
                  
                     <div class="ps-3">
-                      <h6><?= $currentMonthEarning-0; ?> PKR</h6>
+                      <h6><?= $currentMonthEarning-  $vendorEarnings; ?> PKR</h6>
                     
 
                     </div>
@@ -232,7 +240,7 @@ extract($inventory);
     
       </div>
       <div class="ps-3">
-        <h6><?= $currentMonthEarning-$vendorEarning["totalEarn"];?> Rs </h6>
+        <h6><?= $currentMonthEarning-$vendorEarnings;?> Rs </h6>
         <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
 
       </div>
@@ -540,8 +548,21 @@ inventoryEarningDaily.push(value.Earning);
 
 
                 <div class="card-body">
-                  <h5 class="card-title">Earning(Company)</h5>
+                  <?php 
+                if($role==0){
 
+                  ?>
+                    <h5 class="card-title">Earning(Company)</h5>
+                  <?php 
+                }else{
+                  ?>
+                       <h5 class="card-title">Earning</h5>
+                  <?php
+                }
+                  ?>
+                
+             
+            
                
                   <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">

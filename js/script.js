@@ -343,7 +343,7 @@ registerComplete.addEventListener("click", function(e) {
     if (!EmailPattern.test(EmailAddress)) {
         swal('Oops', 'Wrong Email Format ', 'error');
     }
- 
+
 
     var formData = new FormData();
     formData.append('email', EmailAddress);
@@ -371,15 +371,15 @@ registerComplete.addEventListener("click", function(e) {
             console.log(formData);
         */
 
-    urlReg = "http://localhost/groceryWebsite/api/userregister.php?key=avdfheuw23";
+    urlReg = API_PATH + "userregister.php?key=avdfheuw23";
     fetch(urlReg, {
         method: "POST",
         body: formData
     }).then(function(response) {
-        return response.text();
+        return response.json();
     }).then(function(json) {
         console.log(json);
-        return false;
+
         var code = json.code;
         var http_code = json.http_code;
 
@@ -401,6 +401,7 @@ registerComplete.addEventListener("click", function(e) {
 });
 
 /*
+ed9rX%590
 $('#register').click(function(e){
 e.preventDefault();
 let data=$('#userregis').serializeArray();

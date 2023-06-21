@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Order</title>
 </head>
 <body>
     <?php include "headerwebsite.php"?>
@@ -57,6 +57,8 @@
 <script>
 
 function myOrder() {
+  /*$na71l5G4*/
+  
     jwtToken = localStorage.getItem("key");
     const jwt = jwtToken;
 
@@ -134,8 +136,7 @@ content: [
   {text:"Customer Name :"+jsonInventory.data[0].customer_name},
   {text:"Customer Number :"+jsonInventory.data[0].customer_mobile},
   {text:"Delivery Address :"+jsonInventory.data[0].deliveryAddress},
-  {text:"Coupon Code :"+  CouponApply},
-  {text:"Discount :"+  discount+" Rs"},
+
   {text:"Gst :"+jsonInventory.data[0].gst+" Rs"},
   {text:"Order Amount :"+jsonInventory.data[0].totalAmount+" Rs"},
   {text:"Cart Total :"+jsonInventory.data[0].cartTotal+" Rs"},

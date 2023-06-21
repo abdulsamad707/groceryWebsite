@@ -12,32 +12,38 @@ $userdata=json_decode($userdata,true);
 include("validkey.php");
 $admindata=$userdata;
 
-unset($admindata["password"]);
 
-$row=$admindata;
+extract($userdata);
+if($role==1){
+    $sql="select * from deliveryboy where username='$username'";
+   $dataFound= $data->sql($sql,"read");
 
-
-unset($row['passwoord']);
-if($userdata["role"]==1){
-    unset($row["role"]);
-    $totolRecord=$data->checkRecord("deliveryboy",$row," AND ");
-}else{
-    $totolRecord=$data->checkRecord("admins",$row," AND ");
-}
-
-
-$userdata["password"]=password_hash($userdata["password"],PASSWORD_BCRYPT,['cost'=>12]);
-
-if($totolRecord==0){
-    if($userdata["role"]==1){
-        unset($userdata["role"]);
-        $userdata["status"]=1;
-        $userdata["busy"]=0;
-     $data->insert("deliveryboy",$userdata);
-    }else{
-        $data->insert("admins",$userdata);
+echo $totalRecord=$dataFound["totalRecord"];
+    if($totalRecord==0){
+        $userReg["password"]=password_hash($password,PASSWORD_BCRYPT,['cost'=>12]);
+        $userReg["username"]=$username;
+        $userReg["busy"]=0;
+        $userReg["status"]=1;
+        $userReg["mobile"]=$mobile;
+ 
+        $data->insert("deliveryboy",$userReg);
     }
+}else{
+    $sql="select * from admins where username='$username'";
+   $dataFound= $data->sql($sql,"read");
 
+
+    if($totalRecord==0){
+        $userReg["password"]=password_hash($password,PASSWORD_BCRYPT,['cost'=>12]);
+        $userReg["username"]=$username;
+       
+        $userReg["role"]=$role;
+        $userReg["mobile"]=$mobile;
+ 
+        $data->insert("admins",$userReg);
+    }
 }
+
+
 
 ?>

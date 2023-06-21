@@ -165,7 +165,7 @@ function numberofvendor(){
 function numberofproducts(){
    $totalEarningapi="products.php?vendor=admin";
    $totalEarningapi=getDataFromApi($totalEarningapi,2);
-print_r(   $totalEarningapi);
+
  
    return $totalEarningapi;
 }

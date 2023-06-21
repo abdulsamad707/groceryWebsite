@@ -6,7 +6,7 @@ header('Access-Control-Allow-Headers:Access-Control-Allow-Headers,Content-Type,A
 /*
 $sql="DATE_format(orderDate,'%Y-%m') =DATE_FORMAT(CURRENT_DATE,'%Y-%m')";
 */
-$sql="select  count(orderdetail.product_id) as product_sold, DATE_Format(orderscustomer.orderDate,'%M-%Y') as monthyear,SUM(orderdetail.price*orderdetail.orderqty) as earning,admins.username,admins.mobile FROM orderdetail INNER JOIN orderscustomer ON orderdetail.order_id=orderscustomer.id";
+$sql="select  count(orderdetail.product_id) as product_sold, DATE_Format(orderscustomer.orderDate,'%M-%Y') as monthyear,ifnull(SUM(orderdetail.price*orderdetail.orderqty),0) as earning,admins.username,admins.mobile FROM orderdetail INNER JOIN orderscustomer ON orderdetail.order_id=orderscustomer.id";
 $sql.=" INNER JOIN products ON products.id=orderdetail.product_id";
 $sql.=" INNER JOIN admins ON admins.id=products.admin_id ";
 if(isset($_GET['earntype'])){
@@ -26,12 +26,19 @@ if(!$vendor["data"][0]){
 }
 $totalVendor=$vendor["totalRecord"];
 $product_sold_total=0;
+if(isset($vendor["data"][0])){
 foreach($vendor["data"] as $val){
     $vendorearntotal=$vendorearntotal+$val['earning'];
     $product_sold_total=$product_sold_total+$val["product_sold"];
 }
+}else{
+    $vendorearntotal=0; 
+}
 if(isset($_GET['earntype'])){
 $vendorearning["totalEarn"]=$vendorearntotal;
+
+
+
 }else{
     $vendorearning["totalEarns"]=$vendorearntotal;
 }

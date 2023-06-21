@@ -42,12 +42,12 @@ $posttye=$_SERVER['REQUEST_METHOD'];
               
               //Load Composer's autoloader
               $html="";
-      $html.="<br> Thanks For Register With Us Please  Verify Your Email At <a href='http://localhost/grocerywebsite/verify.html?token=$rdStr&mobile=$mobile'> verify  </a> ";
+      $html.="<br> Thanks For Register With Us Please  Verify Your Email At  ";
          $email_message="Your Otp is $otp ".$html;
             $subject="Verification Code";
 
         $number="+".$mobile;
-        $message="Thanks For Registration $username Your OTP is ".$otp."Regards IAD Project Grocery PK";
+        $message="Thanks For Registration $username  Regards Vege Seller";
    /*    $json= SendSms($number,$message);*/
    $sendMailer= sendMail($message,$email,$username,$subject);
 
@@ -60,6 +60,7 @@ $posttye=$_SERVER['REQUEST_METHOD'];
             'username'=>$username,'password'=>$password,'otp'=>$otp,'otp_verify'=>0];
            $insertStatus=$data->insert('users',$insertData);
            $insertStatus['http_code']=200;
+           $insertStatus['message']=' User Register Successfully';
            $insertStatus['operationStatus']="success";
          }else{
           $insertStatus['message']=' User Not Register Due To Internet Connection';
