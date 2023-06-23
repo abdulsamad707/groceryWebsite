@@ -7,7 +7,7 @@ function sendMail($message,$email,$username,$subject){
     include "smtp.php";
     $mail = new PHPMailer;
 
-    $mail->setFrom('abdulsamadahsan@gmail.com', 'Sender Name');
+    $mail->setFrom('abdulsamadahsan@gmail.com', 'Vege Seller');
 $mail->addAddress($email, 'Recipient Name');
 $mail->Subject = $subject;
 $mail->Body =$message;
@@ -22,7 +22,7 @@ $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 $mail->Port = 587; 
 
 if(!$mail->send()) {
-    echo 'Error sending email: ' . $mail->ErrorInfo;
+return 0;
 } else {
  return 1;
 }

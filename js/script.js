@@ -98,10 +98,12 @@ cHANGEBTN.addEventListener("click", function(e) {
         method: "POST",
         body: loginObj
     }).then(function(res) {
-
+        swal("Great Job", "Password Change", "success");
         return res.text();
     }).then(function(response) {
         console.log(response);
+        loginForm.classList.toggle('active');
+        regFormdata.classList.remove('active');
     });
 
 
@@ -121,8 +123,8 @@ ForgetBTN.addEventListener("click", function(e) {
         method: "POST",
         body: loginObj
     }).then(function(res) {
-
-        return res.text();
+        swal("Great Job", "Otp For Change Password Sent to Your Email", "success");
+        return res.json();
     }).then(function(response) {
         console.log(response);
     });
@@ -208,10 +210,11 @@ loginBTN.addEventListener("click", function(e) {
 
 function login() {
     loginForm.classList.toggle('active');
+    regFormdata.classList.remove('active');
     searchForm.classList.remove('active');
     shoppingCart.classList.remove('active');
     navbar.classList.remove('active');
-    regFormdata.classList.remove('active');
+
     loginOTP.classList.remove("active");
     forgetPass.classList.remove('active');
     console.log("hi");
@@ -390,6 +393,9 @@ registerComplete.addEventListener("click", function(e) {
             var msg = json.message;
             if (operation === "success") {
                 swal("Good job!", msg, operation);
+                loginForm.classList.toggle('active');
+                regFormdata.classList.remove('active');
+
             } else {
                 swal("Oops!", msg, operation);
             }
@@ -899,71 +905,74 @@ async function cartCheckout() {
             window.location.href = "index.php";
             return false;
 
-        }
-        const jwt = jwtToken;
-        const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
-        const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
-        const parsedJwtData = JSON.parse(decodedJwtData);
-        cartData = await cartDetail(0, "");
-
-        localStorage.setItem("carts", JSON.stringify(cartData.data));
-        localStorage.setItem("cartTotal", JSON.stringify(cartData.cartTotal));
-        document.getElementById("customerName").value = parsedJwtData.username;
-        document.getElementById("email").value = parsedJwtData.email;
-        document.getElementById("address2").value = parsedJwtData.mobile;
-        if (cartData.cartTotal.code == undefined) {
-            code = "No Coupon Code Applied";
         } else {
-            code = cartData.cartTotal.code;
-        }
-
-        document.getElementById("couponcode").innerText = code;
-        console.log(cartData);
-        checkoutItem = "";
-        if (cartData.totalRecord > 0) {
-            cartData.data.map((item) => {
-                checkoutItem += " <li class='list-group-item d-flex justify-content-between lh-condensed'>";
 
 
-                checkoutItem += "<img src='" + item.image + "' width='60'>";
-                checkoutItem += "    <h2 class='text-muted priceProduct '>" + item.productName + "</h2>";
-                checkoutItem += "   </div>";
-                checkoutItem += " <span class='priceProduct'><h2>" + item.price + "  Rs</h2></span>";
+            const jwt = jwtToken;
+            const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+            const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+            const parsedJwtData = JSON.parse(decodedJwtData);
+            cartData = await cartDetail(0, "");
 
-                checkoutItem += "   <span class='productQty'>" + item.qty + "</span>";
-                checkoutItem += "   <span class='productQty'>" + item.qty * item.price + " Rs </span>";
-
-
-                checkoutItem += " </li>";
-
-            });
-            document.getElementById("productOrder").innerHTML = checkoutItem;
-            document.getElementById("cartTotal").innerText = cartData.cartTotal.cartTotal;
-            document.getElementById("gst").innerText = cartData.cartTotal.gst;
-            document.getElementById("deliveryCharge").innerText = cartData.cartTotal.deliveryCharge;
-            document.getElementById("finalAmount").innerText = cartData.cartTotal.totalAmount;
-            document.getElementById("discount").innerText = cartData.cartTotal.discount;
-            document.getElementById("numberofcart").innerText = cartData.totalRecord;
-            document.getElementById("gstperc").innerText = "(" + cartData.cartTotal.gstperc + "%)";
-            if (cartData.cartTotal.cartTotal < cartData.cartTotal.minOrder) {
-
-                document.getElementById("placeOrder").disabled = true;
-                errorMsg = "<div class='alert alert-danger alert-dismissible'>";
-                errorMsg += " <button type='button' class='close' data-dismiss='alert'>&times;</button>";
-                errorMsg += " <strong>Warning!</strong> <p> Minimum Order Amount is " + cartData.cartTotal.minOrder + " Rs. </p>";
-                errorMsg += "</div>";
-                document.getElementById("errorMsg").innerHTML = errorMsg;
+            localStorage.setItem("carts", JSON.stringify(cartData.data));
+            localStorage.setItem("cartTotal", JSON.stringify(cartData.cartTotal));
+            document.getElementById("customerName").value = parsedJwtData.username;
+            document.getElementById("email").value = parsedJwtData.email;
+            document.getElementById("address2").value = parsedJwtData.mobile;
+            if (cartData.cartTotal.code == undefined) {
+                code = "No Coupon Code Applied";
             } else {
-                document.getElementById("placeOrder").disabled = false;
-
-
-
-
+                code = cartData.cartTotal.code;
             }
-        } else {
-            window.location.href = "index.php";
-        }
 
+            document.getElementById("couponcode").innerText = code;
+            console.log(cartData);
+            checkoutItem = "";
+            if (cartData.totalRecord > 0) {
+                cartData.data.map((item) => {
+                    checkoutItem += " <li class='list-group-item d-flex justify-content-between lh-condensed'>";
+
+
+                    checkoutItem += "<img src='" + item.image + "' width='60'>";
+                    checkoutItem += "    <h2 class='text-muted priceProduct '>" + item.productName + "</h2>";
+                    checkoutItem += "   </div>";
+                    checkoutItem += " <span class='priceProduct'><h2>" + item.price + "  Rs</h2></span>";
+
+                    checkoutItem += "   <span class='productQty'>" + item.qty + "</span>";
+                    checkoutItem += "   <span class='productQty'>" + item.qty * item.price + " Rs </span>";
+
+
+                    checkoutItem += " </li>";
+
+                });
+                document.getElementById("productOrder").innerHTML = checkoutItem;
+                document.getElementById("cartTotal").innerText = cartData.cartTotal.cartTotal;
+                document.getElementById("gst").innerText = cartData.cartTotal.gst;
+                document.getElementById("deliveryCharge").innerText = cartData.cartTotal.deliveryCharge;
+                document.getElementById("finalAmount").innerText = cartData.cartTotal.totalAmount;
+                document.getElementById("discount").innerText = cartData.cartTotal.discount;
+                document.getElementById("numberofcart").innerText = cartData.totalRecord;
+                document.getElementById("gstperc").innerText = "(" + cartData.cartTotal.gstperc + "%)";
+                if (cartData.cartTotal.cartTotal < cartData.cartTotal.minOrder) {
+
+                    document.getElementById("placeOrder").disabled = true;
+                    errorMsg = "<div class='alert alert-danger alert-dismissible'>";
+                    errorMsg += " <button type='button' class='close' data-dismiss='alert'>&times;</button>";
+                    errorMsg += " <strong>Warning!</strong> <p> Minimum Order Amount is " + cartData.cartTotal.minOrder + " Rs. </p>";
+                    errorMsg += "</div>";
+                    document.getElementById("errorMsg").innerHTML = errorMsg;
+                } else {
+                    document.getElementById("placeOrder").disabled = false;
+
+
+
+
+                }
+            } else {
+                window.location.href = "index.php";
+            }
+
+        }
     }
 
 }
@@ -1152,11 +1161,12 @@ function deleteitemifnotavailavailbe(productId) {
 
 function websiteLink() {
     jwtToken = localStorage.getItem("key");
-    const jwt = jwtToken;
-    const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
-    const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
-    const parsedJwtData = JSON.parse(decodedJwtData);
+
     if (jwtToken != undefined) {
+        const jwt = jwtToken;
+        const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+        const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+        const parsedJwtData = JSON.parse(decodedJwtData);
         $("#navBar").append("<a href='myorder.php'>My Order</a>");
     } else {
 

@@ -43,7 +43,11 @@ if(isset($userDataformbase["data"][0])){
     $data->updateData("users",["otp"=>$otp],["email"=>"'$email'"]);
     $message="The OTP For Forgot Password is :" . $otp;
     $subject="OTP For Forgot Password ";
-    sendMail($message,$email,$username,$subject);
+
+   $sendMsg =sendMail($message,$email,$username,$subject);
+   if($sendMsg==1){
+    echo json_encode(["message"=>"Otp Send For Reset Otp","key"=>" ","code"=>404,"status"=>"success"]);
+   }
 }else{
     echo json_encode(["message"=>"Invalid Credential","key"=>" ","code"=>404,"status"=>"error"]);
 }

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
 :root {
     --orange: #ff7800;
     --black: #130f40;
@@ -10,7 +10,7 @@
 }
 
 * {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,7 +18,7 @@
     border: none;
     text-decoration: none;
     text-transform: capitalize;
-    transition: all 0.2s linear;
+    transition: all .2s linear;
     text-decoration: none;
 }
 
@@ -53,17 +53,17 @@ section {
     background: var(--orange);
     color: #fff;
     display: inline-block;
-    padding: 0.5rem 3rem;
+    padding: .5rem 3rem;
     clip-path: polygon(100% 0, 93% 50%, 100% 99%, 0% 100%, 7% 50%, 0% 0%);
 }
 
 .btn {
     margin-top: 1rem !important;
     display: inline-block !important;
-    padding: 0.8rem 3rem !important;
+    padding: .8rem 3rem !important;
     font-size: 1.7rem !important;
-    border-radius: 0.5rem !important;
-    border: 0.2rem solid var(--black) !important;
+    border-radius: .5rem !important;
+    border: .2rem solid var(--black) !important;
     color: var(--black) !important;
     cursor: pointer;
     background: none;
@@ -83,7 +83,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 9%;
+    padding: 2rem 9%;
     background: #fff;
     box-shadow: var(--box-shadow);
 }
@@ -100,7 +100,7 @@ section {
 
 .header .navbar a {
     font-size: 1.7rem;
-    margin: 0 1.5rem;
+    margin: 0 1rem;
     color: var(--black);
 }
 
@@ -112,9 +112,9 @@ section {
     height: 4.5rem;
     width: 4.5rem;
     line-height: 4.5rem;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     font-size: 2rem;
-    margin-left: 0.3rem;
+    margin-left: .3rem;
     cursor: pointer;
     text-align: center;
 }
@@ -135,7 +135,7 @@ section {
     width: 50rem;
     height: 5rem;
     background: #fff;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -144,7 +144,7 @@ section {
 
 .header .search-form.active {
     right: 2rem;
-    transition: 0.4s linear;
+    transition: .4s linear;
 }
 
 .header .search-form input {
@@ -177,7 +177,7 @@ section {
     top: 110%;
     right: -110%;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     box-shadow: var(--box-shadow);
     width: 35rem;
     background: #fff;
@@ -186,7 +186,7 @@ section {
 
 .header .shopping-cart.active {
     right: 2rem;
-    transition: 0.4s linear;
+    transition: .4s linear;
 }
 
 #Shopping_container {
@@ -256,7 +256,7 @@ section {
     width: 35rem;
     box-shadow: var(--box-shadow);
     padding: 2rem;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     background: #fff;
     text-align: center;
 }
@@ -267,7 +267,7 @@ section {
 
 .header .login-form.active {
     right: 2rem;
-    transition: 0.4s linear;
+    transition: .4s linear;
 }
 
 .header .login-form h3 {
@@ -278,9 +278,9 @@ section {
 
 .header .login-form .box {
     width: 100%;
-    margin: 0.7rem 0;
+    margin: .7rem 0;
     background: #eee;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     padding: 1rem;
     font-size: 1.6rem;
     color: var(--black);
@@ -289,7 +289,7 @@ section {
 
 .header .login-form p {
     font-size: 1.4rem;
-    padding: 0.5rem 0;
+    padding: .5rem 0;
     color: var(--light-color);
 }
 
@@ -373,12 +373,12 @@ section {
 
 .products .product-slider .box {
     background: #fff;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     text-align: center;
     padding: 3rem 2rem;
     outline-offset: -1rem;
     box-shadow: var(--box-shadow);
-    transition: 0.2s linear;
+    transition: .2s linear;
 }
 
 .products .product-slider .box:hover {
@@ -398,13 +398,13 @@ section {
 .products .product-slider .box .price {
     font-size: 2rem;
     color: var(--light-color);
-    padding: 0.5rem 0;
+    padding: .5rem 0;
 }
 
 .products .product-slider .box .stars i {
     font-size: 1.7rem;
     color: var(--orange);
-    padding: 0.5rem 0;
+    padding: .5rem 0;
 }
 
 .categories .box-container {
@@ -415,7 +415,7 @@ section {
 
 .categories .box-container .box {
     padding: 3rem 2rem;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     background: #fff;
     box-shadow: var(--box-shadow);
     outline: var(--outline);
@@ -451,13 +451,13 @@ section {
 
 .review .review-slider .box {
     background: #fff;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     text-align: center;
     padding: 3rem 2rem;
     outline-offset: -1rem;
     outline: var(--outline);
     box-shadow: var(--box-shadow);
-    transition: 0.2s linear;
+    transition: .2s linear;
 }
 
 .review .review-slider .box:hover {
@@ -479,7 +479,7 @@ section {
 }
 
 .review .review-slider .box h3 {
-    padding-bottom: 0.5rem;
+    padding-bottom: .5rem;
     color: var(--black);
     font-size: 2.2rem;
 }
@@ -497,7 +497,7 @@ section {
 
 .blogs .box-container .box {
     overflow: hidden;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     box-shadow: var(--box-shadow);
     background: #fff;
 }
@@ -529,21 +529,21 @@ section {
 
 .blogs .box-container .box .content .icons a i {
     color: var(--orange);
-    padding-right: 0.5rem;
+    padding-right: .5rem;
 }
 
 .blogs .box-container .box .content h3 {
     line-height: 1.8;
     color: var(--black);
     font-size: 2.2rem;
-    padding: 0.5rem 0;
+    padding: .5rem 0;
 }
 
 .blogs .box-container .box .content p {
     line-height: 1.8;
     color: var(--light-color);
     font-size: 1.5rem;
-    padding: 0.5rem 0;
+    padding: .5rem 0;
 }
 
 .footer {
@@ -575,7 +575,7 @@ section {
 
 .footer .box-container .box .links i {
     color: var(--orange);
-    padding-right: 0.5rem;
+    padding-right: .5rem;
 }
 
 .footer .box-container .box .links:hover i {
@@ -593,10 +593,10 @@ section {
     height: 4rem;
     width: 4rem;
     line-height: 4rem;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     font-size: 2rem;
     color: var(--black);
-    margin-right: 0.2rem;
+    margin-right: .2rem;
     background: #eee;
     text-align: center;
 }
@@ -608,9 +608,9 @@ section {
 
 .footer .box-container .box .email {
     width: 100%;
-    margin: 0.7rem 0;
+    margin: .7rem 0;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: .5rem;
     background: #eee;
     font-size: 1.6rem;
     color: var(--black);
@@ -640,7 +640,7 @@ section {
 
 /* media queries  */
 
-@media (max-width: 991px) {
+@media (max-width:991px) {
     html {
         font-size: 55%;
     }
@@ -652,7 +652,7 @@ section {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width:768px) {
     #menu-btn {
         display: inline-block;
     }
@@ -674,12 +674,12 @@ section {
         right: -110%;
         width: 30rem;
         box-shadow: var(--box-shadow);
-        border-radius: 0.5rem;
+        border-radius: .5rem;
         background: #fff;
     }
     .header .navbar.active {
         right: 2rem;
-        transition: 0.4s linear;
+        transition: .4s linear;
     }
     .header .navbar a {
         font-size: 2rem;
@@ -689,7 +689,7 @@ section {
     }
 }
 
-@media (max-width: 450px) {
+@media (max-width:450px) {
     html {
         font-size: 50%;
     }
@@ -832,7 +832,7 @@ section {
     text-decoration: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width:768px) {
     .checkitemdetail {
         width: 90%;
     }
@@ -927,6 +927,3 @@ section {
 #cart-btn {
     z-index: 0;
 }
-
-
-/*# sourceMappingURL=style.css.map */

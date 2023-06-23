@@ -102,7 +102,7 @@ https://unpkg.com/swiper@7.4.1/swiper-bundle.css
 
     <form action='' class='login-form' id='LoginFORM'>
         <h3>login now</h3>
-        <input type='email' name='email' id='userEmail' placeholder='your email' class='box'>
+        <input type='email' name='email' id='userEmail' placeholder='your email' class='box' autocomplete="off" value="">
         <input type='password' id='userPassword' name='password' placeholder='your password' class='box'>
         <p>forget your password <a href='javascript:void(0)'   class='forget-form'>click here</a></p>
         <p>don't have an account <a href='javascript:void(0)' class='reg-form'>create now</a></p>
