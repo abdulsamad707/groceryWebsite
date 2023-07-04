@@ -655,7 +655,7 @@ return false;
   },
 
         body:OrderStatusObj});
-      sendRequestText=  await   sendRequest.text();
+      sendRequestText=  await   sendRequest.json();
       displayMsg(      sendRequestText.msg,"success");
     
 console.log(      sendRequestText);
