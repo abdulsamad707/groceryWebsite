@@ -12,6 +12,10 @@ APIKEY = "avdfheuw23";
 WEBSITE_PATHS = "http://localhost/groceryWebsite/";
 API_PATH = "api/";
 APIKEY = "avdfheuw23";
+var currentDomain = window.location.hostname;
+console.log(currentDomain);
+var currentProtocol = window.location.protocol;
+console.log(currentProtocol);
 
 function forgetKey() {
     loginForm.classList.remove('active');
@@ -292,9 +296,9 @@ verifyOtp.addEventListener("click", function(e) {
 
     console.log(parsedJwtData);
     dataOtp = parsedJwtData.otp;
-    console.log("Otp", dataOtp);
+    console.log("Otp Verify", dataOtp);
     user_id = parsedJwtData.id;
-    if (dataOtp === verifyOne) {
+    if (dataOtp == verifyOne) {
         verifyOTP(user_id);
         updateOTP(user_id);
         localStorage.setItem("key", token);
@@ -789,7 +793,7 @@ function displayProduct(productName = "") {
 
         result = [];
 
-        $("#swiper").html("");
+        $("#swipe").html("");
         displayProductHtml = "";
         if (dataProduct != '') {
             dataProduct.map((item) => {
@@ -797,7 +801,7 @@ function displayProduct(productName = "") {
 
 
 
-                displayProductHtml += "<div class='box swiper-slide'>";
+                displayProductHtml += "<div class='box '>";
 
                 displayProductHtml += "<img src = '" + item.ProductImage + "'alt = '' >";
                 displayProductHtml += " <h3 >" + item.productName + " </h3> <div class = 'price' >" + item.price + "Rs </div> <div class = 'stars'>" + item.rating + " <i class = 'fas fa-star'> </i>";
@@ -812,7 +816,7 @@ function displayProduct(productName = "") {
 
 
 
-            $("#swiper").append(displayProductHtml);
+            $("#swipe").append(displayProductHtml);
             console.log(displayProductHtml);
 
         } else {

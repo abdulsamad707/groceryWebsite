@@ -183,7 +183,36 @@ if(isset($_GET["orderDate"]) && $_GET["orderDate"]=="" && $_GET["rider_id"] ==0 
 
 					$order_id = $userdata["order_id"];
 					$ordStat = $userdata["orderSt"];
+
+
+
 					if ($rider_id != 0) {
+
+                   if($ordStat == 3){
+
+				$rider_data=$data->sql("Select  * from  deliveryboy where id= '$rider_id'","read");
+
+ $username=$rider_data["data"][0]["username"];
+$mobile=$rider_data["data"][0]["mobile"];    
+$number="+923357467403";
+$message="hi";
+
+    
+
+$order_data=$data->sql("Select  * from  orderscustomer where id= '$order_id'","read");
+
+$user_id=$order_data["data"][0]["userId"];
+   
+
+$rider_data=$data->sql("Select  * from  users where id= '$user_id'","read");
+
+$username=$rider_data["data"][0]["username"];
+$customermobile=$rider_data["data"][0]["mobile"];
+$number="+".$customermobile;
+$message="hi your order id".$order_id ."your rider mobile number".$mobile."& name is ". $username;
+SendSms($number,$message);           
+				   }
+
 						if ($ordStat == 5) {
 							$updateOrder = $data->updateData("deliveryboy", ["busy" => 0], ["id" => "'$rider_id'"]);
 							$updateOrder = $data->sql("UPDATE orderdetail set orderqty=qtyorder WHERE order_id='$order_id'",'update');						} else {

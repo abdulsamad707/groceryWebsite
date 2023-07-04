@@ -27,18 +27,22 @@ return 0;
  return 1;
 }
       }
-     function SendSms($number,$message){
-      define('APIKEY', 'd47d5752ecb3350de255ef9322eff59d13925d9e');
+     function SendSms($number,$message,$device = 0, $schedule = null, $isMMS = false, $attachments = null, $prioritize = false){
+      
       define("SERVER", "https://www.my.zitasms.com");
-    
+      define("API_KEY", "86bdb062c46d3e877612ee90776a5863b73114cc");
+
+      define("USE_SPECIFIED", 0);
+      define("USE_ALL_DEVICES", 1);
+      define("USE_ALL_SIMS", 2);
       $url = SERVER . "/services/send.php";
          $devices="1860|1";
       $postData = array(
        'number' => $number,
        'message' => $message,
         'sender'=>'grocery APK',
-       'key' => APIKEY,
-       'devices' => $devices,
+       'key' => API_KEY,
+       'devices' => $device,
        'type' => "sms",
   /* IIYwGmVegUdBt3dd*/
        'prioritize' =>  1
@@ -51,6 +55,7 @@ return 0;
    $response = curl_exec($ch);
   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   $json = json_decode($response, true);
+  print_r($json);
   return $json;
 }
 

@@ -80,7 +80,7 @@ curl_close($curl);
     <h1 class="heading"> our <span>products</span> </h1>
     <div id="msgDisplay">          
 </div>
-    <div class="box-container" >
+    <div class="box-container" id="swipe" >
 
  
             <?php

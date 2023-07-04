@@ -249,6 +249,26 @@ foreach($adminData["data"] as $value){
  $adminEarning["QtySold"]= $qtysell;
    return $adminEarning;
 }
+function RiderDetail ($ride_id){
+   define("API_KEY","avdfheuw23");
+define("API_URL","http://localhost/groceryWebsite/api/");
+   $keyApi=API_KEY;
+   $url = API_URL." riders.php?key=$keyApi&rider_id=$ride_id";
+ 
 
+$curl = curl_init();
+
+curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl,CURLOPT_POST,false);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_HEADER, false);
+
+$dataUrl = curl_exec($curl);
+
+curl_close($curl);
+
+$dataUrl=json_decode($dataUrl,true);
+return $dataUrl;
+}
 
           ?>
