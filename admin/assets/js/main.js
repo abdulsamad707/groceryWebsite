@@ -318,8 +318,9 @@
     }
 
 })();
+WEBSITEADMIN_PATH = "http://localhost/groceryWebsite/admin/";
 WebSite = location.href;
-WebSite = WebSite.replace('http://localhost/grocerywebsite/admin/', '');
+WebSite = WebSite.replace(WEBSITEADMIN_PATH, '');
 
 function logout() {
     localStorage.removeItem("id");

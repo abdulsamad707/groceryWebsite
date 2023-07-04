@@ -52,7 +52,7 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
 
-
+<script src="assets/js/constant.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 <script>
 function  capitalize(stri){
@@ -73,7 +73,7 @@ return TotalEarningInv;
 // data to be exported
 async   function downloadReport(urlData,type){
        
- const inventory=await fetch("http://localhost/groceryWebsite/api/inventory.php?key=avdfheuw23&invtype="+urlData);
+ const inventory=await fetch(API_PATH +"inventory.php?key=avdfheuw23&invtype="+urlData);
 const jsonInventory=await inventory.json();
 console.log(inventory);
 console.log(jsonInventory);

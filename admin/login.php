@@ -139,6 +139,7 @@
 
   <script src="assets/js/constant.js"></script>
 <script>
+  WEBSITEADMIN_PATH = "http://localhost/groceryWebsite/admin/";
 function CheckLogin(){
  var LsId=localStorage.getItem("id");
  if(LsId!=null){
@@ -152,7 +153,7 @@ var parsedJwtData = JSON.parse(decodedJwtData);
  id=parsedJwtData.id;
  role=parsedJwtData.role;
  
-  if(window.location=="http://localhost/grocerywebsite/admin/login.php"){
+  if(window.location===WEBSITEADMIN_PATH+"login.php"){
       if(role!=2){
     window.location="index.php?t="+role+"&i="+id;
       }else{
@@ -161,8 +162,8 @@ var parsedJwtData = JSON.parse(decodedJwtData);
   }
 
  }else{
-  if(window.location!="http://localhost/grocerywebsite/admin/login.php"){
-  window.location="http://localhost/grocerywebsite/admin/login.php";
+  if(window.location!=WEBSITEADMIN_PATH+"login.php"){
+  window.location= WEBSITEADMIN_PATH+"login.php";
   }else{
 
   }

@@ -1,4 +1,3 @@
-const APIKEY = "avdfheuw23";
 var searchForm = document.querySelector('.search-form');
 var shoppingCart = document.querySelector('.shopping-cart');
 var loginForm = document.querySelector('.login-form');
@@ -9,6 +8,10 @@ var loginOTP = document.querySelector('#loginOTP');
 var navbar = document.querySelector('.navbar');
 var forgetPass = document.querySelector('#forgotPassword');
 var forgot = document.getElementById("forgot");
+APIKEY = "avdfheuw23";
+WEBSITE_PATHS = "http://localhost/groceryWebsite/";
+API_PATH = "api/";
+APIKEY = "avdfheuw23";
 
 function forgetKey() {
     loginForm.classList.remove('active');
@@ -58,22 +61,22 @@ forgotForm.onclick = () => {
 
 
 document.querySelector('#menu-btn').onclick = () => {
-    navbar.classList.toggle('active');
-    searchForm.classList.remove('active');
-    shoppingCart.classList.remove('active');
-    loginForm.classList.remove('active');
-    regFormdata.classList.remove('active');
-    forgetPass.classList.remove('active');
-}
+        navbar.classList.toggle('active');
+        searchForm.classList.remove('active');
+        shoppingCart.classList.remove('active');
+        loginForm.classList.remove('active');
+        regFormdata.classList.remove('active');
+        forgetPass.classList.remove('active');
+    }
+    /*
+    window.onscroll = () => {
+        searchForm.classList.remove('active');
+        shoppingCart.classList.remove('active');
+        loginForm.classList.remove('active');
+        navbar.classList.remove('active');
+        forgetPass.classList.remove('active');
 
-window.onscroll = () => {
-    searchForm.classList.remove('active');
-    shoppingCart.classList.remove('active');
-    loginForm.classList.remove('active');
-    navbar.classList.remove('active');
-    forgetPass.classList.remove('active');
-
-}
+    }*/
 $("#SubmitBtn").click(function(e) {
 
 });
@@ -87,7 +90,7 @@ cHANGEBTN.addEventListener("click", function(e) {
     otp = document.getElementById("ForgotOTP").value;
 
 
-    apiurl = "http://localhost/groceryWebsite/api/resetpassword.php?key=" + APIKEY;
+    apiurl = API_PATH + "resetpassword.php?key=" + APIKEY;
     loginObj = {
         email: email,
         pass: forgtPas,
@@ -109,7 +112,7 @@ cHANGEBTN.addEventListener("click", function(e) {
 
 });
 ForgetBTN.addEventListener("click", function(e) {
-    apiurl = "http://localhost/groceryWebsite/api/reset.php?key=" + APIKEY;
+    apiurl = API_PATH + "reset.php?key=" + APIKEY;
 
     email = document.getElementById("ForgotEmail").value;
     console.log(email);
@@ -147,7 +150,7 @@ loginBTN.addEventListener("click", function(e) {
 
 
 
-    apiurl = "http://localhost/groceryWebsite/api/login.php?key=" + APIKEY;
+    apiurl = API_PATH + "login.php?key=" + APIKEY;
     fetch(apiurl, {
         method: "POST",
         body: loginObj
@@ -262,7 +265,7 @@ async function verifyOTP(id) {
 
 
 
-    apiurl = "http://localhost/groceryWebsite/api/verifyCustomer.php?key=" + APIKEY;
+    apiurl = API_PATH + "verifyCustomer.php?key=" + APIKEY;
     fetch(apiurl, {
         method: "POST",
         body: loginObj
@@ -291,7 +294,7 @@ verifyOtp.addEventListener("click", function(e) {
     dataOtp = parsedJwtData.otp;
     console.log("Otp", dataOtp);
     user_id = parsedJwtData.id;
-    if (dataOtp == verifyOne) {
+    if (dataOtp === verifyOne) {
         verifyOTP(user_id);
         updateOTP(user_id);
         localStorage.setItem("key", token);
@@ -374,7 +377,7 @@ registerComplete.addEventListener("click", function(e) {
             console.log(formData);
         */
 
-    urlReg = API_PATH + "userregister.php?key=avdfheuw23";
+    urlReg = API_PATH + "userregister.php?key=" + APIKEY;
     fetch(urlReg, {
         method: "POST",
         body: formData
@@ -479,7 +482,7 @@ let obj= {};
       $(this).prop("disabled",true);
       $.ajax({
        method:'POST',
-       url:'http://localhost/grocery/api/userregister.php?key=6CU1qSJfcs',
+       url:'API_PATHuserregister.php?key=6CU1qSJfcs',
         data:obj,
        success:function(response){
       
@@ -568,10 +571,10 @@ var swiper = new Swiper(".product-slider", {
             slidesPerView: 3,
         },
         1020: {
-            slidesPerView: 3,
+            slidesPerView: 4,
         },
         1366: {
-            slidesPerView: 3,
+            slidesPerView: 4,
         },
     },
 });
@@ -587,7 +590,7 @@ var swiper = new Swiper(".review-slider", {
 });
 
 WebSite = location.href;
-WebSite = WebSite.replace('http://localhost/grocerywebsite/', '');
+WebSite = WebSite.replace(WEBSITE_PATH, '');
 token = localStorage.getItem("key");
 if (token != undefined && WebSite != 'index.php') {
     WebSite = WebSite.replaceAll('?token=' + token, '');
@@ -601,7 +604,7 @@ if (token != undefined && WebSite != 'index.php') {
 function checkout() {
     token = localStorage.getItem("key");
     if (token != undefined) {
-        window.location.href = "http://localhost/grocerywebsite/checkout.php?token=" + token;
+        window.location.href = WEBSITE_PATH + "checkout.php?token=" + token;
     }
 }
 
@@ -609,7 +612,7 @@ function cart() {
 
     token = localStorage.getItem("key");
     if (token != undefined) {
-        window.location.href = "http://localhost/grocerywebsite/cart.php?token=" + token;
+        window.location.href = WEBSITE_PATH + "cart.php?token=" + token;
     }
 }
 

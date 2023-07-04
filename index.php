@@ -80,9 +80,9 @@ curl_close($curl);
     <h1 class="heading"> our <span>products</span> </h1>
     <div id="msgDisplay">          
 </div>
-    <div class="swiper product-slider" >
+    <div class="box-container" >
 
-        <div class="swiper-wrapper " id="swiper" >
+ 
             <?php
       
 
@@ -94,7 +94,7 @@ curl_close($curl);
             foreach($dataUrl['data'] as $key => $value){
   ?>
       
-        <div class='box swiper-slide'  >
+        <div class='box '  >
                 <img src="<?=$value['ProductImage'] ;?>" alt="">
                 <h3> <?= $value["productName"];?></h3>
                 <div class="price"> <?php echo  $value["price"]; ?> Rs </div>
@@ -134,6 +134,11 @@ curl_close($curl);
         </div>
 
   
+        <div class="box">
+            <img src="image/cat-2.png" alt="">
+            <h3>fruits</h3>
+ 
+        </div>
 
     </div>
 
