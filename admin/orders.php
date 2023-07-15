@@ -34,14 +34,14 @@
                   </div>
                 </div>
               </div><!-- End Small Modal-->
-
+             
 <button type='button'  class='btn btn-primary' onclick="downloadAllOrderReport()">Print All Orders Detail</button>
 <div class="row"    id="OrdersColumn">
   <div class="col-sm-4">
 
 <input type="text" placeholder="Order Date" id="datepicker" class="form-control mt-3"  min="-1day" max="+1day">
 </div>
-
+ 
 <div class="col-sm-4">
 <input type="text" id="orderID" class="form-control mt-3" placeholder="Order Id "/>
 </div>
@@ -99,7 +99,52 @@
                   </div>
                 </div>
               </div><!-- End Extra Large Modal-->
+<div class="modal fade" id="ExtralargeModals" tabindex="-1">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="productNmae"></h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                 <form action="">
 
+                 <div class="container">
+                  <form >
+                  <div class="row">
+                 <div class="col-6">
+                      <label >Customer Name</label>
+                 </div>
+                      <div class="col-6">
+                   <select class="form-select" aria-label="Default select example"  id="customers">
+                         
+</select>
+                 </div>
+                     
+            <div>
+              SELECT pRODUCT
+            </div>
+
+
+
+                </div>
+                                  </form>
+                 </div>
+ 
+
+
+
+    
+        
+             
+   
+                    </div>
+                    <div class="modal-footer">
+            
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Extra Large Modal-->
     <div class="pagetitle">
       <h1>Order</h1>
       <nav>

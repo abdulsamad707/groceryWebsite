@@ -55,7 +55,7 @@ return 0;
    $response = curl_exec($ch);
   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   $json = json_decode($response, true);
-  print_r($json);
+
   return $json;
 }
 

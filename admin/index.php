@@ -29,7 +29,19 @@
 
    @$role=$_GET['t'];
    @$rider_id=$_GET['i'];
+   $vendorEarningsTotal=vendorEarningsTotal();
+  
+
    if($role==0){
+   
+     if(isset($vendorEarningsTotal)){
+     $vendor_total=$vendorEarningsTotal["totalEarns"];
+
+     }else{
+      $vendor_total=0;
+     }
+
+
     $inventoryType="admin";
     $rider_id=0;
 $total_vendor=0;
@@ -169,7 +181,7 @@ extract($inventory);
                   <div class="d-flex align-items-center">
                  
                     <div class="ps-3">
-                      <h6><?= $currentMonthEarning-  $vendorEarnings; ?> PKR</h6>
+                      <h6><?= $currentMonthEarning ?> PKR</h6>
                     
 
                     </div>
@@ -259,10 +271,14 @@ extract($inventory);
 
     <div class="d-flex align-items-center">
       <div class=" d-flex align-items-center justify-content-center">
-    
+    <?php 
+
+
+
+?>
       </div>
       <div class="ps-3">
-        <h6><?php echo $totalEarning-$vendorEarningsTotal["totalEarns"];?> Rs</h6>
+        <h6><?php echo $totalEarning- $vendor_total;?> Rs</h6>
         <span class="text-danger small pt-1 fw-bold"> </span> <span class="text-muted small pt-2 ps-1">  </span>
 
       </div>
@@ -277,7 +293,7 @@ extract($inventory);
 <div class="card info-card customers-card">
 
   <div class="card-body">
-    <h5 class="card-title">Vendors Active <span> </span></h5>
+    <h5 class="card-title">Vendors Active <span>|This Month </span></h5>
 
     <div class="d-flex align-items-center">
       <div class=" d-flex align-items-center justify-content-center">

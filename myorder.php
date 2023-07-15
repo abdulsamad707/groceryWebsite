@@ -92,6 +92,7 @@ OrderCustomerDisplay="<tr><td>No Order Found</td></tr>";
         OrderCustomerDisplay+="<td>"+item.OrderStatus+"</td>";
         OrderCustomerDisplay+="<td>"+item.order_time+"</td>";
         OrderCustomerDisplay+="<td><button type='button'  onclick=downloadInvoice("+item.orderID+")  class='btn '>Download Invoice</button></td>";
+
         OrderCustomerDisplay+="</tr>";
         });
 

@@ -98,7 +98,7 @@ if($inventoryType=="admin"){
      $inventory["totalEarning"]=inventoryItemEarning("monthly","Earning");
      $inventory["currentMonthEarning"]=$arrayEarningCurrent;
      $inventory["totalItemSold"]=      $totalItemSold;
-     $inventory["totalOrder"]=$totalEarningprevious["data"][0]["totalOrder"];
+  
      return $inventory;
    }else{
  
