@@ -1,6 +1,6 @@
 <?php
 
-try{
+
 header('Access-Control-Allow-Origin:*');
 
 header('Access-Control-Allow-Methods:GET,POST,PUT');
@@ -36,7 +36,7 @@ if(isset($_GET["id"])){
 
     if(isset($_GET["productName"]) && $_GET["productName"]!=""){
       $productName=$_GET["productName"];
-      $whereConduction= "products.productName LIKE '%$productName%' aND products.status='1' AND products.id='$id' ";
+      $whereConduction= "products.productName LIKE '%$productName%' aND products.status='1' AND products.id='$id'  ";
     }else{
       $whereConduction="products.status='1' AND products.id='$id'";
     }
@@ -62,7 +62,7 @@ if(isset($_GET["id"])){
     
     if(isset($_GET["productName"]) && $_GET["productName"]!=""){
       $productName=$_GET["productName"];
-      $whereConduction="products.productName LIKE '%$productName%' OR soundex(products.productName)=soundex('$productName') aND products.status='1' ";
+      $whereConduction="products.productName LIKE '%$productName%'  OR soundex(products.productName)=soundex('$productName') or keyword like '%$productName%'  OR soundex(products.keyword)=soundex('$productName') or products.price >=$productName  aND products.status='1'  ";
     }else{
       $whereConduction="products.status='1' ";
     }
@@ -75,7 +75,7 @@ if(isset($_GET["id"])){
     if($vendor=="admin"){
          if(isset($_GET["productName"]) && $_GET["productName"]!=""){
          $productName=$_GET["productName"];
-          $whereConduction="products.productName LIKE '%$productName%' AND  products.status='1' or products.status='0'   ";
+          $whereConduction="products.productName LIKE '%$productName%'  or keyword like '%$productName%'   or products.price >= $productName   AND products.status='1' or products.status='0'   ";
          }else{
           $whereConduction="products.status='1' or products.status='0'";
          }
@@ -83,7 +83,7 @@ if(isset($_GET["id"])){
     }else{
       if(isset($_GET["productName"]) && $_GET["productName"]!="" ){
         $productName= $_GET["productName"];
-        $whereConduction="products.admin_id='$vendor_id' AND   products.productName  LIKE '%$productName%'";
+        $whereConduction="products.admin_id='$vendor_id' AND   products.productName  LIKE '%$productName%' or keyword like '%$productName%' or products.price >= $productName";
       }else{
         $whereConduction="products.admin_id='$vendor_id'";
       }
@@ -93,12 +93,12 @@ if(isset($_GET["id"])){
  
   $groupby =" group by products.id";
 }
- $sql="SELECT products.productqty,format(ifnull(AVG(productrating.rating),0),2) as rating,products.status,products.price,products.productName,products.id,concat('http://localhost/grocerywebsite/api/',products.image) as ProductImage,ifnull(sum(orderdetail.orderqty),0) as qty_sold, ifnull(products.productqty-(ifnull(sum(orderdetail.orderqty),0)),0) as qty_remaining,ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue from products left join orderdetail on orderdetail.product_id=products.id  left join productrating  ON productrating.product_id=products.id where $whereConduction $groupby ";
+ $sql="SELECT if( count(DISTINCT user_id)<1,1,count(DISTINCT user_id)) as countBy, keyword,products.productqty,if(format(ifnull(AVG(orderdetail.rated),0),2)>1,format(ifnull(AVG(orderdetail.rated),0),2),5.00) as rating,products.status,products.price,products.productName,products.id,concat('http://localhost/grocerywebsite/api/',products.image) as ProductImage,ifnull(sum(orderdetail.orderqty),0) as qty_sold, ifnull(products.productqty-(ifnull(sum(orderdetail.orderqty),0)),0) as qty_remaining,ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue from products left join orderdetail on orderdetail.product_id=products.id   where $whereConduction $groupby ";
 
 $productData=$data->sql($sql,"read");
 if(isset($_GET["id"])){
   $product_id=$_GET["id"];
-  $sqlProductInv="SELECT products.productName,IFNULL(DATE_Format(orderscustomer.orderDate,'%M-%Y'),'NOTSOLD') as monthorder,IFNULL(sum(orderdetail.orderqty*orderdetail.price),0) as revenue,IFNULL(sum(orderdetail.orderqty),0) as qty_sold FROM products LEFT JOIN orderdetail ON orderdetail.product_id=products.id LEFT JOIN orderscustomer ON orderdetail.order_id=orderscustomer.id WHERE products.id='$product_id' GROUP BY month(orderscustomer.orderDate),year(orderscustomer.orderDate),products.id ";
+  $sqlProductInv="SELECT keyword, products.productName,IFNULL(DATE_Format(orderscustomer.orderDate,'%M-%Y'),'NOTSOLD') as monthorder,IFNULL(sum(orderdetail.orderqty*orderdetail.price),0) as revenue,IFNULL(sum(orderdetail.orderqty),0) as qty_sold FROM products LEFT JOIN orderdetail ON orderdetail.product_id=products.id LEFT JOIN orderscustomer ON orderdetail.order_id=orderscustomer.id WHERE products.id='$product_id' GROUP BY month(orderscustomer.orderDate),year(orderscustomer.orderDate),products.id ";
   $sqlProductInvdata=$data->sql($sqlProductInv,"read");
   $productData["productInven"]=  $sqlProductInvdata["data"];
   $sqlProductInvdaily="SELECT products.productName,IFNULL(DATE_Format(orderscustomer.orderDate,'%d-%M-%Y'),'NOTSOLD') as monthorder,IFNULL(sum(orderdetail.orderqty*orderdetail.price),0) as revenue,IFNULL(sum(orderdetail.orderqty),0) as qty_sold FROM products LEFT JOIN orderdetail ON orderdetail.product_id=products.id LEFT JOIN orderscustomer ON orderdetail.order_id=orderscustomer.id WHERE products.id='$product_id' GROUP BY day(orderscustomer.orderDate),month(orderscustomer.orderDate),year(orderscustomer.orderDate),products.id ";
@@ -113,6 +113,7 @@ if($reqMetod=="POST"){
 
     $product_id=$_POST["pid"];
     $productName=$_POST["productName"];
+    $productKeyword=$_POST["keyword"];
 $productArray=$_POST;
            if($product_id==0){
                if(isset($_FILES["file"]["name"])){
@@ -142,7 +143,7 @@ $productArray=$_POST;
                     unset($productArray['file']);
          $productArray["image"]="productImage/".$file_name_new;
          $productArray["status"]=$status;
-         $productArray["keyword"]=$productName;
+         $productArray["keyword"]=$productKeyword;
 
          
   /* 1-table
@@ -243,7 +244,9 @@ $sqlProductCartdata=$data->sql($sqlProductCart,"read");
 
 $cartQty=$sqlProductCartdata["data"][0]['cartQty'];
 $qty_remaining=$qty_remaining-$cartQty;
-$productArray["productqty"]=$productArray["productqty"]+$qty_remaining;
+$productArray["productqty"]=$productArray["productqty"];
+$productKeyword=$_POST["keyword"];
+$productArray["keyword"]=$productKeyword;
 
 /*productqty
   */
@@ -272,10 +275,7 @@ $productArray["productqty"]=$productArray["productqty"]+$qty_remaining;
 
 
 }
-}
-catch (Exception $e) {
- 
-  echo json_encode(["msg"=>"Server Error","status"=>"error"]);
-}
+
+
 
 ?>

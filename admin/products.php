@@ -278,6 +278,8 @@ async function edit(id){
 document.getElementById("formHeading").innerText="Edit Product";
 const inventory=await fetch(API_PATH+"products.php?key=avdfheuw23&id="+id);
 const jsonInventory=await inventory.json();
+console.log("po\roducts edit");
+console.log(jsonInventory);
 const productName=jsonInventory.data[0].productName;
 document.getElementById("prices").value=jsonInventory.data[0].price;
 document.getElementById("productsNmae").value=productName;
@@ -285,6 +287,7 @@ document.getElementById("productsNmae").value=productName;
 document.getElementById("qty").value=jsonInventory.data[0].productqty;
 document.getElementById("id_product").value=id;
 document.getElementById("formFile").required=false;
+
 if(jsonInventory.data[0].status==0){
 document.getElementById("gridRadios2").checked=true;
 
@@ -405,6 +408,7 @@ var available=document.getElementById("gridRadios1").checked;
 
 requiredCheck=document.getElementById("formFile").required;
 productKeyWord=document.getElementById("productKeyWord").innerText;
+console.log("Product Keyword"+productKeyWord);
 
     if(file==undefined && requiredCheck==true){
       displayMsg("Please Product Image",'error');
@@ -498,6 +502,8 @@ const jsonInventory=await inventory.json();
 console.warn(jsonInventory);
 data=jsonInventory.productInven;
 const productName=capitalize(jsonInventory.data[0].productName);
+
+
 var docDefinition = {
 
   content: [

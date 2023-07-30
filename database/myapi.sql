@@ -404,7 +404,8 @@ CREATE TABLE `orderdetail` (
   `price` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
-  `orderqty` int(11) NOT NULL
+  `orderqty` int(11) NOT NULL,
+    `rated` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -563,7 +564,8 @@ CREATE TABLE `productrating` (
   `order_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `comment` varchar(255) NOT NULL
+  `comment` varchar(255) NOT NULL,
+  `rated` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

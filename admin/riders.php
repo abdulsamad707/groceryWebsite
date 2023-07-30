@@ -118,6 +118,17 @@
 
 <?php include "footer.php"?>
 <script src="assets/js/constant.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.core.min.js"></script>
+ 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.13/dist/jspdf.plugin.autotable.min.js"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+
 <script>
 
 
@@ -160,10 +171,11 @@ console.log(jsonInventory);
            userData+="<td>"+(key+1)+"</td>";
            userData+="<td>"+capitalizeFirstWord(item.username)+"</td>";
            userData+="<td>"+item.mobile+"</td>";
-           userData+="<td><button onclick=view('"+item.id+"') data-bs-toggle='modal' data-bs-target='#ExtralargeModal' class='btn btn-primary'>View</button></td>";
-    
 
+           userData+="<td><button onclick=view('"+item.id+"') data-bs-toggle='modal' data-bs-target='#ExtralargeModal' class='btn btn-primary'>View</button></td>";
            userData+="<td>"+Btn+"</td>";
+     userData+="<td><button onclick= downloadReportProduct('"+item.id+"')   class='btn btn-primary'>Download Report</button></td>";
+     
            userData+="</tr>";
           });
          document.getElementById("users").innerHTML=userData;
@@ -190,6 +202,7 @@ displayUsers();
 }
 async function view(vendor_id){
  const inventory=await fetch(API_PATH+"riders.php?key=avdfheuw23&rider_id="+vendor_id);
+ 
 const jsonInventory=await inventory.json();
 console.log(jsonInventory);
 document.getElementById("vendor_names").innerText=jsonInventory.data[0].username;
@@ -214,5 +227,105 @@ jsonInventory.earning_detail.map((item,key)=>{
   document.getElementById("earningdetail").innerHTML=productEarningHTML;
 }
 
+async function downloadReportProduct (id)  {
+  var headerPdf= [{ text: 'S.No', style: 'tableHeader' },{ text: 'Month Year', style: 'tableHeader' }, { text: 'Earning (Rs)', style: 'tableHeader' },{ text: 'Number Of Order', style: 'tableHeader' }];
 
+TotalEarning=[];
+currDate=new Date().toLocaleString("en-US",{month:"long",day:"numeric",year:"numeric",minute:"numeric",hour:"numeric"}).replace("at"," ");
+const inventory=await fetch(API_PATH+"riders.php?key=avdfheuw23&rider_id="+id);
+const jsonInventory=await inventory.json();
+console.warn(jsonInventory);
+data=jsonInventory.earning_detail;
+const riderName=capitalize(jsonInventory.data[0].username);
+
+if(jsonInventory.data[0].Earning >0 ){
+var docDefinition = {
+
+  content: [
+   { text:riderName, style: 'header' ,align:"center"},
+   
+   { text:' Number of Order :'+jsonInventory.data[0].number_of_order, style: 'header' ,align:"center"},
+   { text:' Earning :'+jsonInventory.data[0].Earning+" RS", style: 'header' ,align:"center"},
+   { text:'Mobile :'+jsonInventory.data[0].mobile , style: 'header' ,align:"center"},
+    {
+      table: {
+        headerRows:2,
+        widths: ['*', '*','*','*'],
+        body: [
+
+
+       headerPdf
+        
+             
+        ,
+  
+          ...data.map(function (item,index) {
+console.log(index+1);
+
+
+
+
+
+            IndexPdf=index+1;
+
+            return [IndexPdf,item.ordermonthyear,item.earning,item.numberoforder];
+         
+
+
+          })
+        ]
+  
+      },
+    
+  },
+
+  
+
+  ],
+  styles: {
+      header: {
+         fontSize: 22,
+         bold: true,
+         alignment: 'center',
+         fontWeight:900
+       
+      },
+      tableHeader:{
+      bold: true
+
+      },
+    }
+
+
+};
+}else{
+  var docDefinition = {
+
+content: [
+ { text:riderName, style: 'header' ,align:"center"},
+ { text:' Earning :'+jsonInventory.data[0].Earning+" Rs", style: 'header' ,align:"center"},
+ { text:' Number Of Order :'+jsonInventory.data[0].number_of_order, style: 'header' ,align:"center"},
+ { text:'Mobile :'+jsonInventory.data[0].mobile , style: 'header' ,align:"center"},
+],
+styles: {
+      header: {
+         fontSize: 22,
+         bold: true,
+         alignment: 'center',
+         fontWeight:900
+       
+      },
+      tableHeader:{
+      bold: true
+
+      },
+    }
+  }
+
+}
+
+// download the PDF document
+pdfMake.createPdf(docDefinition).download("product_inventory_report"+".pdf");
+
+}
 </script>

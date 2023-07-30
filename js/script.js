@@ -804,7 +804,7 @@ function displayProduct(productName = "") {
                 displayProductHtml += "<div class='box '>";
 
                 displayProductHtml += "<img src = '" + item.ProductImage + "'alt = '' >";
-                displayProductHtml += " <h3 >" + item.productName + " </h3> <div class = 'price' >" + item.price + "Rs </div> <div class = 'stars'>" + item.rating + " <i class = 'fas fa-star'> </i>";
+                displayProductHtml += " <h3 >" + item.productName + " </h3> <div class = 'price' >" + item.price + "Rs </div> <div class = 'stars'>" + item.rating + " (" + item.countBy + ") <i class = 'fas fa-star'> </i>";
 
                 displayProductHtml += "</div>";
 
@@ -820,7 +820,7 @@ function displayProduct(productName = "") {
             console.log(displayProductHtml);
 
         } else {
-
+            $("#swipe").html("No Product Found");
         }
 
 

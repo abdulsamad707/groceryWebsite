@@ -99,7 +99,7 @@ curl_close($curl);
                 <h3> <?= $value["productName"];?></h3>
                 <div class="price"> <?php echo  $value["price"]; ?> Rs </div>
                 <div class="stars">
-                  <?= $value["rating"]; ?>  <i class="fas fa-star"></i>
+                  <?= $value["rating"]; ?> (<?=$value["countBy"];?>)  <i class="fas fa-star"></i>
                
                 </div>
           

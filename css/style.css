@@ -734,6 +734,10 @@ section {
     display: none;
 }
 
+.btn-close {
+    font-size: 36px;
+}
+
 .errorHeading {
     background-color: yellow;
     font-weight: 900;

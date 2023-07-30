@@ -8,7 +8,39 @@
 </head>
 <body>
     <?php include "headerwebsite.php"?>
+    
+
+
+
+
+
 <section class="home" id="home">
+<div class="modal fade" id="ExtralargeModal" tabindex="-1">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title" id="productNmae">dddddgfff</h1>
+       <button type="button" class="btn"  data-dismiss="modal" >Close</button>
+                    </div>
+                    <div class="modal-body">
+             <p>   Order Total Amount :<span id="qty_sold">13</span></p>
+             <p>   Order Status :<span id="qty_remaining">5</span></p>
+             <p>    Order Date :<span id="revenue">5</span></p>
+             <p>    Order Time :<span id="price">5</span></p>
+
+          <p>Rider Name: <span id="rider_name"></span></p>
+
+
+
+             <h1>   Order Product  Detail</h1>
+                <div id="productInvdetail"></div> 
+                    </div>
+                    <div class="modal-footer">
+            
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Extra Large Modal-->
 
     <div class="content">
 
@@ -45,13 +77,14 @@
 </html>
 
 <?php include "footer.php" ?>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<script src="assets/js/constant.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
@@ -79,7 +112,7 @@ function myOrder() {
         console.log(re);
         OrderCustomerDisplay="";
        if(re.totalRecord==0){
-OrderCustomerDisplay="<tr><td>No Order Found</td></tr>";
+OrderCustomerDisplay="<tr><td colspan='7' style='text-align:center'>No Order Found</td></tr>";
        }else{
 
         re.data.map((item,index)=>{
@@ -92,7 +125,7 @@ OrderCustomerDisplay="<tr><td>No Order Found</td></tr>";
         OrderCustomerDisplay+="<td>"+item.OrderStatus+"</td>";
         OrderCustomerDisplay+="<td>"+item.order_time+"</td>";
         OrderCustomerDisplay+="<td><button type='button'  onclick=downloadInvoice("+item.orderID+")  class='btn '>Download Invoice</button></td>";
-
+        OrderCustomerDisplay+="<td><button type='button'  data-toggle='modal' data-target='#ExtralargeModal' onclick= viewDetail("+item.orderID+")   class='btn '>View</button></td>";
         OrderCustomerDisplay+="</tr>";
         });
 
@@ -104,6 +137,107 @@ console.log(OrderCustomerDisplay);
 }
 
 myOrder();
+async function rating(e,i,product_id){
+  jwtToken = localStorage.getItem("key");
+    const jwt = jwtToken;
+
+    const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+    const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    const parsedJwtData = JSON.parse(decodedJwtData);
+   const customer_id= parsedJwtData.id;
+  console.log(e);
+  e.style.color="red";
+         console.log(product_id);
+       console.warn (e.id);
+       e.innerHTML="product rated";
+       document.getElementById("product-"+product_id).innerHTML="You Rate "+i+" star";
+}
+function changeColor(e,i){
+  console.log(e);
+  e.style.color="red";
+  
+}
+function backOriginal(e,i){
+  e.style.color="";
+}
+async function checkCurrentRating(id,product_id){
+  var inventory=await fetch(API_PATH+"productCurrentOrdder.php?key=avdfheuw23&id="+id+"&pid="+product_id);
+var jsonInventory=await inventory.json();
+
+Rate={
+  rate:jsonInventory.rating
+}
+
+return jsonInventory;
+
+}
+
+
+async function viewDetail(id){
+  var inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
+var jsonInventory=await inventory.json();
+  console.log(jsonInventory);
+  document.getElementById("productNmae").innerText="Order Id "+id;
+document.getElementById("qty_sold").innerText=jsonInventory.data[0].totalAmount+" Rs";
+document.getElementById("qty_remaining").innerText=jsonInventory.data[0].OrderStatus;
+document.getElementById("revenue").innerText=jsonInventory.data[0].orderDate;
+document.getElementById("price").innerText=jsonInventory.data[0].order_time;
+
+
+if(jsonInventory.data[0].rider_name!=null){
+  rider_name=jsonInventory.data[0].rider_name;
+}else{
+  rider_name="No Rider Assigned";
+}
+document.getElementById("rider_name").innerText=  rider_name;
+OrderHTML="<table class='table'>";
+OrderHTML+="<tr>";
+OrderHTML+="<td>S.No</td>";
+OrderHTML+="<td>Product Name</td>";
+OrderHTML+="<td>Quantity Order</td>";
+OrderHTML+="<td>Unit Price(RS)</td>";
+OrderHTML+="<td>Sub Total(RS)</td>";
+
+OrderHTML+="</tr>";
+jsonInventory.products.map((item,index)=>{
+console.log(item);
+itemno=index+1;
+OrderHTML+="<tr>";
+OrderHTML+="<td>"+itemno+"</td>";
+OrderHTML+="<td>"+item.productName+"</td>";
+OrderHTML+="<td>"+item.qty+"</td>";
+OrderHTML+="<td>"+item.price+"</td>";
+OrderHTML+="<td>"+item.price*item.qty+"</td>";
+OrderHTML+="<td><span id=product-"+item.product_id+" >";
+
+
+
+if(jsonInventory.data[0].order_status==5){
+  OrderHTML+=" <td>";
+  
+
+if(item.rated==0){
+
+  for(i=1; i<=5; i++){
+      OrderHTML+=" <span style='font-size:20px;'>&#9734;</span>";
+    }
+  }else{
+    OrderHTML+=" <span style='font-size:20px;'>"+ item.rated+" &#9734;</span>";
+  }
+  OrderHTML+=" </td>";
+}
+
+
+
+
+
+ 
+OrderHTML+="</span></td>";
+OrderHTML+="</tr>";
+})
+OrderHTML+="</table>";
+document.getElementById("productInvdetail").innerHTML=OrderHTML;
+}
 async function downloadInvoice(id){
   var inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
 var jsonInventory=await inventory.json();
