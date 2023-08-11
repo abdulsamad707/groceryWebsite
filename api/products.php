@@ -93,7 +93,7 @@ if(isset($_GET["id"])){
  
   $groupby =" group by products.id";
 }
- $sql="SELECT if( count(DISTINCT user_id)<1,1,count(DISTINCT user_id)) as countBy, keyword,products.productqty,if(format(ifnull(AVG(orderdetail.rated),0),2)>1,format(ifnull(AVG(orderdetail.rated),0),2),5.00) as rating,products.status,products.price,products.productName,products.id,concat('http://localhost/grocerywebsite/api/',products.image) as ProductImage,ifnull(sum(orderdetail.orderqty),0) as qty_sold, ifnull(products.productqty-(ifnull(sum(orderdetail.orderqty),0)),0) as qty_remaining,ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue from products left join orderdetail on orderdetail.product_id=products.id   where $whereConduction $groupby ";
+ $sql="SELECT if( count(DISTINCT productrating.user_id)<1,1,count(DISTINCT productrating.user_id)) as countBy, keyword,products.productqty,if(format(ifnull(AVG(productrating.rating),0),2)>1,format(ifnull(AVG(productrating.rating),0),2),5.00) as rating,products.status,products.price,products.productName,products.id,concat('http://localhost/grocerywebsite/api/',products.image) as ProductImage,ifnull(sum(orderdetail.orderqty),0) as qty_sold, ifnull(products.productqty-(ifnull(sum(orderdetail.orderqty),0)),0) as qty_remaining,ifnull(sum(orderdetail.orderqty*orderdetail.price),0) as revenue from products left join productrating on productrating.product_id = products.id  left join orderdetail on orderdetail.product_id=products.id  where $whereConduction $groupby ";
 
 $productData=$data->sql($sql,"read");
 if(isset($_GET["id"])){

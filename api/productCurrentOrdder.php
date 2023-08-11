@@ -8,16 +8,37 @@ header(
 );
 include("validkey.php");
 
+ 
 
-$product_id=$_GET["pid"];
-$order_id=$_GET["id"];
-$sql="SELECT  IFNULL(ROUND(AVG(rating),1),0) as rate FROM productrating  Where product_id='$product_id' AND order_id='$order_id'";
-$ratingData=$data->sql($sql,"read");
+  $headers = apache_request_headers();
+  $auth_header = isset($headers['Authorization']) ? $headers['Authorization'] : null;
+  if ($auth_header) {
+      $bearer_token = explode(" ", $auth_header);
+  $jwt_token = $bearer_token[1];
+ $userdata=file_get_contents("php://input");
 
+ $userdata=json_decode($userdata,true);
+  
+      $adminData = $data->DecodeToken($jwt_token, "keys");
+      
+       $customer_id=0;
+    $reqMetod=$_SERVER["REQUEST_METHOD"];
+$customer_id=$adminData["id"];
 
-$rdata=[
-    "rating"=> $ratingData["data"][0]["rate"]
+extract($userdata);
+$productRating=$rating;
+$productID=$product_id;
+$orderID=$order_id;
+extract($userdata);
+$productRatingArr=[
+"rating"=>$productRating,
+"order_id"=>$orderID,
+"user_id"=>$customer_id,
+"product_id"=>$productID
 ];
-echo json_encode($rdata);
+
+    $data->updateData("orderdetail",["rated"=>$productRating],["product_id"=>$productID,"order_id"=>$orderID] );
+    $data->insert("productrating",$productRatingArr);
+  }
 
 ?>

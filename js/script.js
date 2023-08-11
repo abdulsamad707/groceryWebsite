@@ -1174,7 +1174,7 @@ function websiteLink() {
         const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
         const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
         const parsedJwtData = JSON.parse(decodedJwtData);
-        $("#navBar").append("<a href='myorder.php'>My Order</a>");
+        $("#navBar").append("<a href='myorder.php'>My Order</a><a href='myprofile.php'>My Profile</a>");
     } else {
 
     }

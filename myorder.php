@@ -27,7 +27,8 @@
              <p>   Order Status :<span id="qty_remaining">5</span></p>
              <p>    Order Date :<span id="revenue">5</span></p>
              <p>    Order Time :<span id="price">5</span></p>
-
+             <p>    Delivery Charge :<span id="dc">5</span></p>
+             <p>    GST :<span id="gst">5</span></p>
           <p>Rider Name: <span id="rider_name"></span></p>
 
 
@@ -152,11 +153,7 @@ async function rating(e,i,product_id){
        e.innerHTML="product rated";
        document.getElementById("product-"+product_id).innerHTML="You Rate "+i+" star";
 }
-function changeColor(e,i){
-  console.log(e);
-  e.style.color="red";
-  
-}
+
 function backOriginal(e,i){
   e.style.color="";
 }
@@ -172,7 +169,6 @@ return jsonInventory;
 
 }
 
-
 async function viewDetail(id){
   var inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
 var jsonInventory=await inventory.json();
@@ -182,7 +178,8 @@ document.getElementById("qty_sold").innerText=jsonInventory.data[0].totalAmount+
 document.getElementById("qty_remaining").innerText=jsonInventory.data[0].OrderStatus;
 document.getElementById("revenue").innerText=jsonInventory.data[0].orderDate;
 document.getElementById("price").innerText=jsonInventory.data[0].order_time;
-
+document.getElementById("dc").innerText=jsonInventory.data[0].deliveryCharge+" Rs";
+document.getElementById("gst").innerText=jsonInventory.data[0].gst+" Rs";
 
 if(jsonInventory.data[0].rider_name!=null){
   rider_name=jsonInventory.data[0].rider_name;
@@ -215,16 +212,17 @@ OrderHTML+="<td><span id=product-"+item.product_id+" >";
 if(jsonInventory.data[0].order_status==5){
   OrderHTML+=" <td>";
   
-
+    OrderHTML+=" <span id='productOrder-"+item.product_id+"'>";
 if(item.rated==0){
 
   for(i=1; i<=5; i++){
-      OrderHTML+=" <span style='font-size:20px;'>&#9734;</span>";
+      OrderHTML+=" <span class='productRating' id='product-"+item.product_id+"-"+i+"' style='font-size:20px;' onmouseenter=changeColor("+item.product_id+","+i+") onmouseleave=changeB("+item.product_id+","+item.ratings+") onclick=submitRating("+item.product_id+","+i+","+id+")  >&#9734;</span>";
     }
   }else{
-    OrderHTML+=" <span style='font-size:20px;'>"+ item.rated+" &#9734;</span>";
+    OrderHTML+=" <span style='font-size:20px;' >"+ item.rated+" &#9734;</span>";
   }
-  OrderHTML+=" </td>";
+  OrderHTML+="</span> </td>";
+
 }
 
 
@@ -236,7 +234,47 @@ OrderHTML+="</span></td>";
 OrderHTML+="</tr>";
 })
 OrderHTML+="</table>";
+if(jsonInventory.data[0].order_status==5){
+  OrderHTML+="<h1>Comment About Order </h1>";
+  OrderHTML+="<textarea cols='50' rows='5' id='submitOrdereview' style='border:1px solid black; resize:none;'>  </textarea><br>";
+  OrderHTML+="<button class='btn'   onclick=submitReview("+id+")>Submit Review </button>";
+}
 document.getElementById("productInvdetail").innerHTML=OrderHTML;
+
+/*
+admin123
+jE1YCCH2PHxj
+@Chuck123
+*/
+
+
+}
+
+async function submitReview(id){
+  
+  jwtToken = localStorage.getItem("key");
+    const jwt = jwtToken;
+  let Review=document.getElementById("submitOrdereview").value;
+
+
+     const order_id=id;
+review_object={
+review:Review,
+order_id:order_id
+};
+review_object=JSON.stringify(review_object);
+console.warn(review_object);
+apiurl = API_PATH + "review.php?key=" + APIKEY;
+ productRa = await fetch(apiurl, {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${jwtToken}`
+
+        },
+        body: review_object
+    });
+    console.log(productRa);
+
 }
 async function downloadInvoice(id){
   var inventory=await fetch(API_PATH+"orders.php?key=avdfheuw23&id="+id);
@@ -340,7 +378,59 @@ pdfMake.createPdf(docDefinition).download("order Invoice"+".pdf");
 
 
 }
+ function backRemove(product){
 
+    for(i=1; i<=5; i++){
+      document.getElementById("product-"+product+"-"+i).style="font-size:20px; color:ccc";
+     }
+ }
+  function changeB(product,index){
+backRemove(product);
+    
+    for(i=1; i<=index; i++){
+      document.getElementById("product-"+product+"-"+i).style="font-size:20px; color:#ffcc00;";
+     }
+ }
+function changeColor(product,index){
+  console.log("tth");
+backRemove(product);
+     for(i=1; i<=index; i++){
+      document.getElementById("product-"+product+"-"+i).style="color:#ffcc00; font-size:20px";
+     }
+}
+async function submitRating(product,rating,order_id){
+        jwtToken = localStorage.getItem("key");
+    const jwt = jwtToken;
+console.log(jwtToken);
+    const jwtData = jwt.split('.')[1]; // Get the data section of the JWT
+    const decodedJwtData = atob(jwtData); // Decode the base64-encoded data
+    const parsedJwtData = JSON.parse(decodedJwtData);
+   const customer_id= parsedJwtData.id;
+           SubmitRating={
+            product_id:product,
+            rating:rating,
+            order_id:order_id
+           }
+           SubmitRating   = JSON.stringify( SubmitRating);
+          
+           document.getElementById("productOrder-"+product).innerHTML="<span style='font-size:20px;'>"+rating+"&#9734;</span>";
+           console.warn(SubmitRating);
 
+           APIKEY = "avdfheuw23";
+WEBSITE_PATHS = "http://localhost/groceryWebsite/";
+API_PATH = "api/";
+APIKEY = "avdfheuw23";
+           
+    apiurl = API_PATH + "productCurrentOrdder.php?key=" + APIKEY;
+ productRa = await fetch(apiurl, {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${jwtToken}`
 
+        },
+        body:   SubmitRating
+    });
+    console.log(productRa);
+   console.warn(await productRa.text());
+}
 </script>

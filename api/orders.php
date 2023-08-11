@@ -156,7 +156,7 @@ if(isset($_GET["orderDate"]) && $_GET["orderDate"]=="" && $_GET["rider_id"] ==0 
 			$whereConditions = "orderdetail.order_id='$orderID'";
 			$joins = "LEFT JOIN products OM orderdetail.product_id=products.id";
 			$orderdetail = $data->sql(
-				"SELECT rated,ifnull(avg(rating),0) as ratings,admins.id as admin_id_products,admins.username,orderdetail.product_id,orderdetail.price,products.productName,orderdetail.qtyorder as qty FROM orderdetail LEFT JOIN  products ON orderdetail.product_id=products.id LEFT JOIN admins ON admins.id=products.admin_id left JOIN productrating ON productrating.product_id=products.id  where orderdetail.order_id='$orderID'  group by orderdetail.product_id",
+				"SELECT rated,ifnull(avg(rated),0) as ratings,admins.id as admin_id_products,admins.username,orderdetail.product_id,orderdetail.price,products.productName,orderdetail.qtyorder as qty FROM orderdetail LEFT JOIN  products ON orderdetail.product_id=products.id LEFT JOIN admins ON admins.id=products.admin_id left JOIN productrating ON productrating.product_id=products.id  where orderdetail.order_id='$orderID'  group by orderdetail.product_id",
 				"read"
 			);
 			$orderdata["products"] = $orderdetail['data'];
