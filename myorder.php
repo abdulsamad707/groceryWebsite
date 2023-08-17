@@ -236,7 +236,7 @@ OrderHTML+="</tr>";
 OrderHTML+="</table>";
 if(jsonInventory.data[0].order_status==5){
   OrderHTML+="<h1>Comment About Order </h1>";
-  OrderHTML+="<textarea cols='50' rows='5' id='submitOrdereview' style='border:1px solid black; resize:none;'>  </textarea><br>";
+  OrderHTML+="<textarea cols='50' class='form-control' rows='5' id='submitOrdereview' style='border:1px solid black; resize:none;'>  </textarea><br>";
   OrderHTML+="<button class='btn'   onclick=submitReview("+id+")>Submit Review </button>";
 }
 document.getElementById("productInvdetail").innerHTML=OrderHTML;
@@ -273,7 +273,7 @@ apiurl = API_PATH + "review.php?key=" + APIKEY;
         },
         body: review_object
     });
-    console.log(productRa);
+    console.log(await productRa.text());
 
 }
 async function downloadInvoice(id){

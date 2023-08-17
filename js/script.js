@@ -846,7 +846,35 @@ function displayProduct(productName = "") {
 
 }
 displayProduct();
+async function DisplayReview() {
+    apiurl = API_PATH + "review.php?key=" + APIKEY;
+    console.log(apiurl);
+    replyData = await fetch(apiurl);
+    console.log("Jeth");
+    replyDataJSON = await replyData.json();
+    console.warn(replyDataJSON);
+    ReviewHTML = "";
+    replyDataJSON.data.map((item) => {
+        ReviewHTML += " <div class='box'>";
 
+        ReviewHTML += " <div class='content'>";
+        ReviewHTML += " <div class='icons'>";
+        ReviewHTML += "   <a href='#'> <i class='fas fa-user'></i> by " + item.username + "</a>";
+        ReviewHTML += "    <a href='#'> <i class='fas fa-calendar'></i> " + item.review_date + "</a>";
+        ReviewHTML += "  </div>";
+
+        ReviewHTML += " <p>" + item.review + ".</p>";
+
+        ReviewHTML += " </div>";
+        ReviewHTML += "</div>";
+    })
+
+
+    document.getElementById("review_container").innerHTML = ReviewHTML;
+
+
+}
+DisplayReview();
 async function cartCheckout() {
     /*
         localStorage.setItem("carts", JSON.stringify(cartData));

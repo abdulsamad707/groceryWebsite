@@ -632,7 +632,7 @@ CREATE TABLE `reviews` (
   `user_id` int(11) DEFAULT NULL,
   `review` varchar(255) DEFAULT NULL,
   `order_id` varchar(255) DEFAULT NULL,
-  `review_date` datetime DEFAULT NULL ON UPDATE current_timestamp()
+  `review_date` datetime  DEFAULT CURRENT_TIMESTAMP ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
